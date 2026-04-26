@@ -13,6 +13,7 @@
   --ink:#0D0D0D;--ink2:#4A4A4A;--ink3:#9A9A9A;
   --bg:#FAFAF8;--bg2:#F3F2EF;--bg3:#ECEAE5;
   --line:#E2E0DB;--accent:#B8935A;--white:#FFFFFF;
+  --err:#C0392B;--ok:#27AE60;
 }
 html{scroll-behavior:smooth}
 body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--ink);min-height:100vh;overflow-x:hidden}
@@ -30,6 +31,9 @@ nav{background:var(--white);border-bottom:1px solid var(--line);display:flex;ali
 .cart-icon{cursor:pointer;display:flex;align-items:center;gap:6px;font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:var(--ink2);background:none;border:none;font-family:'DM Sans',sans-serif;transition:color 0.2s;padding:0}
 .cart-icon:hover{color:var(--ink)}
 .cart-dot{background:var(--ink);color:var(--white);width:17px;height:17px;border-radius:50%;font-size:10px;display:flex;align-items:center;justify-content:center;font-weight:500;flex-shrink:0}
+.nav-account{font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:var(--ink2);background:none;border:none;font-family:'DM Sans',sans-serif;cursor:pointer;transition:color 0.2s;padding:0}
+.nav-account:hover{color:var(--ink)}
+.nav-account-name{font-size:11px;letter-spacing:0.08em;color:var(--accent);background:none;border:none;font-family:'DM Sans',sans-serif;cursor:pointer;padding:0}
 
 /* Hamburger */
 .hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;background:none;border:none;padding:4px}
@@ -53,6 +57,8 @@ nav{background:var(--white);border-bottom:1px solid var(--line);display:flex;ali
 .btn-outline:hover{background:var(--ink);color:var(--white)}
 .btn-accent{background:var(--accent);color:var(--white);padding:13px 32px}
 .btn-accent:hover{background:#9E7B44}
+.btn-ghost{background:transparent;color:var(--ink2);border:1px solid var(--line);padding:12px 32px}
+.btn-ghost:hover{border-color:var(--ink2)}
 
 /* ── HERO ── */
 .hero{background:var(--white);display:grid;grid-template-columns:1fr 1fr;min-height:calc(100vh - 56px)}
@@ -146,7 +152,7 @@ nav{background:var(--white);border-bottom:1px solid var(--line);display:flex;ali
 .fgg{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .fg.full{grid-column:1/-1}
 label{font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:var(--ink3)}
-input[type=text],input[type=email],input[type=tel],select,textarea{border:1px solid var(--line);padding:10px 12px;font-size:13px;background:var(--white);font-family:'DM Sans',sans-serif;outline:none;transition:border-color 0.2s;width:100%;color:var(--ink);-webkit-appearance:none;border-radius:0}
+input[type=text],input[type=email],input[type=tel],input[type=password],select,textarea{border:1px solid var(--line);padding:10px 12px;font-size:13px;background:var(--white);font-family:'DM Sans',sans-serif;outline:none;transition:border-color 0.2s;width:100%;color:var(--ink);-webkit-appearance:none;border-radius:0}
 input:focus,select:focus,textarea:focus{border-color:var(--ink)}
 .pay-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:1.5rem}
 .pm{border:1px solid var(--line);padding:16px 8px;text-align:center;cursor:pointer;transition:all 0.2s;background:var(--white)}
@@ -160,6 +166,47 @@ input:focus,select:focus,textarea:focus{border-color:var(--ink)}
 .o-iname{color:var(--ink2)}
 .o-ip{color:var(--ink);font-weight:500;white-space:nowrap;margin-left:8px}
 .sub-h{font-family:'Playfair Display',serif;font-size:18px;font-weight:400;color:var(--ink);margin-bottom:1rem}
+
+/* ── LOGIN / AUTH ── */
+.auth-page{min-height:calc(100vh - 56px);display:grid;grid-template-columns:1fr 1fr;background:var(--white)}
+.auth-visual{background:var(--ink);display:flex;flex-direction:column;justify-content:center;align-items:center;padding:4rem 3rem;position:relative;overflow:hidden}
+.auth-visual-inner{position:relative;z-index:1;text-align:center}
+.auth-visual h2{font-family:'Playfair Display',serif;font-size:clamp(30px,3.5vw,44px);font-weight:400;color:var(--white);margin-bottom:1rem;line-height:1.1}
+.auth-visual h2 em{font-style:italic;color:var(--accent)}
+.auth-visual p{font-size:12px;color:rgba(255,255,255,0.45);line-height:2;max-width:300px;letter-spacing:0.04em}
+.auth-visual-deco{position:absolute;inset:0;opacity:0.04}
+.auth-form-panel{display:flex;flex-direction:column;justify-content:center;padding:4rem 3rem;overflow-y:auto}
+.auth-tabs{display:flex;gap:0;border-bottom:1px solid var(--line);margin-bottom:2rem}
+.auth-tab{background:none;border:none;border-bottom:2px solid transparent;padding:10px 20px;font-family:'DM Sans',sans-serif;font-size:11px;letter-spacing:0.16em;text-transform:uppercase;color:var(--ink3);cursor:pointer;transition:all 0.2s;margin-bottom:-1px}
+.auth-tab.active{color:var(--ink);border-bottom-color:var(--ink)}
+.auth-form{display:none}.auth-form.active{display:block}
+.auth-form-title{font-family:'Playfair Display',serif;font-size:28px;font-weight:400;color:var(--ink);margin-bottom:0.35rem}
+.auth-form-sub{font-size:12px;color:var(--ink3);letter-spacing:0.04em;margin-bottom:2rem}
+.auth-err{background:#FEF0EE;border:1px solid #FACBC5;color:var(--err);font-size:11px;padding:10px 14px;margin-bottom:14px;letter-spacing:0.02em;display:none}
+.auth-err.show{display:block}
+.auth-ok{background:#EFF8F3;border:1px solid #BBE8CC;color:var(--ok);font-size:11px;padding:10px 14px;margin-bottom:14px;letter-spacing:0.02em;display:none}
+.auth-ok.show{display:block}
+.auth-divider{display:flex;align-items:center;gap:1rem;margin:1.25rem 0;color:var(--ink3);font-size:10px;letter-spacing:0.12em;text-transform:uppercase}
+.auth-divider::before,.auth-divider::after{content:'';flex:1;height:1px;background:var(--line)}
+.demo-box{border:1px dashed var(--line);padding:14px;background:var(--bg2);margin-bottom:1.25rem;font-size:11px;color:var(--ink3);line-height:1.8}
+.demo-box strong{color:var(--ink2)}
+
+/* ── ACCOUNT ── */
+.account-header{background:var(--ink);padding:3rem 1.5rem 2rem}
+.account-header h1{font-family:'Playfair Display',serif;font-size:clamp(26px,4vw,36px);font-weight:400;color:var(--white);margin-bottom:4px}
+.account-header p{font-size:12px;color:rgba(255,255,255,0.45);letter-spacing:0.06em}
+.account-body{padding:2rem 1.5rem;display:grid;grid-template-columns:220px 1fr;gap:0;background:var(--white)}
+.account-nav{border-right:1px solid var(--line);padding-right:1.5rem}
+.acc-nav-item{display:block;font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:var(--ink3);padding:10px 0;cursor:pointer;border-bottom:1px solid var(--line);transition:color 0.2s;background:none;border-left:none;border-right:none;border-top:none;width:100%;text-align:left;font-family:'DM Sans',sans-serif}
+.acc-nav-item:hover,.acc-nav-item.active{color:var(--ink)}
+.account-section{padding-left:2rem;display:none}
+.account-section.active{display:block}
+.order-card{border:1px solid var(--line);padding:1.25rem;margin-bottom:12px}
+.order-ref{font-family:'Playfair Display',serif;font-size:17px;font-weight:400;color:var(--ink);margin-bottom:3px}
+.order-meta{font-size:11px;color:var(--ink3);letter-spacing:0.06em;margin-bottom:10px}
+.order-status{display:inline-block;font-size:9px;letter-spacing:0.14em;text-transform:uppercase;padding:4px 10px;background:var(--bg3);color:var(--ink2)}
+.order-status.pending{background:#FEF5E7;color:#956B1A}
+.order-status.dispatched{background:var(--bg3);color:var(--ink2)}
 
 /* ── EMPTY ── */
 .empty{text-align:center;padding:5rem 1.5rem}
@@ -218,6 +265,11 @@ footer{background:var(--ink);padding:2.5rem 1.5rem;display:grid;grid-template-co
 .toast-bar{position:fixed;bottom:1.5rem;left:50%;transform:translateX(-50%) translateY(80px);background:var(--ink);color:var(--white);padding:10px 24px;font-size:11px;letter-spacing:0.12em;text-transform:uppercase;transition:transform 0.3s;z-index:999;white-space:nowrap;max-width:calc(100vw - 2rem);text-align:center}
 .toast-bar.show{transform:translateX(-50%) translateY(0)}
 
+/* ── LOADER ── */
+.btn-loading{position:relative;pointer-events:none;opacity:0.7}
+.btn-loading::after{content:'';width:12px;height:12px;border:1.5px solid rgba(255,255,255,0.4);border-top-color:white;border-radius:50%;animation:spin 0.6s linear infinite;position:absolute;right:12px;top:50%;transform:translateY(-50%)}
+@keyframes spin{to{transform:translateY(-50%) rotate(360deg)}}
+
 /* ── MODAL ── */
 #modal-overlay{position:fixed;inset:0;background:rgba(13,13,13,0.55);z-index:500;align-items:flex-start;justify-content:center;padding:1rem;overflow-y:auto;-webkit-overflow-scrolling:touch}
 #modal-box{background:var(--white);max-width:540px;width:100%;position:relative;margin:auto;min-height:0}
@@ -227,10 +279,8 @@ footer{background:var(--ink);padding:2.5rem 1.5rem;display:grid;grid-template-co
 .co-header{padding:1.25rem 1.5rem;border-bottom:1px solid var(--line);background:var(--white);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem}
 
 /* ══════════════════════════════
-   RESPONSIVE BREAKPOINTS
+   RESPONSIVE
 ══════════════════════════════ */
-
-/* Tablet: ≤900px */
 @media(max-width:900px){
   .hero{grid-template-columns:1fr}
   .hero-visual{display:none}
@@ -249,66 +299,61 @@ footer{background:var(--ink);padding:2.5rem 1.5rem;display:grid;grid-template-co
   .categories{grid-template-columns:repeat(3,1fr);margin:0 1rem}
   .section-pad{padding:3rem 1rem}
   .stores-grid{grid-template-columns:repeat(auto-fill,minmax(240px,1fr))}
+  .auth-page{grid-template-columns:1fr}
+  .auth-visual{display:none}
+  .auth-form-panel{padding:2.5rem 1.5rem}
+  .account-body{grid-template-columns:1fr}
+  .account-nav{border-right:none;border-bottom:1px solid var(--line);padding-right:0;padding-bottom:1rem;margin-bottom:1.5rem;display:flex;gap:0;overflow-x:auto}
+  .acc-nav-item{border-bottom:2px solid transparent;white-space:nowrap;padding:10px 14px;font-size:10px}
+  .acc-nav-item.active{border-bottom-color:var(--ink);color:var(--ink)}
+  .account-section{padding-left:0}
 }
-
-/* Tablet portrait / large phone: ≤680px */
 @media(max-width:680px){
   nav{padding:0 1rem;height:52px}
   .nav-links{display:none}
   .hamburger{display:flex}
   .mobile-menu{top:52px}
   .cart-icon .cart-label{display:none}
-
+  .nav-account-name{display:none}
   .hero-text{padding:2.5rem 1.25rem}
   .hero-p{max-width:100%}
-
   .categories{grid-template-columns:1fr 1fr;margin:0 1rem;gap:1px}
   .cat-card{padding:1.5rem 1rem}
   .cat-icon{font-size:24px}
   .cat-name{font-size:14px}
-
   .section-pad{padding:2.5rem 1rem}
-
   .products-grid{grid-template-columns:repeat(2,1fr)}
   .p-img{height:200px}
   .p-name{font-size:14px}
   .p-info{padding:0.9rem 0.9rem 1.1rem}
-
   .shop-header{padding:2rem 1rem 0}
   .shop-top{margin-bottom:1rem}
-
   .cart-main{padding:1.75rem 1rem}
   .cart-side{padding:1.75rem 1rem}
   .c-item{grid-template-columns:70px 1fr auto;gap:0.75rem}
   .c-img{width:70px;height:88px}
-
   .co-header{padding:1rem;gap:0.75rem}
   .steps{gap:0}
   .slabel{display:none}
   .sline{max-width:30px;margin:0 8px}
-
   .co-main{padding:1.5rem 1rem}
   .co-side{padding:1.5rem 1rem}
   .fgg{grid-template-columns:1fr}
-
   .about-banner{padding:3rem 1rem}
   .vals{grid-template-columns:1fr}
   .contact-info{padding:2.5rem 1.5rem}
   .contact-form{padding:2.5rem 1.5rem}
   footer{padding:2rem 1rem}
   .f-links{gap:1rem}
-
   .pay-grid{grid-template-columns:1fr 1fr 1fr;gap:6px}
   .pm{padding:12px 6px}
   .pm-label{font-size:9px}
-
   .sec-title{font-size:24px}
   .sub-h{font-size:16px}
   #modal-overlay{padding:0.5rem}
   #modal-box{max-width:100%}
+  .auth-form-panel{padding:2rem 1.25rem}
 }
-
-/* Phone: ≤420px */
 @media(max-width:420px){
   .categories{grid-template-columns:1fr 1fr}
   .cat-count{display:none}
@@ -320,12 +365,9 @@ footer{background:var(--ink);padding:2.5rem 1.5rem;display:grid;grid-template-co
   .about-grid{grid-template-columns:1fr}
   .about-block{padding:2rem 1.25rem}
   .val{padding:1.5rem 1.25rem}
-
   .c-item{grid-template-columns:62px 1fr}
   .c-price{display:none}
 }
-
-/* Very small: ≤360px */
 @media(max-width:360px){
   .hero-h1{font-size:34px}
   .hero-text{padding:2rem 1rem}
@@ -333,8 +375,6 @@ footer{background:var(--ink);padding:2.5rem 1.5rem;display:grid;grid-template-co
   .p-img{height:220px}
   .btn{font-size:10px;padding:11px 24px}
 }
-
-/* Touch-friendly tap targets */
 @media(hover:none){
   .p-hover-cta{transform:translateY(0);opacity:0.85}
   .cat-card:active{background:var(--bg2)}
@@ -342,6 +382,12 @@ footer{background:var(--ink);padding:2.5rem 1.5rem;display:grid;grid-template-co
   .ftab{padding:14px 16px}
   .p-add{padding:8px 14px}
 }
+.strip-wrapper{background:var(--ink);padding:13px 0;overflow:hidden;white-space:nowrap}
+.strip-track{display:inline-flex;align-items:center;gap:3rem;animation:marquee 28s linear infinite}
+.strip-track span{font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(255,255,255,0.6);white-space:nowrap;flex-shrink:0}
+.strip-dot{width:3px;height:3px;background:var(--accent);border-radius:50%;flex-shrink:0}
+.strip-wrapper:hover .strip-track{animation-play-state:paused}
+@keyframes marquee{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
 </style>
 </head>
 <body>
@@ -359,6 +405,7 @@ footer{background:var(--ink);padding:2.5rem 1.5rem;display:grid;grid-template-co
     <button class="cart-icon" onclick="go('cart')">
       <span class="cart-label">Bag</span> <span class="cart-dot" id="ccount">0</span>
     </button>
+    <span id="nav-auth-area"></span>
     <button class="hamburger" id="ham" onclick="toggleMenu()" aria-label="Menu">
       <span></span><span></span><span></span>
     </button>
@@ -372,6 +419,7 @@ footer{background:var(--ink);padding:2.5rem 1.5rem;display:grid;grid-template-co
   <a class="mm-link" onclick="go('stores');closeMenu()">Stores</a>
   <a class="mm-link" onclick="go('about');closeMenu()">About</a>
   <a class="mm-link" onclick="go('contact');closeMenu()">Contact</a>
+  <a class="mm-link" id="mm-auth-link" onclick="go('login');closeMenu()">Sign In</a>
   <div class="mm-footer">© 2026 Eras and Moonlight · Philippines</div>
 </div>
 
@@ -415,69 +463,41 @@ footer{background:var(--ink);padding:2.5rem 1.5rem;display:grid;grid-template-co
       </svg>
     </div>
   </div>
-  <div class="strip">
+  <div class="strip-wrapper">
+  <div class="strip-track">
     <span>Free shipping nationwide</span><div class="strip-dot"></div>
     <span>Easy 14-day returns</span><div class="strip-dot"></div>
     <span>COD · Bank · E-Wallet</span><div class="strip-dot"></div>
     <span>Asian-sourced · Men &amp; Women</span><div class="strip-dot"></div>
-    <span>Visit us in-store</span>
+    <span>Visit us in-store</span><div class="strip-dot"></div>
+    <!-- duplicate for seamless loop -->
+    <span>Free shipping nationwide</span><div class="strip-dot"></div>
+    <span>Easy 14-day returns</span><div class="strip-dot"></div>
+    <span>COD · Bank · E-Wallet</span><div class="strip-dot"></div>
+    <span>Asian-sourced · Men &amp; Women</span><div class="strip-dot"></div>
+    <span>Visit us in-store</span><div class="strip-dot"></div>
   </div>
+</div>
   <div class="section-pad" style="background:var(--white)">
     <p class="section-label">Shop by category</p>
     <h2 class="section-title">Find your style</h2>
     <div class="categories">
-      <div class="cat-card" onclick="go('shop');filterP(null,'dress')">
-        <div class="cat-icon">◈</div>
-        <div class="cat-name">Dresses</div>
-        <div class="cat-count">12 pieces · Women</div>
-      </div>
-      <div class="cat-card" onclick="go('shop');filterP(null,'top')">
-        <div class="cat-icon">◇</div>
-        <div class="cat-name">Tops &amp; Blouses</div>
-        <div class="cat-count">18 pieces · Men &amp; Women</div>
-      </div>
-      <div class="cat-card" onclick="go('shop');filterP(null,'coord')">
-        <div class="cat-icon">◉</div>
-        <div class="cat-name">Co-ord Sets</div>
-        <div class="cat-count">8 pieces · Men &amp; Women</div>
-      </div>
-      <div class="cat-card" onclick="go('shop');filterP(null,'skirt')">
-        <div class="cat-icon">○</div>
-        <div class="cat-name">Skirts &amp; Bottoms</div>
-        <div class="cat-count">10 pieces · Women</div>
-      </div>
-      <div class="cat-card" onclick="go('shop');filterP(null,'mens')">
-        <div class="cat-icon">▣</div>
-        <div class="cat-name">Men's Essentials</div>
-        <div class="cat-count">14 pieces · Men</div>
-      </div>
-      <div class="cat-card" onclick="go('shop');filterP(null,'outerwear')">
-        <div class="cat-icon">◆</div>
-        <div class="cat-name">Outerwear</div>
-        <div class="cat-count">6 pieces · Men &amp; Women</div>
-      </div>
+      <div class="cat-card" onclick="go('shop');filterP(null,'dress')"><div class="cat-icon">◈</div><div class="cat-name">Dresses</div><div class="cat-count">12 pieces · Women</div></div>
+      <div class="cat-card" onclick="go('shop');filterP(null,'top')"><div class="cat-icon">◇</div><div class="cat-name">Tops &amp; Blouses</div><div class="cat-count">18 pieces · Men &amp; Women</div></div>
+      <div class="cat-card" onclick="go('shop');filterP(null,'coord')"><div class="cat-icon">◉</div><div class="cat-name">Co-ord Sets</div><div class="cat-count">8 pieces · Men &amp; Women</div></div>
+      <div class="cat-card" onclick="go('shop');filterP(null,'skirt')"><div class="cat-icon">○</div><div class="cat-name">Skirts &amp; Bottoms</div><div class="cat-count">10 pieces · Women</div></div>
+      <div class="cat-card" onclick="go('shop');filterP(null,'mens')"><div class="cat-icon">▣</div><div class="cat-name">Men's Essentials</div><div class="cat-count">14 pieces · Men</div></div>
+      <div class="cat-card" onclick="go('shop');filterP(null,'outerwear')"><div class="cat-icon">◆</div><div class="cat-name">Outerwear</div><div class="cat-count">6 pieces · Men &amp; Women</div></div>
     </div>
   </div>
-  <footer>
-    <div class="f-brand"><em>Eras</em> &amp; Moonlight</div>
-    <div class="f-links">
-      <a onclick="go('shop')">Shop</a>
-      <a onclick="go('stores')">Stores</a>
-      <a onclick="go('about')">About</a>
-      <a onclick="go('contact')">Contact</a>
-    </div>
-    <div class="f-copy">© 2026 Eras and Moonlight</div>
-  </footer>
+  <footer><div class="f-brand"><em>Eras</em> &amp; Moonlight</div><div class="f-links"><a onclick="go('shop')">Shop</a><a onclick="go('stores')">Stores</a><a onclick="go('about')">About</a><a onclick="go('contact')">Contact</a></div><div class="f-copy">© 2026 Eras and Moonlight</div></footer>
 </div>
 
 <!-- ═══════════ SHOP ═══════════ -->
 <div id="page-shop" class="page">
   <div class="shop-header">
     <div class="shop-top">
-      <div>
-        <p class="section-label">Collection</p>
-        <h1 style="font-family:'Playfair Display',serif;font-size:clamp(26px,4vw,36px);font-weight:400;color:var(--ink)">All Pieces</h1>
-      </div>
+      <div><p class="section-label">Collection</p><h1 style="font-family:'Playfair Display',serif;font-size:clamp(26px,4vw,36px);font-weight:400;color:var(--ink)">All Pieces</h1></div>
       <span id="pcount" style="font-size:12px;color:var(--ink3);letter-spacing:0.06em;align-self:flex-end;padding-bottom:4px"></span>
     </div>
     <div class="filter-bar" id="filterBar">
@@ -491,21 +511,120 @@ footer{background:var(--ink);padding:2.5rem 1.5rem;display:grid;grid-template-co
     </div>
   </div>
   <div class="products-grid" id="pgrid"></div>
-  <footer>
-    <div class="f-brand"><em>Eras</em> &amp; Moonlight</div>
-    <div class="f-links"><a onclick="go('shop')">Shop</a><a onclick="go('stores')">Stores</a><a onclick="go('about')">About</a><a onclick="go('contact')">Contact</a></div>
-    <div class="f-copy">© 2026 Eras and Moonlight</div>
-  </footer>
+  <footer><div class="f-brand"><em>Eras</em> &amp; Moonlight</div><div class="f-links"><a onclick="go('shop')">Shop</a><a onclick="go('stores')">Stores</a><a onclick="go('about')">About</a><a onclick="go('contact')">Contact</a></div><div class="f-copy">© 2026 Eras and Moonlight</div></footer>
+</div>
+
+<!-- ═══════════ LOGIN ═══════════ -->
+<div id="page-login" class="page">
+  <div class="auth-page">
+    <div class="auth-visual">
+      <svg class="auth-visual-deco" viewBox="0 0 400 600" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="200" cy="300" r="200" fill="none" stroke="white" stroke-width="1"/>
+        <circle cx="200" cy="300" r="150" fill="none" stroke="white" stroke-width="0.5"/>
+        <circle cx="200" cy="300" r="80" fill="none" stroke="white" stroke-width="0.5"/>
+        <line x1="0" y1="300" x2="400" y2="300" stroke="white" stroke-width="0.5"/>
+        <line x1="200" y1="0" x2="200" y2="600" stroke="white" stroke-width="0.5"/>
+      </svg>
+      <div class="auth-visual-inner">
+        <div style="font-family:'Playfair Display',serif;font-size:11px;letter-spacing:0.3em;text-transform:uppercase;color:var(--accent);margin-bottom:1.5rem">Eras &amp; Moonlight</div>
+        <h2>Your personal<br><em>wardrobe awaits.</em></h2>
+        <p style="margin-top:1.5rem">Sign in to track your orders, save your wishlist, and shop seamlessly across all your devices.</p>
+        <div style="margin-top:3rem;display:flex;flex-direction:column;gap:16px;text-align:left;border-top:1px solid rgba(255,255,255,0.1);padding-top:2rem">
+          <div style="display:flex;gap:12px;align-items:flex-start">
+            <span style="color:var(--accent);font-size:16px;flex-shrink:0;margin-top:1px">◎</span>
+            <div><p style="font-size:12px;color:rgba(255,255,255,0.7);line-height:1.6">Track orders in real time from placement to delivery</p></div>
+          </div>
+          <div style="display:flex;gap:12px;align-items:flex-start">
+            <span style="color:var(--accent);font-size:16px;flex-shrink:0;margin-top:1px">◈</span>
+            <div><p style="font-size:12px;color:rgba(255,255,255,0.7);line-height:1.6">Faster checkout with saved shipping addresses</p></div>
+          </div>
+          <div style="display:flex;gap:12px;align-items:flex-start">
+            <span style="color:var(--accent);font-size:16px;flex-shrink:0;margin-top:1px">◆</span>
+            <div><p style="font-size:12px;color:rgba(255,255,255,0.7);line-height:1.6">Exclusive early access to new arrivals and sales</p></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="auth-form-panel">
+      <div class="auth-tabs">
+        <button class="auth-tab active" id="tab-login" onclick="switchAuthTab('login')">Sign In</button>
+        <button class="auth-tab" id="tab-register" onclick="switchAuthTab('register')">Create Account</button>
+      </div>
+
+      <!-- LOGIN FORM -->
+      <div class="auth-form active" id="form-login">
+        <h2 class="auth-form-title">Welcome back.</h2>
+        <p class="auth-form-sub">Sign in to your Eras &amp; Moonlight account</p>
+        <div class="demo-box">
+          <strong>Demo account:</strong><br>
+          demo@erasandmoonlight.ph &nbsp;/&nbsp; demo1234
+        </div>
+        <div class="auth-err" id="login-err"></div>
+        <div class="fg"><label>Email Address</label><input type="email" id="login-email" placeholder="you@email.com" autocomplete="email"></div>
+        <div class="fg"><label>Password</label><input type="password" id="login-pass" placeholder="Your password" autocomplete="current-password"></div>
+        <div style="display:flex;justify-content:flex-end;margin-bottom:1.25rem">
+          <span style="font-size:11px;color:var(--ink3);cursor:pointer;letter-spacing:0.06em" onclick="showToast('Password reset coming soon')">Forgot password?</span>
+        </div>
+        <button class="btn btn-dark" id="login-btn" style="width:100%;text-align:center;padding:15px" onclick="doLogin()">Sign In →</button>
+        <div class="auth-divider">or</div>
+        <button class="btn btn-ghost" style="width:100%;text-align:center" onclick="switchAuthTab('register')">Create an Account</button>
+        <p style="font-size:11px;color:var(--ink3);line-height:1.8;margin-top:1.5rem;text-align:center">By signing in, you agree to our <span style="text-decoration:underline;cursor:pointer">Terms</span> and <span style="text-decoration:underline;cursor:pointer">Privacy Policy</span>.</p>
+      </div>
+
+      <!-- REGISTER FORM -->
+      <div class="auth-form" id="form-register">
+        <h2 class="auth-form-title">Join us.</h2>
+        <p class="auth-form-sub">Create your Eras &amp; Moonlight account</p>
+        <div class="auth-err" id="reg-err"></div>
+        <div class="auth-ok" id="reg-ok"></div>
+        <div class="fgg">
+          <div class="fg"><label>First Name</label><input type="text" id="reg-fname" placeholder="" autocomplete="given-name"></div>
+          <div class="fg"><label>Last Name</label><input type="text" id="reg-lname" placeholder="" autocomplete="family-name"></div>
+          <div class="fg full"><label>Email Address</label><input type="email" id="reg-email" placeholder="you@email.com" autocomplete="email"></div>
+          <div class="fg full"><label>Phone (optional)</label><input type="tel" id="reg-phone" placeholder="+63 9XX XXX XXXX" autocomplete="tel"></div>
+          <div class="fg full"><label>Password</label><input type="password" id="reg-pass" placeholder="At least 6 characters" autocomplete="new-password"></div>
+          <div class="fg full"><label>Confirm Password</label><input type="password" id="reg-pass2" placeholder="Repeat your password" autocomplete="new-password"></div>
+        </div>
+        <button class="btn btn-dark" id="reg-btn" style="width:100%;text-align:center;padding:15px;margin-top:4px" onclick="doRegister()">Create Account →</button>
+        <div class="auth-divider">or</div>
+        <button class="btn btn-ghost" style="width:100%;text-align:center" onclick="switchAuthTab('login')">Sign In Instead</button>
+      </div>
+    </div>
+  </div>
+  <footer><div class="f-brand"><em>Eras</em> &amp; Moonlight</div><div class="f-links"><a onclick="go('shop')">Shop</a><a onclick="go('stores')">Stores</a><a onclick="go('about')">About</a><a onclick="go('contact')">Contact</a></div><div class="f-copy">© 2026 Eras and Moonlight</div></footer>
+</div>
+
+<!-- ═══════════ ACCOUNT ═══════════ -->
+<div id="page-account" class="page">
+  <div class="account-header">
+    <h1 id="acc-name">My Account</h1>
+    <p id="acc-email" style="color:rgba(255,255,255,0.45);font-size:12px;letter-spacing:0.06em"></p>
+  </div>
+  <div class="account-body">
+    <div class="account-nav">
+      <button class="acc-nav-item active" onclick="switchAccSection('orders',this)">My Orders</button>
+      <button class="acc-nav-item" onclick="switchAccSection('profile',this)">Profile</button>
+      <button class="acc-nav-item" onclick="doLogout()">Sign Out</button>
+    </div>
+    <div style="flex:1">
+      <div class="account-section active" id="acc-orders">
+        <h2 class="sec-title" style="font-size:22px;margin-bottom:1.25rem">Order History</h2>
+        <div id="acc-orders-list"><p style="font-size:13px;color:var(--ink3)">Loading orders...</p></div>
+      </div>
+      <div class="account-section" id="acc-profile">
+        <h2 class="sec-title" style="font-size:22px;margin-bottom:1.25rem">Profile Details</h2>
+        <div id="acc-profile-content"></div>
+      </div>
+    </div>
+  </div>
+  <footer><div class="f-brand"><em>Eras</em> &amp; Moonlight</div><div class="f-links"><a onclick="go('shop')">Shop</a><a onclick="go('stores')">Stores</a><a onclick="go('about')">About</a><a onclick="go('contact')">Contact</a></div><div class="f-copy">© 2026 Eras and Moonlight</div></footer>
 </div>
 
 <!-- ═══════════ CART ═══════════ -->
 <div id="page-cart" class="page">
   <div id="cartContent"></div>
-  <footer>
-    <div class="f-brand"><em>Eras</em> &amp; Moonlight</div>
-    <div class="f-links"><a onclick="go('shop')">Shop</a><a onclick="go('stores')">Stores</a><a onclick="go('about')">About</a><a onclick="go('contact')">Contact</a></div>
-    <div class="f-copy">© 2026 Eras and Moonlight</div>
-  </footer>
+  <footer><div class="f-brand"><em>Eras</em> &amp; Moonlight</div><div class="f-links"><a onclick="go('shop')">Shop</a><a onclick="go('stores')">Stores</a><a onclick="go('about')">About</a><a onclick="go('contact')">Contact</a></div><div class="f-copy">© 2026 Eras and Moonlight</div></footer>
 </div>
 
 <!-- ═══════════ CHECKOUT ═══════════ -->
@@ -524,28 +643,15 @@ footer{background:var(--ink);padding:2.5rem 1.5rem;display:grid;grid-template-co
     <div class="co-main" id="coMain"></div>
     <div class="co-side" id="coSide"></div>
   </div>
-  <footer>
-    <div class="f-brand"><em>Eras</em> &amp; Moonlight</div>
-    <div class="f-links"><a onclick="go('shop')">Shop</a><a onclick="go('stores')">Stores</a><a onclick="go('about')">About</a><a onclick="go('contact')">Contact</a></div>
-    <div class="f-copy">© 2026 Eras and Moonlight</div>
-  </footer>
+  <footer><div class="f-brand"><em>Eras</em> &amp; Moonlight</div><div class="f-links"><a onclick="go('shop')">Shop</a><a onclick="go('stores')">Stores</a><a onclick="go('about')">About</a><a onclick="go('contact')">Contact</a></div><div class="f-copy">© 2026 Eras and Moonlight</div></footer>
 </div>
 
 <!-- ═══════════ ABOUT ═══════════ -->
 <div id="page-about" class="page">
-  <div class="about-banner">
-    <h1>Our Story</h1>
-    <p>Built on the belief that great clothing transcends seasons — Eras and Moonlight dresses men and women for every chapter of their lives.</p>
-  </div>
+  <div class="about-banner"><h1>Our Story</h1><p>Built on the belief that great clothing transcends seasons — Eras and Moonlight dresses men and women for every chapter of their lives.</p></div>
   <div class="about-grid">
-    <div class="about-block">
-      <h2>Who we are</h2>
-      <p>Eras and Moonlight is a Philippine-based clothing label founded in 2022. We curate for anyone who moves between worlds — effortlessly, unapologetically. Our collections span casual, formal, and everything in between — designed for both men and women.</p>
-    </div>
-    <div class="about-block" style="background:var(--bg)">
-      <h2>How we work</h2>
-      <p>Our pieces are carefully sourced from trusted suppliers across Asia — Japan, Korea, China, and Thailand — bringing you quality fabrics and contemporary cuts at honest prices. We keep our sourcing transparent so you know exactly where your clothes come from.</p>
-    </div>
+    <div class="about-block"><h2>Who we are</h2><p>Eras and Moonlight is a Philippine-based clothing label founded in 2022. We curate for anyone who moves between worlds — effortlessly, unapologetically. Our collections span casual, formal, and everything in between — designed for both men and women.</p></div>
+    <div class="about-block" style="background:var(--bg)"><h2>How we work</h2><p>Our pieces are carefully sourced from trusted suppliers across Asia — Japan, Korea, China, and Thailand — bringing you quality fabrics and contemporary cuts at honest prices. We keep our sourcing transparent so you know exactly where your clothes come from.</p></div>
   </div>
   <div class="vals">
     <div class="val"><h4>Timeless</h4><p>Designed beyond trends — pieces built to be worn across years, not seasons.</p></div>
@@ -553,132 +659,37 @@ footer{background:var(--ink);padding:2.5rem 1.5rem;display:grid;grid-template-co
     <div class="val"><h4>Inclusive</h4><p>Sizes XS–2XL for women, S–XXL for men. Fits designed for real bodies.</p></div>
     <div class="val"><h4>Honest</h4><p>Clear pricing, transparent sourcing, and straightforward returns — always.</p></div>
   </div>
-  <footer>
-    <div class="f-brand"><em>Eras</em> &amp; Moonlight</div>
-    <div class="f-links"><a onclick="go('shop')">Shop</a><a onclick="go('stores')">Stores</a><a onclick="go('about')">About</a><a onclick="go('contact')">Contact</a></div>
-    <div class="f-copy">© 2026 Eras and Moonlight</div>
-  </footer>
+  <footer><div class="f-brand"><em>Eras</em> &amp; Moonlight</div><div class="f-links"><a onclick="go('shop')">Shop</a><a onclick="go('stores')">Stores</a><a onclick="go('about')">About</a><a onclick="go('contact')">Contact</a></div><div class="f-copy">© 2026 Eras and Moonlight</div></footer>
 </div>
 
 <!-- ═══════════ CONTACT ═══════════ -->
 <div id="page-contact" class="page">
-  <div style="padding:2.5rem 1.5rem 1.5rem;background:var(--white);border-bottom:1px solid var(--line)">
-    <p class="section-label">Get in touch</p>
-    <h1 style="font-family:'Playfair Display',serif;font-size:clamp(26px,4vw,36px);font-weight:400;color:var(--ink)">We'd love to hear from you</h1>
-  </div>
+  <div style="padding:2.5rem 1.5rem 1.5rem;background:var(--white);border-bottom:1px solid var(--line)"><p class="section-label">Get in touch</p><h1 style="font-family:'Playfair Display',serif;font-size:clamp(26px,4vw,36px);font-weight:400;color:var(--ink)">We'd love to hear from you</h1></div>
   <div class="contact-wrap">
-    <div class="contact-info">
-      <h2>Contact Details</h2>
-      <p>Whether it's a sizing question, an order concern, or just a note to say hello — our team typically responds within 24 hours.</p>
-      <div class="ci-row">
-        <div class="ci-item"><label>Email</label><span>hello@erasandmoonlight.ph</span></div>
-        <div class="ci-item"><label>Instagram</label><span>@erasandmoonlight</span></div>
-        <div class="ci-item"><label>Facebook</label><span>Eras and Moonlight</span></div>
-        <div class="ci-item"><label>Hours</label><span>Mon–Sat, 9am–6pm PHT</span></div>
-        <div class="ci-item"><label>Stores</label><span>Tutuban Mall &amp; Ayala Malls Cloverleaf</span></div>
-      </div>
-    </div>
-    <div class="contact-form">
-      <h2>Send a message</h2>
-      <div class="fg"><label>Full Name</label><input type="text" placeholder="Your name"></div>
-      <div class="fg"><label>Email Address</label><input type="email" placeholder="you@email.com"></div>
-      <div class="fg">
-        <label>Subject</label>
-        <select><option>Order inquiry</option><option>Returns &amp; exchanges</option><option>Sizing help</option><option>Wholesale</option><option>Other</option></select>
-      </div>
-      <div class="fg"><label>Message</label><textarea placeholder="Tell us how we can help..."></textarea></div>
-      <button class="btn btn-dark" style="width:100%;text-align:center;margin-top:8px" onclick="showToast('Message sent — we\'ll be in touch soon.')">Send Message</button>
-    </div>
+    <div class="contact-info"><h2>Contact Details</h2><p>Whether it's a sizing question, an order concern, or just a note to say hello — our team typically responds within 24 hours.</p><div class="ci-row"><div class="ci-item"><label>Email</label><span>hello@erasandmoonlight.ph</span></div><div class="ci-item"><label>Instagram</label><span>@erasandmoonlight</span></div><div class="ci-item"><label>Facebook</label><span>Eras and Moonlight</span></div><div class="ci-item"><label>Hours</label><span>Mon–Sat, 9am–6pm PHT</span></div><div class="ci-item"><label>Stores</label><span>Tutuban Mall &amp; Ayala Malls Cloverleaf</span></div></div></div>
+    <div class="contact-form"><h2>Send a message</h2><div class="fg"><label>Full Name</label><input type="text" placeholder="Your name"></div><div class="fg"><label>Email Address</label><input type="email" placeholder="you@email.com"></div><div class="fg"><label>Subject</label><select><option>Order inquiry</option><option>Returns &amp; exchanges</option><option>Sizing help</option><option>Wholesale</option><option>Other</option></select></div><div class="fg"><label>Message</label><textarea placeholder="Tell us how we can help..."></textarea></div><button class="btn btn-dark" style="width:100%;text-align:center;margin-top:8px" onclick="showToast('Message sent — we\'ll be in touch soon.')">Send Message</button></div>
   </div>
-  <footer>
-    <div class="f-brand"><em>Eras</em> &amp; Moonlight</div>
-    <div class="f-links"><a onclick="go('shop')">Shop</a><a onclick="go('stores')">Stores</a><a onclick="go('about')">About</a><a onclick="go('contact')">Contact</a></div>
-    <div class="f-copy">© 2026 Eras and Moonlight</div>
-  </footer>
+  <footer><div class="f-brand"><em>Eras</em> &amp; Moonlight</div><div class="f-links"><a onclick="go('shop')">Shop</a><a onclick="go('stores')">Stores</a><a onclick="go('about')">About</a><a onclick="go('contact')">Contact</a></div><div class="f-copy">© 2026 Eras and Moonlight</div></footer>
 </div>
 
 <!-- ═══════════ STORES ═══════════ -->
 <div id="page-stores" class="page">
-  <div class="stores-header">
-    <p class="section-label">Find us in person</p>
-    <h1 style="font-family:'Playfair Display',serif;font-size:clamp(26px,4vw,36px);font-weight:400;color:var(--ink)">Our Physical Stores</h1>
-    <p style="font-size:13px;color:var(--ink2);line-height:2;max-width:520px;margin-top:0.5rem">We believe in transparency — come see the clothes in person, feel the fabric, and try before you buy. We have <strong>4 store locations</strong> across Metro Manila.</p>
-  </div>
-
+  <div class="stores-header"><p class="section-label">Find us in person</p><h1 style="font-family:'Playfair Display',serif;font-size:clamp(26px,4vw,36px);font-weight:400;color:var(--ink)">Our Physical Stores</h1><p style="font-size:13px;color:var(--ink2);line-height:2;max-width:520px;margin-top:0.5rem">We believe in transparency — come see the clothes in person. We have <strong>4 store locations</strong> across Metro Manila.</p></div>
   <div style="padding:2.5rem 1.5rem;background:var(--bg)">
-    <!-- Tutuban -->
     <div style="margin-bottom:2.5rem">
-      <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1.25rem">
-        <div style="width:3px;height:30px;background:var(--accent);flex-shrink:0"></div>
-        <div>
-          <p style="font-size:10px;letter-spacing:0.22em;text-transform:uppercase;color:var(--accent);margin-bottom:2px">3 Branches</p>
-          <h2 style="font-family:'Playfair Display',serif;font-size:clamp(20px,3vw,26px);font-weight:400;color:var(--ink)">Tutuban Center Mall</h2>
-          <p style="font-size:12px;color:var(--ink3);letter-spacing:0.04em">Claro M. Recto Ave, Tondo, Manila</p>
-        </div>
-      </div>
+      <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1.25rem"><div style="width:3px;height:30px;background:var(--accent);flex-shrink:0"></div><div><p style="font-size:10px;letter-spacing:0.22em;text-transform:uppercase;color:var(--accent);margin-bottom:2px">3 Branches</p><h2 style="font-family:'Playfair Display',serif;font-size:clamp(20px,3vw,26px);font-weight:400;color:var(--ink)">Tutuban Center Mall</h2><p style="font-size:12px;color:var(--ink3);letter-spacing:0.04em">Claro M. Recto Ave, Tondo, Manila</p></div></div>
       <div class="stores-grid">
-        <div class="store-card">
-          <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:0.9rem">
-            <div><p style="font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:var(--accent);margin-bottom:3px">Inside the Mall</p><h3 style="font-family:'Playfair Display',serif;font-size:19px;font-weight:400;color:var(--ink)">Main Branch</h3></div>
-            <span class="store-badge-outline">Ground Floor</span>
-          </div>
-          <p style="font-size:12px;color:var(--ink2);line-height:1.9">Our flagship Tutuban store. Full collection available — men's and women's. Fitting rooms on-site.</p>
-          <div style="margin-top:1.1rem;padding-top:1.1rem;border-top:1px solid var(--line)"><p style="font-size:11px;color:var(--ink3);letter-spacing:0.06em">Mon–Sun · 10am–8pm</p></div>
-        </div>
-        <div class="store-card">
-          <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:0.9rem">
-            <div><p style="font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:var(--accent);margin-bottom:3px">Inside the Mall</p><h3 style="font-family:'Playfair Display',serif;font-size:19px;font-weight:400;color:var(--ink)">Station Branch</h3></div>
-            <span class="store-badge-outline">Near LRT</span>
-          </div>
-          <p style="font-size:12px;color:var(--ink2);line-height:1.9">Conveniently located near the Recto LRT station entrance. Perfect for quick pickups on your commute.</p>
-          <div style="margin-top:1.1rem;padding-top:1.1rem;border-top:1px solid var(--line)"><p style="font-size:11px;color:var(--ink3);letter-spacing:0.06em">Mon–Sun · 10am–8pm</p></div>
-        </div>
-        <div class="store-card">
-          <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:0.9rem">
-            <div><p style="font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:var(--accent);margin-bottom:3px">Outside the Mall</p><h3 style="font-family:'Playfair Display',serif;font-size:19px;font-weight:400;color:var(--ink)">Night Market</h3></div>
-            <span class="store-badge-dark">Outdoor</span>
-          </div>
-          <p style="font-size:12px;color:var(--ink2);line-height:1.9">Open evenings at the Tutuban Night Market. Great deals and new arrivals dropped weekly. Cash-friendly.</p>
-          <div style="margin-top:1.1rem;padding-top:1.1rem;border-top:1px solid var(--line)"><p style="font-size:11px;color:var(--ink3);letter-spacing:0.06em">Thu–Sun · 6pm–11pm</p></div>
-        </div>
+        <div class="store-card"><div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:0.9rem"><div><p style="font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:var(--accent);margin-bottom:3px">Inside the Mall</p><h3 style="font-family:'Playfair Display',serif;font-size:19px;font-weight:400;color:var(--ink)">Main Branch</h3></div><span class="store-badge-outline">Ground Floor</span></div><p style="font-size:12px;color:var(--ink2);line-height:1.9">Our flagship Tutuban store. Full collection available — men's and women's. Fitting rooms on-site.</p><div style="margin-top:1.1rem;padding-top:1.1rem;border-top:1px solid var(--line)"><p style="font-size:11px;color:var(--ink3);letter-spacing:0.06em">Mon–Sun · 10am–8pm</p></div></div>
+        <div class="store-card"><div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:0.9rem"><div><p style="font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:var(--accent);margin-bottom:3px">Inside the Mall</p><h3 style="font-family:'Playfair Display',serif;font-size:19px;font-weight:400;color:var(--ink)">Station Branch</h3></div><span class="store-badge-outline">Near LRT</span></div><p style="font-size:12px;color:var(--ink2);line-height:1.9">Conveniently located near the Recto LRT station entrance. Perfect for quick pickups on your commute.</p><div style="margin-top:1.1rem;padding-top:1.1rem;border-top:1px solid var(--line)"><p style="font-size:11px;color:var(--ink3);letter-spacing:0.06em">Mon–Sun · 10am–8pm</p></div></div>
+        <div class="store-card"><div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:0.9rem"><div><p style="font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:var(--accent);margin-bottom:3px">Outside the Mall</p><h3 style="font-family:'Playfair Display',serif;font-size:19px;font-weight:400;color:var(--ink)">Night Market</h3></div><span class="store-badge-dark">Outdoor</span></div><p style="font-size:12px;color:var(--ink2);line-height:1.9">Open evenings at the Tutuban Night Market. Great deals and new arrivals dropped weekly. Cash-friendly.</p><div style="margin-top:1.1rem;padding-top:1.1rem;border-top:1px solid var(--line)"><p style="font-size:11px;color:var(--ink3);letter-spacing:0.06em">Thu–Sun · 6pm–11pm</p></div></div>
       </div>
     </div>
-
-    <!-- Ayala -->
-    <div>
-      <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1.25rem">
-        <div style="width:3px;height:30px;background:var(--accent);flex-shrink:0"></div>
-        <div>
-          <p style="font-size:10px;letter-spacing:0.22em;text-transform:uppercase;color:var(--accent);margin-bottom:2px">1 Branch</p>
-          <h2 style="font-family:'Playfair Display',serif;font-size:clamp(20px,3vw,26px);font-weight:400;color:var(--ink)">Ayala Malls Cloverleaf</h2>
-          <p style="font-size:12px;color:var(--ink3);letter-spacing:0.04em">A. Bonifacio Ave, Balintawak, Quezon City</p>
-        </div>
-      </div>
-      <div class="store-card" style="background:var(--white);max-width:400px">
-        <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:0.9rem">
-          <div><p style="font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:var(--accent);margin-bottom:3px">Inside the Mall</p><h3 style="font-family:'Playfair Display',serif;font-size:19px;font-weight:400;color:var(--ink)">Cloverleaf Branch</h3></div>
-          <span class="store-badge-outline">Level 2</span>
-        </div>
-        <p style="font-size:12px;color:var(--ink2);line-height:1.9">Our newest store. Full men's and women's collection, plus exclusive branch-only arrivals from Korea and Japan.</p>
-        <div style="margin-top:1.1rem;padding-top:1.1rem;border-top:1px solid var(--line)"><p style="font-size:11px;color:var(--ink3);letter-spacing:0.06em">Mon–Sun · 10am–9pm</p></div>
-      </div>
+    <div><div style="display:flex;align-items:center;gap:1rem;margin-bottom:1.25rem"><div style="width:3px;height:30px;background:var(--accent);flex-shrink:0"></div><div><p style="font-size:10px;letter-spacing:0.22em;text-transform:uppercase;color:var(--accent);margin-bottom:2px">1 Branch</p><h2 style="font-family:'Playfair Display',serif;font-size:clamp(20px,3vw,26px);font-weight:400;color:var(--ink)">Ayala Malls Cloverleaf</h2><p style="font-size:12px;color:var(--ink3);letter-spacing:0.04em">A. Bonifacio Ave, Balintawak, Quezon City</p></div></div>
+      <div class="store-card" style="background:var(--white);max-width:400px"><div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:0.9rem"><div><p style="font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:var(--accent);margin-bottom:3px">Inside the Mall</p><h3 style="font-family:'Playfair Display',serif;font-size:19px;font-weight:400;color:var(--ink)">Cloverleaf Branch</h3></div><span class="store-badge-outline">Level 2</span></div><p style="font-size:12px;color:var(--ink2);line-height:1.9">Our newest store. Full men's and women's collection, plus exclusive branch-only arrivals from Korea and Japan.</p><div style="margin-top:1.1rem;padding-top:1.1rem;border-top:1px solid var(--line)"><p style="font-size:11px;color:var(--ink3);letter-spacing:0.06em">Mon–Sun · 10am–9pm</p></div></div>
     </div>
-
-    <div style="margin-top:2.5rem;border:1px solid var(--line);padding:1.75rem;background:var(--white);display:flex;gap:1.25rem;align-items:flex-start">
-      <div style="font-size:22px;color:var(--accent);flex-shrink:0">◎</div>
-      <div>
-        <h4 style="font-family:'Playfair Display',serif;font-size:17px;font-weight:400;color:var(--ink);margin-bottom:5px">Can't visit in person?</h4>
-        <p style="font-size:12px;color:var(--ink2);line-height:1.9">Shop online anytime — we ship nationwide with Cash on Delivery, GCash, and bank transfer available.</p>
-        <button class="btn btn-dark" style="margin-top:1rem;font-size:10px" onclick="go('shop')">Shop Online →</button>
-      </div>
-    </div>
+    <div style="margin-top:2.5rem;border:1px solid var(--line);padding:1.75rem;background:var(--white);display:flex;gap:1.25rem;align-items:flex-start"><div style="font-size:22px;color:var(--accent);flex-shrink:0">◎</div><div><h4 style="font-family:'Playfair Display',serif;font-size:17px;font-weight:400;color:var(--ink);margin-bottom:5px">Can't visit in person?</h4><p style="font-size:12px;color:var(--ink2);line-height:1.9">Shop online anytime — we ship nationwide with Cash on Delivery, GCash, and bank transfer available.</p><button class="btn btn-dark" style="margin-top:1rem;font-size:10px" onclick="go('shop')">Shop Online →</button></div></div>
   </div>
-
-  <footer>
-    <div class="f-brand"><em>Eras</em> &amp; Moonlight</div>
-    <div class="f-links"><a onclick="go('shop')">Shop</a><a onclick="go('stores')">Stores</a><a onclick="go('about')">About</a><a onclick="go('contact')">Contact</a></div>
-    <div class="f-copy">© 2026 Eras and Moonlight</div>
-  </footer>
+  <footer><div class="f-brand"><em>Eras</em> &amp; Moonlight</div><div class="f-links"><a onclick="go('shop')">Shop</a><a onclick="go('stores')">Stores</a><a onclick="go('about')">About</a><a onclick="go('contact')">Contact</a></div><div class="f-copy">© 2026 Eras and Moonlight</div></footer>
 </div>
 
 <!-- ═══════════ SUCCESS ═══════════ -->
@@ -686,19 +697,18 @@ footer{background:var(--ink);padding:2.5rem 1.5rem;display:grid;grid-template-co
   <div class="success-wrap">
     <div class="success-mark">✓</div>
     <h1>Order confirmed</h1>
-    <p>Thank you for shopping with Eras and Moonlight. We'll send your tracking details via email once your order is dispatched.</p>
+    <p id="success-msg">Thank you for shopping with Eras and Moonlight. We'll send your tracking details via email once your order is dispatched.</p>
     <div class="order-tag" id="oref">Order #EM-000000</div>
-    <button class="btn btn-outline" onclick="go('home')" style="margin-top:1rem">Return to Home</button>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:1rem">
+      <button class="btn btn-outline" onclick="go('home')">Return to Home</button>
+      <button class="btn btn-dark" id="success-orders-btn" style="display:none" onclick="go('account')">View My Orders</button>
+    </div>
   </div>
-  <footer>
-    <div class="f-brand"><em>Eras</em> &amp; Moonlight</div>
-    <div class="f-links"><a onclick="go('shop')">Shop</a><a onclick="go('stores')">Stores</a><a onclick="go('about')">About</a><a onclick="go('contact')">Contact</a></div>
-    <div class="f-copy">© 2026 Eras and Moonlight</div>
-  </footer>
+  <footer><div class="f-brand"><em>Eras</em> &amp; Moonlight</div><div class="f-links"><a onclick="go('shop')">Shop</a><a onclick="go('stores')">Stores</a><a onclick="go('about')">About</a><a onclick="go('contact')">Contact</a></div><div class="f-copy">© 2026 Eras and Moonlight</div></footer>
 </div>
 
 <div class="toast-bar" id="toast"></div>
-
+<canvas id="confetti-canvas" style="display:none;position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:9999"></canvas>
 <!-- Product Modal -->
 <div id="modal-overlay" style="display:none" onclick="if(event.target===this)closeModal()">
   <div id="modal-box">
@@ -708,6 +718,10 @@ footer{background:var(--ink);padding:2.5rem 1.5rem;display:grid;grid-template-co
 </div>
 
 <script>
+// ── CONFIG ──
+const API = 'http://localhost:3001';
+
+// ── STATE ──
 const products=[
   {id:1,name:'Luna Slip Dress',cat:'dress',price:1890,icon:'◈',badge:'Bestseller',meta:'Women · Slip · Korea',colors:['Ivory','Rose','Midnight'],sizes:['XS','S','M','L','XL','2XL']},
   {id:2,name:'Soleil Wrap Top',cat:'top',price:890,icon:'◇',badge:'New',meta:'Women · Tops · Thailand',colors:['Cream','Sage','Blush'],sizes:['XS','S','M','L','XL','2XL']},
@@ -736,16 +750,216 @@ const COD_FEE=50;
 
 let cart=[],coStep=1,selPay='cod',selRegion='Metro Manila';
 let modalQty=1,modalColor='',modalSize='';
+let savedDelivery = {}; 
 
-/* ── Nav ── */
+// ── AUTH STATE ──
+let currentUser = null;
+let authToken = null;
+
+function loadAuth(){
+  try{
+    authToken = sessionStorage.getItem('em_token');
+    const u = sessionStorage.getItem('em_user');
+    if(authToken && u) currentUser = JSON.parse(u);
+  } catch{}
+  updateNavAuth();
+}
+
+function saveAuth(token, user){
+  authToken = token;
+  currentUser = user;
+  sessionStorage.setItem('em_token', token);
+  sessionStorage.setItem('em_user', JSON.stringify(user));
+  updateNavAuth();
+}
+
+function clearAuth(){
+  authToken = null;
+  currentUser = null;
+  sessionStorage.removeItem('em_token');
+  sessionStorage.removeItem('em_user');
+  updateNavAuth();
+}
+
+function updateNavAuth(){
+  const area = document.getElementById('nav-auth-area');
+  const mmLink = document.getElementById('mm-auth-link');
+  if(currentUser){
+    area.innerHTML = `<button class="nav-account-name" onclick="go('account')">${currentUser.firstName} ▾</button>`;
+    if(mmLink){ mmLink.textContent = currentUser.firstName + "'s Account"; mmLink.onclick = ()=>{go('account');closeMenu();}; }
+  } else {
+    area.innerHTML = `<button class="nav-account" onclick="go('login')">Sign In</button>`;
+    if(mmLink){ mmLink.textContent = 'Sign In'; mmLink.onclick = ()=>{go('login');closeMenu();}; }
+  }
+}
+
+function authHeaders(){
+  return authToken ? { 'Authorization': 'Bearer ' + authToken, 'Content-Type': 'application/json' } : { 'Content-Type': 'application/json' };
+}
+
+// ── Auth actions ──
+
+async function doLogin(){
+  const email = document.getElementById('login-email').value.trim();
+  const pass = document.getElementById('login-pass').value;
+  const btn = document.getElementById('login-btn');
+  const errEl = document.getElementById('login-err');
+
+  errEl.classList.remove('show');
+  if(!email || !pass){ showAuthErr('login-err','Please enter your email and password'); return; }
+
+  btn.classList.add('btn-loading');
+  btn.textContent = 'Signing in...  ';
+
+  try {
+    const res = await fetch(API+'/auth/login', {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({email, password:pass})
+    });
+    const data = await res.json();
+    if(!res.ok){ showAuthErr('login-err', data.error || 'Login failed'); return; }
+    saveAuth(data.token, data.user);
+    showToast('Welcome back, '+data.user.firstName+'!');
+    go('home');
+  } catch(e){
+    showAuthErr('login-err', 'Cannot connect to server. Is the backend running?');
+  } finally {
+    btn.classList.remove('btn-loading');
+    btn.textContent = 'Sign In →';
+  }
+}
+
+async function doRegister(){
+  const fname = document.getElementById('reg-fname').value.trim();
+  const lname = document.getElementById('reg-lname').value.trim();
+  const email = document.getElementById('reg-email').value.trim();
+  const phone = document.getElementById('reg-phone').value.trim();
+  const pass = document.getElementById('reg-pass').value;
+  const pass2 = document.getElementById('reg-pass2').value;
+  const btn = document.getElementById('reg-btn');
+
+  document.getElementById('reg-err').classList.remove('show');
+  document.getElementById('reg-ok').classList.remove('show');
+
+  if(!fname||!lname||!email||!pass){ showAuthErr('reg-err','Please fill in all required fields'); return; }
+  if(pass.length < 6){ showAuthErr('reg-err','Password must be at least 6 characters'); return; }
+  if(pass !== pass2){ showAuthErr('reg-err','Passwords do not match'); return; }
+
+  btn.classList.add('btn-loading');
+  btn.textContent = 'Creating account...  ';
+
+  try {
+    const res = await fetch(API+'/auth/register', {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({email, password:pass, firstName:fname, lastName:lname, phone})
+    });
+    const data = await res.json();
+    if(!res.ok){ showAuthErr('reg-err', data.error || 'Registration failed'); return; }
+    saveAuth(data.token, data.user);
+    showToast('Account created! Welcome, '+data.user.firstName+'!');
+    go('home');
+  } catch(e){
+    showAuthErr('reg-err', 'Cannot connect to server. Is the backend running?');
+  } finally {
+    btn.classList.remove('btn-loading');
+    btn.textContent = 'Create Account →';
+  }
+}
+
+function doLogout(){
+  clearAuth();
+  showToast('You\'ve been signed out');
+  go('home');
+}
+
+function showAuthErr(id, msg){
+  const el = document.getElementById(id);
+  el.textContent = msg;
+  el.classList.add('show');
+}
+
+function switchAuthTab(tab){
+  document.getElementById('tab-login').classList.toggle('active', tab==='login');
+  document.getElementById('tab-register').classList.toggle('active', tab==='register');
+  document.getElementById('form-login').classList.toggle('active', tab==='login');
+  document.getElementById('form-register').classList.toggle('active', tab==='register');
+  document.getElementById('login-err').classList.remove('show');
+  document.getElementById('reg-err').classList.remove('show');
+  document.getElementById('reg-ok').classList.remove('show');
+}
+
+// ── Account page ──
+
+function switchAccSection(name, btn){
+  document.querySelectorAll('.acc-nav-item').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.account-section').forEach(s=>s.classList.remove('active'));
+  document.getElementById('acc-'+name).classList.add('active');
+  if(name==='orders') loadOrders();
+  if(name==='profile') renderProfile();
+}
+
+async function loadOrders(){
+  const el = document.getElementById('acc-orders-list');
+  if(!authToken){ el.innerHTML='<p style="font-size:13px;color:var(--ink3)">Please sign in to view orders.</p>'; return; }
+  el.innerHTML = '<p style="font-size:13px;color:var(--ink3)">Loading...</p>';
+  try {
+    const res = await fetch(API+'/orders/my', { headers: authHeaders() });
+    const orders = await res.json();
+    if(!orders.length){
+      el.innerHTML = `<div class="empty" style="padding:2rem 0;text-align:left"><h2 style="font-size:20px">No orders yet</h2><p>When you place an order, it'll appear here.</p><button class="btn btn-dark" style="margin-top:1rem" onclick="go('shop')">Start Shopping</button></div>`;
+      return;
+    }
+    el.innerHTML = orders.map(o=>`
+      <div class="order-card">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:0.5rem;margin-bottom:10px">
+          <div>
+            <div class="order-ref">${o.ref}</div>
+            <div class="order-meta">${new Date(o.placedAt).toLocaleDateString('en-PH',{year:'numeric',month:'long',day:'numeric'})}</div>
+          </div>
+          <span class="order-status ${o.status}">${o.status}</span>
+        </div>
+        <div style="font-size:12px;color:var(--ink2);margin-bottom:8px">${(o.cart||[]).map(i=>i.name+' (×'+i.qty+')').join(', ')}</div>
+        <div style="font-size:13px;font-weight:500;color:var(--ink)">Total: ₱${(o.totals?.total||0).toLocaleString()}</div>
+      </div>`).join('');
+  } catch(e){
+    el.innerHTML = '<p style="font-size:13px;color:var(--ink3)">Could not load orders. Is the backend running?</p>';
+  }
+}
+
+function renderProfile(){
+  if(!currentUser) return;
+  document.getElementById('acc-profile-content').innerHTML=`
+    <div style="max-width:420px">
+      <div class="fgg" style="margin-bottom:1.25rem">
+        <div class="fg"><label>First Name</label><input type="text" value="${currentUser.firstName}" disabled style="background:var(--bg2);color:var(--ink2)"></div>
+        <div class="fg"><label>Last Name</label><input type="text" value="${currentUser.lastName}" disabled style="background:var(--bg2);color:var(--ink2)"></div>
+        <div class="fg full"><label>Email</label><input type="email" value="${currentUser.email}" disabled style="background:var(--bg2);color:var(--ink2)"></div>
+      </div>
+      <p style="font-size:11px;color:var(--ink3);margin-bottom:1.25rem;letter-spacing:0.04em">Profile editing coming soon. Contact us to update your details.</p>
+      <button class="btn btn-outline" onclick="doLogout()">Sign Out</button>
+    </div>`;
+}
+
+// ── Nav ──
+
 function go(p){
   document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));
   document.getElementById('page-'+p).classList.add('active');
   window.scrollTo(0,0);
   closeMenu();
-  if(p==='cart')renderCart();
+  if(p==='cart') renderCart();
   if(p==='checkout'){coStep=1;renderCo();}
-  if(p==='shop')renderProds('all');
+  if(p==='shop') renderProds('all');
+  if(p==='login' && currentUser){ go('account'); return; }
+  if(p==='account'){
+    if(!currentUser){ go('login'); return; }
+    document.getElementById('acc-name').textContent = currentUser.firstName+"'s Account";
+    document.getElementById('acc-email').textContent = currentUser.email;
+    loadOrders();
+  }
 }
 
 function filterP(btn,cat){
@@ -766,7 +980,7 @@ function closeMenu(){
   document.body.style.overflow='';
 }
 
-/* ── Products ── */
+// ── Products ──
 function renderProds(cat){
   const list=cat==='all'?products:products.filter(p=>p.cat===cat);
   document.getElementById('pcount').textContent=list.length+' pieces';
@@ -788,7 +1002,7 @@ function renderProds(cat){
     </div>`).join('');
 }
 
-/* ── Modal ── */
+// ── Modal ──
 function openModal(id){
   const p=products.find(x=>x.id===id);
   modalQty=1;modalColor=p.colors[0];modalSize='';
@@ -870,7 +1084,7 @@ function addToCartFromModal(id,buyNow=false){
   if(buyNow)go('cart');
 }
 
-/* ── Cart ── */
+// ── Cart ──
 function updCount(){document.getElementById('ccount').textContent=cart.reduce((s,i)=>s+i.qty,0);}
 function chQty(key,d){
   const i=cart.find(x=>x.key===key);if(!i)return;
@@ -924,6 +1138,11 @@ function renderCart(){
       <div class="promo"><input type="text" id="promoInput" placeholder="Promo code"><button onclick="applyPromo()">Apply</button></div>
       <div style="font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:var(--ink3);margin-bottom:8px">Accepted payments</div>
       <div class="pay-accept"><span class="pac">COD</span><span class="pac">BPI</span><span class="pac">BDO</span><span class="pac">GCash</span><span class="pac">Maya</span></div>
+      ${!currentUser?`
+        <div style="border:1px dashed var(--line);padding:12px;background:var(--bg2);margin-bottom:12px;font-size:11px;color:var(--ink3);line-height:1.8">
+          <strong style="color:var(--ink2)">Sign in</strong> to track your order history and check out faster.
+          <button class="btn btn-outline" style="margin-top:8px;font-size:10px;padding:8px 16px;width:100%" onclick="go('login')">Sign In / Create Account</button>
+        </div>`:''}
       <button class="btn btn-dark" style="width:100%;text-align:center" onclick="go('checkout')">Proceed to Checkout →</button>
       <button class="btn btn-outline" style="width:100%;text-align:center;margin-top:10px" onclick="go('shop')">Continue Shopping</button>
     </div>
@@ -936,7 +1155,7 @@ function applyPromo(){
   else showToast('Invalid promo code');
 }
 
-/* ── Checkout ── */
+// ── Checkout ──
 function renderCo(){
   const m=document.getElementById('coMain'),a=document.getElementById('coSide');
   ['s1','s2','s3'].forEach((id,i)=>{
@@ -959,10 +1178,11 @@ function renderCo(){
 
   if(coStep===1){
     m.innerHTML=`<h2 class="sec-title" style="font-size:24px">Delivery Information</h2>
+      ${currentUser?`<div style="border:1px solid var(--line);padding:12px;background:var(--bg2);margin-bottom:1.25rem;font-size:12px;color:var(--ink2)">Checking out as <strong>${currentUser.firstName} ${currentUser.lastName}</strong> (${currentUser.email})</div>`:''}
       <div class="fgg">
-        <div class="fg"><label>First Name</label><input type="text" id="f-fname" placeholder=""></div>
-        <div class="fg"><label>Last Name</label><input type="text" id="f-lname" placeholder=""></div>
-        <div class="fg full"><label>Email</label><input type="email" id="f-email" placeholder="you@email.com"></div>
+        <div class="fg"><label>First Name</label><input type="text" id="f-fname" placeholder="" value="${currentUser?currentUser.firstName:''}"></div>
+        <div class="fg"><label>Last Name</label><input type="text" id="f-lname" placeholder="" value="${currentUser?currentUser.lastName:''}"></div>
+        <div class="fg full"><label>Email</label><input type="email" id="f-email" placeholder="you@email.com" value="${currentUser?currentUser.email:''}"></div>
         <div class="fg full"><label>Phone</label><input type="tel" id="f-phone" placeholder="+63 9XX XXX XXXX"></div>
         <div class="fg full"><label>Street Address</label><input type="text" id="f-street" placeholder="House / Unit No., Street"></div>
         <div class="fg full"><label>Barangay</label><input type="text" id="f-brgy" placeholder="Barangay"></div>
@@ -975,7 +1195,7 @@ function renderCo(){
             <option>Mindanao</option><option>Other</option>
           </select>
         </div>
-        <div class="fg full"><label>Delivery Notes (optional)</label><textarea placeholder="Leave at gate, call upon arrival, etc." style="height:70px"></textarea></div>
+        <div class="fg full"><label>Delivery Notes (optional)</label><textarea id="f-notes" placeholder="Leave at gate, call upon arrival, etc." style="height:70px"></textarea></div>
       </div>
       <div style="background:var(--bg2);padding:12px;font-size:11px;color:var(--ink3);margin-bottom:1rem;line-height:1.7">
         Shipping to <strong style="color:var(--ink)">${selRegion}</strong>: ₱${calcShip(selRegion).toLocaleString()} · Estimated 3–5 business days
@@ -1021,20 +1241,29 @@ function renderCo(){
         <div style="display:flex;justify-content:space-between;font-size:15px;font-weight:500;padding-top:10px;margin-top:4px;border-top:2px solid var(--ink)"><span>Total</span><span>₱${t2.toLocaleString()}</span></div>
       </div>
       <p style="font-size:12px;color:var(--ink3);line-height:1.9;margin-bottom:1.25rem">By placing your order you agree to our Terms of Service. A confirmation will be sent to your email.</p>
-      <button class="btn btn-accent" style="width:100%;text-align:center;padding:16px;font-size:12px" onclick="placeOrder()">Place Order — ₱${t2.toLocaleString()}</button>`;
+      <button class="btn btn-accent" id="place-btn" style="width:100%;text-align:center;padding:16px;font-size:12px" onclick="placeOrder()">Place Order — ₱${t2.toLocaleString()}</button>`;
   }
 }
 
-function updateRegion(r){
-  selRegion=r;renderCo();
-}
 function validateStep1(){
-  const fname=document.getElementById('f-fname')?.value.trim();
-  const email=document.getElementById('f-email')?.value.trim();
-  const phone=document.getElementById('f-phone')?.value.trim();
-  const street=document.getElementById('f-street')?.value.trim();
-  if(!fname||!email||!phone||!street){showToast('Please fill in all required fields');return;}
-  selRegion=document.getElementById('f-region')?.value||selRegion;
+  const fname  = document.getElementById('f-fname')?.value.trim();
+  const lname  = document.getElementById('f-lname')?.value.trim();
+  const email  = document.getElementById('f-email')?.value.trim();
+  const phone  = document.getElementById('f-phone')?.value.trim();
+  const street = document.getElementById('f-street')?.value.trim();
+  const brgy   = document.getElementById('f-brgy')?.value.trim();
+  const city   = document.getElementById('f-city')?.value.trim();
+  const prov   = document.getElementById('f-prov')?.value.trim();
+  const notes  = document.getElementById('f-notes')?.value.trim();
+
+  if(!fname||!email||!phone||!street){
+    showToast('Please fill in all required fields');
+    return;
+  }
+
+  // save for use in placeOrder
+  savedDelivery = { fname, lname, email, phone, street, brgy, city, prov, notes };
+  selRegion = document.getElementById('f-region')?.value || selRegion;
   nxtStep();
 }
 function selP(method){
@@ -1059,20 +1288,113 @@ function renderPayInfo(){
   el.innerHTML=info[selPay];
 }
 function nxtStep(){coStep++;renderCo();window.scrollTo(0,0);}
-function placeOrder(){
-  const ref='EM-'+Math.floor(100000+Math.random()*900000);
-  const t=calcTotal(selRegion);
-  const sw=document.getElementById('page-success').querySelector('.success-wrap');
-  sw.querySelector('p').innerHTML=`Thank you for shopping with Eras and Moonlight!<br>
-    <span style="font-size:12px;color:var(--ink3)">
-      ${selPay==='cod'?'Please prepare <strong>₱'+t.toLocaleString()+'</strong> upon delivery.':
-        selPay==='bank'?'Please transfer <strong>₱'+t.toLocaleString()+'</strong> and send us your receipt.':
-        'Please send <strong>₱'+t.toLocaleString()+'</strong> via GCash/Maya and screenshot your receipt.'}
-      <br>We'll send tracking details to your email once dispatched.
-    </span>`;
-  document.getElementById('oref').textContent='Order #'+ref;
-  cart=[];updCount();go('success');
+
+async function placeOrder(){
+  const btn = document.getElementById('place-btn');
+  if(btn){ btn.classList.add('btn-loading'); btn.textContent='Placing order...  '; }
+
+  const t = calcTotal(selRegion);
+
+  // collect delivery info that was filled in step 1
+  const orderData = {
+    cart: cart.map(i=>({id:i.id,name:i.name,price:i.price,qty:i.qty,size:i.size,color:i.color})),
+    payment: selPay,
+    region: selRegion,
+    delivery: {
+      name:  (savedDelivery.fname+' '+savedDelivery.lname).trim(),
+      email:  savedDelivery.email,
+      phone:  savedDelivery.phone,
+      street: savedDelivery.street,
+      brgy:   savedDelivery.brgy  || '',
+      city:   savedDelivery.city  || '',
+      prov:   savedDelivery.prov  || '',
+      notes:  savedDelivery.notes || '',
+    },
+    totals: { subtotal:calcSub(), shipping:calcShip(selRegion), codFee:calcCODFee(), total:t }
+  };
+
+  try {
+    const res = await fetch(API+'/orders', {
+      method:'POST',
+      headers: authHeaders(),
+      body: JSON.stringify(orderData)
+    });
+    const data = await res.json();
+    const ref = data.ref || ('EM-'+Math.floor(100000+Math.random()*900000));
+
+    document.getElementById('success-msg').innerHTML=`Thank you for shopping with Eras and Moonlight!<br>
+      <span style="font-size:12px;color:var(--ink3)">
+        ${selPay==='cod'?'Please prepare <strong>₱'+t.toLocaleString()+'</strong> upon delivery.':
+          selPay==='bank'?'Please transfer <strong>₱'+t.toLocaleString()+'</strong> and send us your receipt.':
+          'Please send <strong>₱'+t.toLocaleString()+'</strong> via GCash/Maya and screenshot your receipt.'}
+        <br>We'll send tracking details to your email once dispatched.
+      </span>`;
+    document.getElementById('oref').textContent='Order #'+ref;
+    document.getElementById('success-orders-btn').style.display = currentUser ? 'inline-block' : 'none';
+    cart=[];updCount();go('success');launchConfetti();
+  } catch(e){
+    showToast('Could not place order. Please try again.');
+    if(btn){ btn.classList.remove('btn-loading'); btn.textContent='Place Order — ₱'+t.toLocaleString(); }
+  }
 }
+function launchConfetti() {
+  const canvas = document.getElementById('confetti-canvas');
+  const ctx = canvas.getContext('2d');
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+  canvas.style.display = 'block';
+
+  const pieces = Array.from({length: 160}, () => ({
+    x: Math.random() * canvas.width,
+    y: -20 - Math.random() * 200,
+    w: 8 + Math.random() * 8,
+    h: 4 + Math.random() * 4,
+    r: Math.random() * Math.PI * 2,
+    dr: (Math.random() - 0.5) * 0.18,
+    dx: (Math.random() - 0.5) * 2.5,
+    dy: 2.5 + Math.random() * 3.5,
+    color: ['#0D0D0D','#B8935A','#4A4A4A','#FAFAF8','#9A9A9A','#333333'][Math.floor(Math.random()*6)],
+    alpha: 1,
+  }));
+
+  let frame;
+
+  function draw() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    let allGone = true;
+
+    pieces.forEach(p => {
+      if (p.alpha <= 0) return;
+      allGone = false;
+      p.x  += p.dx;
+      p.y  += p.dy;
+      p.r  += p.dr;
+      p.dy += 0.06;
+      if (p.y > canvas.height * 0.75) p.alpha -= 0.025;
+
+      ctx.save();
+      ctx.globalAlpha = Math.max(0, p.alpha);
+      ctx.translate(p.x, p.y);
+      ctx.rotate(p.r);
+      ctx.fillStyle = p.color;
+      ctx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h);
+      ctx.restore();
+    });
+
+    if (allGone) {
+      canvas.style.display = 'none';
+      cancelAnimationFrame(frame);
+    } else {
+      frame = requestAnimationFrame(draw);
+    }
+  }
+
+  draw();
+  setTimeout(() => {
+    pieces.forEach(p => { p.alpha = Math.min(p.alpha, 0.6); p.dy += 1; });
+  }, 2800);
+}
+
 
 function showToast(msg){
   const t=document.getElementById('toast');
@@ -1080,11 +1402,21 @@ function showToast(msg){
   setTimeout(()=>t.classList.remove('show'),2500);
 }
 
-/* Close mobile menu on resize to desktop */
-window.addEventListener('resize',()=>{
-  if(window.innerWidth>680)closeMenu();
+window.addEventListener('resize',()=>{if(window.innerWidth>680)closeMenu();});
+
+// Keyboard enter on login/register
+document.addEventListener('keydown', e=>{
+  if(e.key==='Enter'){
+    const p = document.querySelector('.page.active');
+    if(p && p.id==='page-login'){
+      if(document.getElementById('form-login').classList.contains('active')) doLogin();
+      else doRegister();
+    }
+  }
 });
 
+// ── Init ──
+loadAuth();
 renderProds('all');
 </script>
 </body>
