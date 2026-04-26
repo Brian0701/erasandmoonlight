@@ -1,188 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Eras & Moonlight</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=DM+Sans:wght@300;400;500&display=swap');
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
   --ink:#0D0D0D;--ink2:#4A4A4A;--ink3:#9A9A9A;
   --bg:#FAFAF8;--bg2:#F3F2EF;--bg3:#ECEAE5;
   --line:#E2E0DB;--accent:#B8935A;--white:#FFFFFF;
 }
+html{scroll-behavior:smooth}
 body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--ink);min-height:100vh;overflow-x:hidden}
+img{max-width:100%;display:block}
 .page{display:none}.page.active{display:block}
-nav{background:var(--white);border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 2.5rem;height:60px;position:sticky;top:0;z-index:100}
-.brand{font-family:'Playfair Display',serif;font-size:17px;font-weight:400;letter-spacing:0.06em;color:var(--ink);cursor:pointer;white-space:nowrap}
+
+/* ── NAV ── */
+nav{background:var(--white);border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 1.5rem;height:56px;position:sticky;top:0;z-index:200}
+.brand{font-family:'Playfair Display',serif;font-size:16px;font-weight:400;letter-spacing:0.06em;color:var(--ink);cursor:pointer;white-space:nowrap;flex-shrink:0}
 .brand em{font-style:italic;color:var(--accent)}
-.nav-links{display:flex;gap:2.5rem}
+.nav-links{display:flex;gap:2rem}
 .nav-links a{font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:var(--ink2);cursor:pointer;text-decoration:none;transition:color 0.2s}
 .nav-links a:hover{color:var(--ink)}
-.nav-right{display:flex;align-items:center;gap:1.5rem}
-.cart-icon{cursor:pointer;display:flex;align-items:center;gap:6px;font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:var(--ink2);background:none;border:none;font-family:'DM Sans',sans-serif;transition:color 0.2s}
+.nav-right{display:flex;align-items:center;gap:1rem}
+.cart-icon{cursor:pointer;display:flex;align-items:center;gap:6px;font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:var(--ink2);background:none;border:none;font-family:'DM Sans',sans-serif;transition:color 0.2s;padding:0}
 .cart-icon:hover{color:var(--ink)}
-.cart-dot{background:var(--ink);color:var(--white);width:17px;height:17px;border-radius:50%;font-size:10px;display:flex;align-items:center;justify-content:center;font-weight:500}
+.cart-dot{background:var(--ink);color:var(--white);width:17px;height:17px;border-radius:50%;font-size:10px;display:flex;align-items:center;justify-content:center;font-weight:500;flex-shrink:0}
 
-.hero{background:var(--white);display:grid;grid-template-columns:1fr 1fr;min-height:calc(100vh - 60px)}
-.hero-text{display:flex;flex-direction:column;justify-content:center;padding:5rem 3.5rem;border-right:1px solid var(--line)}
-.hero-kicker{font-size:10px;letter-spacing:0.25em;text-transform:uppercase;color:var(--accent);margin-bottom:2rem}
-.hero-h1{font-family:'Playfair Display',serif;font-size:clamp(44px,6vw,72px);font-weight:400;line-height:1.05;color:var(--ink);margin-bottom:1.5rem}
+/* Hamburger */
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;background:none;border:none;padding:4px}
+.hamburger span{width:22px;height:1.5px;background:var(--ink);display:block;transition:all 0.3s}
+.hamburger.open span:nth-child(1){transform:translateY(6.5px) rotate(45deg)}
+.hamburger.open span:nth-child(2){opacity:0}
+.hamburger.open span:nth-child(3){transform:translateY(-6.5px) rotate(-45deg)}
+
+/* Mobile drawer */
+.mobile-menu{display:none;position:fixed;top:56px;left:0;right:0;bottom:0;background:var(--white);z-index:190;flex-direction:column;padding:2rem 1.5rem;gap:0;border-top:1px solid var(--line);overflow-y:auto}
+.mobile-menu.open{display:flex}
+.mm-link{font-size:24px;font-family:'Playfair Display',serif;font-weight:400;color:var(--ink);padding:1rem 0;border-bottom:1px solid var(--line);cursor:pointer;text-decoration:none;display:block}
+.mm-link:last-child{border-bottom:none}
+.mm-footer{margin-top:auto;padding-top:2rem;font-size:11px;color:var(--ink3);letter-spacing:0.08em}
+
+/* ── BUTTONS ── */
+.btn{display:inline-block;font-family:'DM Sans',sans-serif;font-size:11px;letter-spacing:0.18em;text-transform:uppercase;cursor:pointer;transition:all 0.25s;border:none}
+.btn-dark{background:var(--ink);color:var(--white);padding:13px 32px}
+.btn-dark:hover{background:#333}
+.btn-outline{background:transparent;color:var(--ink);border:1px solid var(--ink);padding:12px 32px}
+.btn-outline:hover{background:var(--ink);color:var(--white)}
+.btn-accent{background:var(--accent);color:var(--white);padding:13px 32px}
+.btn-accent:hover{background:#9E7B44}
+
+/* ── HERO ── */
+.hero{background:var(--white);display:grid;grid-template-columns:1fr 1fr;min-height:calc(100vh - 56px)}
+.hero-text{display:flex;flex-direction:column;justify-content:center;padding:4rem 3rem;border-right:1px solid var(--line)}
+.hero-kicker{font-size:10px;letter-spacing:0.25em;text-transform:uppercase;color:var(--accent);margin-bottom:1.5rem}
+.hero-h1{font-family:'Playfair Display',serif;font-size:clamp(40px,5.5vw,68px);font-weight:400;line-height:1.05;color:var(--ink);margin-bottom:1.25rem}
 .hero-h1 em{font-style:italic;color:var(--ink2)}
 .hero-p{font-size:13px;line-height:2;color:var(--ink2);max-width:340px;margin-bottom:2.5rem;letter-spacing:0.02em}
-.btn{display:inline-block;font-family:'DM Sans',sans-serif;font-size:11px;letter-spacing:0.18em;text-transform:uppercase;cursor:pointer;transition:all 0.25s;border:none}
-.btn-dark{background:var(--ink);color:var(--white);padding:13px 36px}
-.btn-dark:hover{background:#333}
-.btn-outline{background:transparent;color:var(--ink);border:1px solid var(--ink);padding:12px 36px}
-.btn-outline:hover{background:var(--ink);color:var(--white)}
-.btn-accent{background:var(--accent);color:var(--white);padding:13px 36px}
-.btn-accent:hover{background:#9E7B44}
-.hero-visual{background:var(--bg2);display:flex;align-items:center;justify-content:center;position:relative}
-.hero-placeholder{text-align:center}
-.hero-mono{font-size:80px;opacity:0.15}
-.hero-caption{font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:var(--ink3);margin-top:1rem}
+.hero-visual{background:var(--bg2);display:flex;align-items:center;justify-content:center;position:relative;min-height:340px}
+.hero-visual svg{width:100%;height:100%;object-fit:cover}
 
-.strip{background:var(--ink);padding:14px 2rem;display:flex;gap:4rem;justify-content:center;align-items:center;overflow-x:auto}
+/* ── STRIP ── */
+.strip{background:var(--ink);padding:12px 1.5rem;display:flex;gap:3rem;justify-content:center;align-items:center;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+.strip::-webkit-scrollbar{display:none}
 .strip span{font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(255,255,255,0.6);white-space:nowrap}
 .strip-dot{width:3px;height:3px;background:var(--accent);border-radius:50%;flex-shrink:0}
 
-.section-pad{padding:5rem 2.5rem}
-.section-label{font-size:10px;letter-spacing:0.25em;text-transform:uppercase;color:var(--accent);margin-bottom:1rem}
-.section-title{font-family:'Playfair Display',serif;font-size:clamp(28px,4vw,42px);font-weight:400;color:var(--ink);margin-bottom:2.5rem;line-height:1.2}
+/* ── SECTIONS ── */
+.section-pad{padding:4rem 1.5rem}
+.section-label{font-size:10px;letter-spacing:0.25em;text-transform:uppercase;color:var(--accent);margin-bottom:0.75rem}
+.section-title{font-family:'Playfair Display',serif;font-size:clamp(26px,3.5vw,40px);font-weight:400;color:var(--ink);margin-bottom:2.5rem;line-height:1.2}
 
-.categories{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);margin:0 2.5rem}
-.cat-card{background:var(--white);padding:2.5rem 1.5rem;cursor:pointer;transition:background 0.2s;text-align:center}
-.cat-card:hover{background:var(--bg2)}
-.cat-icon{font-size:32px;margin-bottom:1rem;opacity:0.5}
-.cat-name{font-family:'Playfair Display',serif;font-size:18px;font-weight:400;color:var(--ink);margin-bottom:4px}
-.cat-count{font-size:11px;color:var(--ink3);letter-spacing:0.08em}
+/* ── CATEGORIES ── */
+.categories{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);margin:0 1.5rem}
+.cat-card{background:var(--white);padding:2rem 1.25rem;cursor:pointer;transition:background 0.2s;text-align:center}
+.cat-card:hover,.cat-card:active{background:var(--bg2)}
+.cat-icon{font-size:28px;margin-bottom:0.75rem;opacity:0.5}
+.cat-name{font-family:'Playfair Display',serif;font-size:16px;font-weight:400;color:var(--ink);margin-bottom:3px}
+.cat-count{font-size:10px;color:var(--ink3);letter-spacing:0.08em}
 
-.shop-header{padding:3rem 2.5rem 0;background:var(--white);border-bottom:1px solid var(--line)}
-.shop-top{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:2rem}
-.filter-bar{display:flex;gap:0;overflow-x:auto}
-.ftab{background:none;border:none;border-bottom:2px solid transparent;padding:12px 20px;font-family:'DM Sans',sans-serif;font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:var(--ink3);cursor:pointer;transition:all 0.2s;white-space:nowrap}
+/* ── SHOP ── */
+.shop-header{padding:2.5rem 1.5rem 0;background:var(--white);border-bottom:1px solid var(--line)}
+.shop-top{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:1.5rem;flex-wrap:wrap;gap:0.5rem}
+.filter-bar{display:flex;gap:0;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding-bottom:0}
+.filter-bar::-webkit-scrollbar{display:none}
+.ftab{background:none;border:none;border-bottom:2px solid transparent;padding:12px 16px;font-family:'DM Sans',sans-serif;font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:var(--ink3);cursor:pointer;transition:all 0.2s;white-space:nowrap}
 .ftab.active,.ftab:hover{color:var(--ink);border-bottom-color:var(--ink)}
 
-.products-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:1px;background:var(--line);margin:1px 0}
+/* ── PRODUCTS ── */
+.products-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:1px;background:var(--line);margin:1px 0}
 .product-card{background:var(--white);cursor:pointer;transition:background 0.2s}
 .product-card:hover{background:var(--bg)}
-.p-img{height:300px;background:var(--bg2);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
-.p-emoji{font-size:64px;opacity:0.2}
-.p-badge{position:absolute;top:14px;left:14px;background:var(--ink);color:var(--white);font-size:9px;letter-spacing:0.14em;text-transform:uppercase;padding:4px 9px}
-.p-info{padding:1.25rem 1.25rem 1.5rem}
-.p-name{font-family:'Playfair Display',serif;font-size:16px;font-weight:400;color:var(--ink);margin-bottom:3px}
+.p-img{height:280px;background:var(--bg2);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
+.p-badge{position:absolute;top:12px;left:12px;background:var(--ink);color:var(--white);font-size:9px;letter-spacing:0.14em;text-transform:uppercase;padding:4px 9px}
+.p-info{padding:1.1rem 1.1rem 1.4rem}
+.p-name{font-family:'Playfair Display',serif;font-size:15px;font-weight:400;color:var(--ink);margin-bottom:3px}
 .p-sub{font-size:11px;color:var(--ink3);letter-spacing:0.06em;margin-bottom:10px}
 .p-row{display:flex;justify-content:space-between;align-items:center}
 .p-price{font-size:14px;font-weight:500;color:var(--ink)}
-.p-add{background:none;border:1px solid var(--line);color:var(--ink2);font-family:'DM Sans',sans-serif;font-size:10px;letter-spacing:0.12em;text-transform:uppercase;padding:6px 14px;cursor:pointer;transition:all 0.2s}
-.p-add:hover{border-color:var(--ink);color:var(--ink);background:var(--ink);color:var(--white)}
+.p-add{background:none;border:1px solid var(--line);color:var(--ink2);font-family:'DM Sans',sans-serif;font-size:10px;letter-spacing:0.12em;text-transform:uppercase;padding:6px 12px;cursor:pointer;transition:all 0.2s}
+.p-add:hover,.p-add:active{border-color:var(--ink);background:var(--ink);color:var(--white)}
+.p-hover-cta{position:absolute;bottom:0;left:0;right:0;background:var(--ink);color:var(--white);text-align:center;font-size:10px;letter-spacing:0.16em;text-transform:uppercase;padding:10px;transform:translateY(100%);transition:transform 0.22s ease}
+.product-card:hover .p-hover-cta{transform:translateY(0)}
 
-.cart-wrap{display:grid;grid-template-columns:1fr 340px;min-height:80vh;background:var(--white)}
-.cart-main{padding:3rem 2.5rem;border-right:1px solid var(--line)}
-.cart-side{padding:3rem 2rem;background:var(--bg)}
-.sec-title{font-family:'Playfair Display',serif;font-size:30px;font-weight:400;color:var(--ink);margin-bottom:2rem}
-.c-item{display:grid;grid-template-columns:88px 1fr auto;gap:1.25rem;padding:1.5rem 0;border-bottom:1px solid var(--line);align-items:start}
-.c-img{width:88px;height:110px;background:var(--bg2);display:flex;align-items:center;justify-content:center;font-size:32px;opacity:0.4;flex-shrink:0}
-.c-name{font-family:'Playfair Display',serif;font-size:16px;font-weight:400;color:var(--ink);margin-bottom:3px}
-.c-meta{font-size:11px;color:var(--ink3);letter-spacing:0.06em;margin-bottom:12px}
-.qty-row{display:flex;align-items:center;gap:12px}
+/* ── CART ── */
+.cart-wrap{display:grid;grid-template-columns:1fr 320px;background:var(--white)}
+.cart-main{padding:2.5rem 1.5rem;border-right:1px solid var(--line)}
+.cart-side{padding:2.5rem 1.5rem;background:var(--bg)}
+.sec-title{font-family:'Playfair Display',serif;font-size:28px;font-weight:400;color:var(--ink);margin-bottom:1.75rem}
+.c-item{display:grid;grid-template-columns:80px 1fr auto;gap:1rem;padding:1.25rem 0;border-bottom:1px solid var(--line);align-items:start}
+.c-img{width:80px;height:100px;background:var(--bg2);display:flex;align-items:center;justify-content:center;font-size:28px;opacity:0.3;flex-shrink:0}
+.c-name{font-family:'Playfair Display',serif;font-size:15px;font-weight:400;color:var(--ink);margin-bottom:3px}
+.c-meta{font-size:11px;color:var(--ink3);letter-spacing:0.06em;margin-bottom:10px}
+.qty-row{display:flex;align-items:center;gap:10px}
 .qbtn{width:28px;height:28px;border:1px solid var(--line);background:none;cursor:pointer;font-size:14px;color:var(--ink);display:flex;align-items:center;justify-content:center;transition:all 0.2s;font-family:'DM Sans',sans-serif}
-.qbtn:hover{border-color:var(--ink);background:var(--ink);color:var(--white)}
+.qbtn:hover,.qbtn:active{border-color:var(--ink);background:var(--ink);color:var(--white)}
 .qnum{font-size:13px;font-weight:500;min-width:18px;text-align:center}
 .rmv{font-size:10px;color:var(--ink3);background:none;border:none;cursor:pointer;letter-spacing:0.1em;text-transform:uppercase;font-family:'DM Sans',sans-serif;margin-top:6px;display:block;text-decoration:underline}
-.c-price{font-size:15px;font-weight:500;color:var(--ink);padding-top:2px}
-.sum-row{display:flex;justify-content:space-between;font-size:13px;color:var(--ink2);padding:9px 0}
-.sum-total{display:flex;justify-content:space-between;font-size:16px;font-weight:500;color:var(--ink);padding-top:14px;margin-top:6px;border-top:1px solid var(--line)}
-.promo{display:flex;gap:8px;margin:1.5rem 0}
-.promo input{flex:1;border:1px solid var(--line);padding:10px 12px;font-size:12px;font-family:'DM Sans',sans-serif;background:var(--white);outline:none;letter-spacing:0.05em}
+.c-price{font-size:14px;font-weight:500;color:var(--ink);padding-top:2px;white-space:nowrap}
+.sum-row{display:flex;justify-content:space-between;font-size:13px;color:var(--ink2);padding:8px 0}
+.sum-total{display:flex;justify-content:space-between;font-size:16px;font-weight:500;color:var(--ink);padding-top:12px;margin-top:4px;border-top:1px solid var(--line)}
+.promo{display:flex;gap:8px;margin:1.25rem 0}
+.promo input{flex:1;border:1px solid var(--line);padding:10px 12px;font-size:12px;font-family:'DM Sans',sans-serif;background:var(--white);outline:none;letter-spacing:0.05em;min-width:0}
 .promo input:focus{border-color:var(--ink)}
-.promo button{border:1px solid var(--ink);background:none;color:var(--ink);padding:0 16px;font-size:10px;letter-spacing:0.14em;text-transform:uppercase;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.2s}
+.promo button{border:1px solid var(--ink);background:none;color:var(--ink);padding:0 14px;font-size:10px;letter-spacing:0.14em;text-transform:uppercase;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.2s;white-space:nowrap}
 .promo button:hover{background:var(--ink);color:var(--white)}
-.pay-accept{display:flex;flex-wrap:wrap;gap:6px;margin:1.25rem 0 1.5rem}
+.pay-accept{display:flex;flex-wrap:wrap;gap:6px;margin:1rem 0 1.25rem}
 .pac{border:1px solid var(--line);padding:4px 10px;font-size:10px;color:var(--ink3);letter-spacing:0.08em;background:var(--white)}
 
-.co-wrap{display:grid;grid-template-columns:1fr 320px;min-height:80vh;background:var(--white)}
-.co-main{padding:3rem 2.5rem;border-right:1px solid var(--line)}
-.co-side{padding:3rem 2rem;background:var(--bg)}
-.steps{display:flex;align-items:center;gap:0;margin-bottom:2.5rem}
+/* ── CHECKOUT ── */
+.co-wrap{display:grid;grid-template-columns:1fr 300px;background:var(--white)}
+.co-main{padding:2.5rem 1.5rem;border-right:1px solid var(--line)}
+.co-side{padding:2.5rem 1.25rem;background:var(--bg)}
+.steps{display:flex;align-items:center;gap:0}
 .sdot{width:26px;height:26px;border:1px solid var(--line);display:flex;align-items:center;justify-content:center;font-size:11px;color:var(--ink3);font-weight:500;flex-shrink:0;transition:all 0.3s}
 .sdot.active{background:var(--ink);border-color:var(--ink);color:var(--white)}
 .sdot.done{background:var(--accent);border-color:var(--accent);color:var(--white)}
-.slabel{font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--ink3);margin-left:8px;white-space:nowrap}
-.sline{flex:1;height:1px;background:var(--line);margin:0 16px;max-width:60px}
-.fg{display:flex;flex-direction:column;gap:5px;margin-bottom:14px}
+.slabel{font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--ink3);margin-left:6px;white-space:nowrap}
+.sline{flex:1;height:1px;background:var(--line);margin:0 12px;max-width:50px}
+.fg{display:flex;flex-direction:column;gap:5px;margin-bottom:12px}
 .fgg{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .fg.full{grid-column:1/-1}
 label{font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:var(--ink3)}
-input[type=text],input[type=email],input[type=tel],select,textarea{border:1px solid var(--line);padding:10px 12px;font-size:13px;background:var(--white);font-family:'DM Sans',sans-serif;outline:none;transition:border-color 0.2s;width:100%;color:var(--ink)}
+input[type=text],input[type=email],input[type=tel],select,textarea{border:1px solid var(--line);padding:10px 12px;font-size:13px;background:var(--white);font-family:'DM Sans',sans-serif;outline:none;transition:border-color 0.2s;width:100%;color:var(--ink);-webkit-appearance:none;border-radius:0}
 input:focus,select:focus,textarea:focus{border-color:var(--ink)}
 .pay-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:1.5rem}
-.pm{border:1px solid var(--line);padding:18px 10px;text-align:center;cursor:pointer;transition:all 0.2s;background:var(--white)}
+.pm{border:1px solid var(--line);padding:16px 8px;text-align:center;cursor:pointer;transition:all 0.2s;background:var(--white)}
 .pm.sel{border-color:var(--ink);background:var(--bg)}
-.pm-icon{font-size:20px;margin-bottom:6px;opacity:0.5}
+.pm-icon{font-size:18px;margin-bottom:5px;opacity:0.5}
 .pm-label{font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink2)}
-.pay-info{border:1px solid var(--line);padding:1.25rem;background:var(--bg);margin-bottom:1.5rem}
+.pay-info{border:1px solid var(--line);padding:1.1rem;background:var(--bg);margin-bottom:1.25rem}
 .pay-info p{font-size:12px;color:var(--ink2);line-height:1.9}
 .pay-info strong{color:var(--ink)}
 .o-item{display:flex;justify-content:space-between;padding:9px 0;border-bottom:1px solid var(--line);font-size:12px}
 .o-iname{color:var(--ink2)}
-.o-ip{color:var(--ink);font-weight:500}
+.o-ip{color:var(--ink);font-weight:500;white-space:nowrap;margin-left:8px}
 .sub-h{font-family:'Playfair Display',serif;font-size:18px;font-weight:400;color:var(--ink);margin-bottom:1rem}
 
-.empty{text-align:center;padding:5rem 2rem}
-.empty h2{font-family:'Playfair Display',serif;font-size:28px;font-weight:400;color:var(--ink);margin:1rem 0 0.5rem}
+/* ── EMPTY ── */
+.empty{text-align:center;padding:5rem 1.5rem}
+.empty h2{font-family:'Playfair Display',serif;font-size:26px;font-weight:400;color:var(--ink);margin:1rem 0 0.5rem}
 .empty p{font-size:13px;color:var(--ink3);margin-bottom:2rem;letter-spacing:0.04em}
 
-.about-banner{background:var(--ink);padding:5rem 2.5rem;text-align:center}
-.about-banner h1{font-family:'Playfair Display',serif;font-size:52px;font-weight:400;color:var(--white);margin-bottom:1rem}
+/* ── ABOUT ── */
+.about-banner{background:var(--ink);padding:4rem 1.5rem;text-align:center}
+.about-banner h1{font-family:'Playfair Display',serif;font-size:clamp(36px,6vw,52px);font-weight:400;color:var(--white);margin-bottom:1rem}
 .about-banner p{font-size:13px;color:rgba(255,255,255,0.5);max-width:480px;margin:0 auto;line-height:2;letter-spacing:0.03em}
-.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:0;background:var(--line);margin:0}
-.about-block{padding:3rem;background:var(--white)}
-.about-block h2{font-family:'Playfair Display',serif;font-size:26px;font-weight:400;color:var(--ink);margin-bottom:1rem}
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:0;background:var(--line)}
+.about-block{padding:2.5rem 2rem;background:var(--white)}
+.about-block h2{font-family:'Playfair Display',serif;font-size:24px;font-weight:400;color:var(--ink);margin-bottom:0.75rem}
 .about-block p{font-size:13px;color:var(--ink2);line-height:2}
-.vals{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line);margin:1px 0}
-.val{background:var(--bg);padding:2rem}
-.val h4{font-family:'Playfair Display',serif;font-size:18px;font-weight:400;color:var(--ink);margin-bottom:0.5rem}
+.vals{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line)}
+.val{background:var(--bg);padding:1.75rem 1.5rem}
+.val h4{font-family:'Playfair Display',serif;font-size:17px;font-weight:400;color:var(--ink);margin-bottom:0.5rem}
 .val p{font-size:12px;color:var(--ink3);line-height:1.8}
 
+/* ── CONTACT ── */
 .contact-wrap{display:grid;grid-template-columns:1fr 1fr;gap:0;background:var(--line)}
-.contact-info{background:var(--ink);padding:4rem 3rem}
-.contact-info h2{font-family:'Playfair Display',serif;font-size:36px;font-weight:400;color:var(--white);margin-bottom:1.5rem}
-.contact-info p{font-size:13px;color:rgba(255,255,255,0.55);line-height:2;margin-bottom:2rem}
-.ci-row{display:flex;flex-direction:column;gap:16px}
-.ci-item label{font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:var(--accent);display:block;margin-bottom:3px}
+.contact-info{background:var(--ink);padding:3.5rem 2.5rem}
+.contact-info h2{font-family:'Playfair Display',serif;font-size:32px;font-weight:400;color:var(--white);margin-bottom:1.25rem}
+.contact-info p{font-size:13px;color:rgba(255,255,255,0.55);line-height:2;margin-bottom:1.75rem}
+.ci-row{display:flex;flex-direction:column;gap:14px}
+.ci-item label{font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:var(--accent);display:block;margin-bottom:2px}
 .ci-item span{font-size:13px;color:rgba(255,255,255,0.75)}
-.contact-form{background:var(--white);padding:4rem 3rem}
-.contact-form h2{font-family:'Playfair Display',serif;font-size:30px;font-weight:400;color:var(--ink);margin-bottom:1.5rem}
+.contact-form{background:var(--white);padding:3.5rem 2.5rem}
+.contact-form h2{font-family:'Playfair Display',serif;font-size:28px;font-weight:400;color:var(--ink);margin-bottom:1.25rem}
 textarea{height:100px;resize:vertical}
 
-.success-wrap{padding:6rem 2rem;text-align:center;background:var(--white);min-height:60vh;display:flex;flex-direction:column;align-items:center;justify-content:center}
-.success-mark{width:56px;height:56px;border:1px solid var(--accent);display:flex;align-items:center;justify-content:center;margin:0 auto 2rem;font-size:20px;color:var(--accent)}
-.success-wrap h1{font-family:'Playfair Display',serif;font-size:40px;font-weight:400;color:var(--ink);margin-bottom:1rem}
-.success-wrap p{font-size:13px;color:var(--ink2);line-height:2;max-width:420px}
-.order-tag{border:1px solid var(--line);padding:10px 24px;font-size:12px;color:var(--ink);letter-spacing:0.12em;margin:1.5rem auto;display:inline-block}
+/* ── STORES ── */
+.stores-header{padding:2.5rem 1.5rem 1.5rem;background:var(--white);border-bottom:1px solid var(--line)}
+.stores-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1px;background:var(--line)}
+.store-card{background:var(--white);padding:1.75rem}
+.store-badge-outline{border:1px solid var(--line);font-size:9px;letter-spacing:0.12em;text-transform:uppercase;padding:4px 10px;color:var(--ink3)}
+.store-badge-dark{background:var(--ink);font-size:9px;letter-spacing:0.12em;text-transform:uppercase;padding:4px 10px;color:var(--white)}
 
-footer{background:var(--ink);padding:3rem 2.5rem;display:grid;grid-template-columns:1fr 1fr 1fr;gap:2rem;align-items:center}
-.f-brand{font-family:'Playfair Display',serif;font-size:18px;color:var(--white)}
+/* ── SUCCESS ── */
+.success-wrap{padding:5rem 1.5rem;text-align:center;background:var(--white);min-height:60vh;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.success-mark{width:52px;height:52px;border:1px solid var(--accent);display:flex;align-items:center;justify-content:center;margin:0 auto 1.75rem;font-size:20px;color:var(--accent)}
+.success-wrap h1{font-family:'Playfair Display',serif;font-size:clamp(30px,5vw,40px);font-weight:400;color:var(--ink);margin-bottom:1rem}
+.success-wrap p{font-size:13px;color:var(--ink2);line-height:2;max-width:420px}
+.order-tag{border:1px solid var(--line);padding:10px 22px;font-size:12px;color:var(--ink);letter-spacing:0.12em;margin:1.5rem auto;display:inline-block}
+
+/* ── FOOTER ── */
+footer{background:var(--ink);padding:2.5rem 1.5rem;display:grid;grid-template-columns:1fr 1fr 1fr;gap:1.5rem;align-items:center}
+.f-brand{font-family:'Playfair Display',serif;font-size:16px;color:var(--white)}
 .f-brand em{font-style:italic;color:var(--accent)}
-.f-links{display:flex;gap:2rem;justify-content:center}
+.f-links{display:flex;gap:1.5rem;justify-content:center;flex-wrap:wrap}
 .f-links a{font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:rgba(255,255,255,0.4);cursor:pointer;text-decoration:none;transition:color 0.2s}
 .f-links a:hover{color:rgba(255,255,255,0.8)}
 .f-copy{font-size:10px;color:rgba(255,255,255,0.3);letter-spacing:0.08em;text-align:right}
 
-.toast-bar{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%) translateY(80px);background:var(--ink);color:var(--white);padding:11px 28px;font-size:11px;letter-spacing:0.12em;text-transform:uppercase;transition:transform 0.3s;z-index:999;white-space:nowrap}
+/* ── TOAST ── */
+.toast-bar{position:fixed;bottom:1.5rem;left:50%;transform:translateX(-50%) translateY(80px);background:var(--ink);color:var(--white);padding:10px 24px;font-size:11px;letter-spacing:0.12em;text-transform:uppercase;transition:transform 0.3s;z-index:999;white-space:nowrap;max-width:calc(100vw - 2rem);text-align:center}
 .toast-bar.show{transform:translateX(-50%) translateY(0)}
-.p-hover-cta{position:absolute;bottom:0;left:0;right:0;background:var(--ink);color:var(--white);text-align:center;font-size:10px;letter-spacing:0.16em;text-transform:uppercase;padding:10px;transform:translateY(100%);transition:transform 0.22s ease}
-.product-card:hover .p-hover-cta{transform:translateY(0)}
-.product-card{cursor:pointer}
-#modal-overlay{backdrop-filter:none}
+
+/* ── MODAL ── */
+#modal-overlay{position:fixed;inset:0;background:rgba(13,13,13,0.55);z-index:500;align-items:flex-start;justify-content:center;padding:1rem;overflow-y:auto;-webkit-overflow-scrolling:touch}
+#modal-box{background:var(--white);max-width:540px;width:100%;position:relative;margin:auto;min-height:0}
+#modal-close{position:absolute;top:12px;right:14px;background:none;border:none;font-size:20px;cursor:pointer;color:var(--ink3);line-height:1;z-index:2;width:32px;height:32px;display:flex;align-items:center;justify-content:center}
+
+/* ── CHECKOUT HEADER ── */
+.co-header{padding:1.25rem 1.5rem;border-bottom:1px solid var(--line);background:var(--white);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem}
+
+/* ══════════════════════════════
+   RESPONSIVE BREAKPOINTS
+══════════════════════════════ */
+
+/* Tablet: ≤900px */
+@media(max-width:900px){
+  .hero{grid-template-columns:1fr}
+  .hero-visual{display:none}
+  .hero-text{border-right:none;padding:3.5rem 2rem;border-bottom:1px solid var(--line)}
+  .cart-wrap{grid-template-columns:1fr}
+  .cart-main{border-right:none;border-bottom:1px solid var(--line)}
+  .co-wrap{grid-template-columns:1fr}
+  .co-main{border-right:none;border-bottom:1px solid var(--line)}
+  .co-side{border-top:1px solid var(--line)}
+  .contact-wrap{grid-template-columns:1fr}
+  .about-grid{grid-template-columns:1fr}
+  .vals{grid-template-columns:1fr 1fr}
+  footer{grid-template-columns:1fr;text-align:center}
+  .f-copy{text-align:center}
+  .f-links{justify-content:center}
+  .categories{grid-template-columns:repeat(3,1fr);margin:0 1rem}
+  .section-pad{padding:3rem 1rem}
+  .stores-grid{grid-template-columns:repeat(auto-fill,minmax(240px,1fr))}
+}
+
+/* Tablet portrait / large phone: ≤680px */
 @media(max-width:680px){
-  .hero{grid-template-columns:1fr}.hero-visual{display:none}
-  .cart-wrap,.co-wrap,.contact-wrap,.about-grid{grid-template-columns:1fr}
-  .categories{grid-template-columns:1fr 1fr}
-  .fgg{grid-template-columns:1fr}
-  footer{grid-template-columns:1fr;text-align:center}.f-copy{text-align:center}.f-links{justify-content:center}
+  nav{padding:0 1rem;height:52px}
   .nav-links{display:none}
+  .hamburger{display:flex}
+  .mobile-menu{top:52px}
+  .cart-icon .cart-label{display:none}
+
+  .hero-text{padding:2.5rem 1.25rem}
+  .hero-p{max-width:100%}
+
+  .categories{grid-template-columns:1fr 1fr;margin:0 1rem;gap:1px}
+  .cat-card{padding:1.5rem 1rem}
+  .cat-icon{font-size:24px}
+  .cat-name{font-size:14px}
+
+  .section-pad{padding:2.5rem 1rem}
+
+  .products-grid{grid-template-columns:repeat(2,1fr)}
+  .p-img{height:200px}
+  .p-name{font-size:14px}
+  .p-info{padding:0.9rem 0.9rem 1.1rem}
+
+  .shop-header{padding:2rem 1rem 0}
+  .shop-top{margin-bottom:1rem}
+
+  .cart-main{padding:1.75rem 1rem}
+  .cart-side{padding:1.75rem 1rem}
+  .c-item{grid-template-columns:70px 1fr auto;gap:0.75rem}
+  .c-img{width:70px;height:88px}
+
+  .co-header{padding:1rem;gap:0.75rem}
+  .steps{gap:0}
+  .slabel{display:none}
+  .sline{max-width:30px;margin:0 8px}
+
+  .co-main{padding:1.5rem 1rem}
+  .co-side{padding:1.5rem 1rem}
+  .fgg{grid-template-columns:1fr}
+
+  .about-banner{padding:3rem 1rem}
+  .vals{grid-template-columns:1fr}
+  .contact-info{padding:2.5rem 1.5rem}
+  .contact-form{padding:2.5rem 1.5rem}
+  footer{padding:2rem 1rem}
+  .f-links{gap:1rem}
+
+  .pay-grid{grid-template-columns:1fr 1fr 1fr;gap:6px}
+  .pm{padding:12px 6px}
+  .pm-label{font-size:9px}
+
+  .sec-title{font-size:24px}
+  .sub-h{font-size:16px}
+  #modal-overlay{padding:0.5rem}
+  #modal-box{max-width:100%}
+}
+
+/* Phone: ≤420px */
+@media(max-width:420px){
+  .categories{grid-template-columns:1fr 1fr}
+  .cat-count{display:none}
+  .products-grid{grid-template-columns:1fr 1fr}
+  .p-img{height:170px}
+  .p-hover-cta{display:none}
+  .strip{gap:1.5rem}
+  footer{gap:1rem}
+  .about-grid{grid-template-columns:1fr}
+  .about-block{padding:2rem 1.25rem}
+  .val{padding:1.5rem 1.25rem}
+
+  .c-item{grid-template-columns:62px 1fr}
+  .c-price{display:none}
+}
+
+/* Very small: ≤360px */
+@media(max-width:360px){
+  .hero-h1{font-size:34px}
+  .hero-text{padding:2rem 1rem}
+  .products-grid{grid-template-columns:1fr}
+  .p-img{height:220px}
+  .btn{font-size:10px;padding:11px 24px}
+}
+
+/* Touch-friendly tap targets */
+@media(hover:none){
+  .p-hover-cta{transform:translateY(0);opacity:0.85}
+  .cat-card:active{background:var(--bg2)}
+  .qbtn{min-width:36px;min-height:36px}
+  .ftab{padding:14px 16px}
+  .p-add{padding:8px 14px}
 }
 </style>
+</head>
+<body>
 
 <nav>
-  <div class="brand" onclick="go('home')"><em>Eras</em> & Moonlight</div>
+  <div class="brand" onclick="go('home')"><em>Eras</em> &amp; Moonlight</div>
   <div class="nav-links">
     <a onclick="go('home')">Home</a>
     <a onclick="go('shop')">Shop</a>
@@ -192,11 +357,25 @@ footer{background:var(--ink);padding:3rem 2.5rem;display:grid;grid-template-colu
   </div>
   <div class="nav-right">
     <button class="cart-icon" onclick="go('cart')">
-      Bag <span class="cart-dot" id="ccount">0</span>
+      <span class="cart-label">Bag</span> <span class="cart-dot" id="ccount">0</span>
+    </button>
+    <button class="hamburger" id="ham" onclick="toggleMenu()" aria-label="Menu">
+      <span></span><span></span><span></span>
     </button>
   </div>
 </nav>
 
+<!-- Mobile drawer -->
+<div class="mobile-menu" id="mobileMenu">
+  <a class="mm-link" onclick="go('home');closeMenu()">Home</a>
+  <a class="mm-link" onclick="go('shop');closeMenu()">Shop</a>
+  <a class="mm-link" onclick="go('stores');closeMenu()">Stores</a>
+  <a class="mm-link" onclick="go('about');closeMenu()">About</a>
+  <a class="mm-link" onclick="go('contact');closeMenu()">Contact</a>
+  <div class="mm-footer">© 2026 Eras and Moonlight · Philippines</div>
+</div>
+
+<!-- ═══════════ HOME ═══════════ -->
 <div id="page-home" class="page active">
   <div class="hero">
     <div class="hero-text">
@@ -206,7 +385,7 @@ footer{background:var(--ink);padding:3rem 2.5rem;display:grid;grid-template-colu
       <button class="btn btn-dark" onclick="go('shop')">Shop the Collection</button>
     </div>
     <div class="hero-visual">
-      <svg width="100%" viewBox="0 0 500 420" xmlns="http://www.w3.org/2000/svg" style="max-height:100%;object-fit:cover">
+      <svg viewBox="0 0 500 420" xmlns="http://www.w3.org/2000/svg">
         <defs>
           <pattern id="grain" width="4" height="4" patternUnits="userSpaceOnUse">
             <circle cx="1" cy="1" r="0.4" fill="rgba(255,255,255,0.04)"/>
@@ -221,15 +400,8 @@ footer{background:var(--ink);padding:3rem 2.5rem;display:grid;grid-template-colu
         <circle cx="250" cy="210" r="108" fill="none" stroke="#B8935A" stroke-width="0.4" opacity="0.15"/>
         <path d="M250 100 A110 110 0 1 1 250 320 A75 75 0 1 0 250 100Z" fill="#B8935A" opacity="0.1"/>
         <path d="M250 100 A110 110 0 1 1 250 320 A75 75 0 1 0 250 100Z" fill="none" stroke="#B8935A" stroke-width="1" opacity="0.55"/>
-        <path d="M50 185 C110 165 155 245 210 205" fill="none" stroke="rgba(255,255,255,0.07)" stroke-width="1"/>
-        <path d="M50 205 C115 180 158 260 212 218" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
-        <path d="M450 185 C390 165 345 245 290 205" fill="none" stroke="rgba(255,255,255,0.07)" stroke-width="1"/>
-        <path d="M450 205 C385 180 342 260 288 218" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
         <circle cx="90" cy="88" r="1.2" fill="#B8935A" opacity="0.7"/>
         <circle cx="410" cy="88" r="1.2" fill="#B8935A" opacity="0.7"/>
-        <circle cx="140" cy="125" r="0.7" fill="rgba(255,255,255,0.4)"/>
-        <circle cx="360" cy="120" r="0.7" fill="rgba(255,255,255,0.4)"/>
-        <circle cx="250" cy="72" r="1" fill="rgba(255,255,255,0.45)"/>
         <text x="250" y="190" text-anchor="middle" font-family="'Playfair Display',Georgia,serif" font-size="48" font-weight="400" letter-spacing="14" fill="#FAFAF8" opacity="0.95">ERAS</text>
         <text x="250" y="220" text-anchor="middle" font-family="'Playfair Display',Georgia,serif" font-size="12" font-weight="400" letter-spacing="5" fill="#B8935A" opacity="0.85">&amp;</text>
         <text x="250" y="248" text-anchor="middle" font-family="'Playfair Display',Georgia,serif" font-size="26" font-weight="400" letter-spacing="10" fill="#FAFAF8" opacity="0.82" font-style="italic">Moonlight</text>
@@ -287,9 +459,10 @@ footer{background:var(--ink);padding:3rem 2.5rem;display:grid;grid-template-colu
     </div>
   </div>
   <footer>
-    <div class="f-brand"><em>Eras</em> & Moonlight</div>
+    <div class="f-brand"><em>Eras</em> &amp; Moonlight</div>
     <div class="f-links">
       <a onclick="go('shop')">Shop</a>
+      <a onclick="go('stores')">Stores</a>
       <a onclick="go('about')">About</a>
       <a onclick="go('contact')">Contact</a>
     </div>
@@ -297,12 +470,13 @@ footer{background:var(--ink);padding:3rem 2.5rem;display:grid;grid-template-colu
   </footer>
 </div>
 
+<!-- ═══════════ SHOP ═══════════ -->
 <div id="page-shop" class="page">
   <div class="shop-header">
     <div class="shop-top">
       <div>
         <p class="section-label">Collection</p>
-        <h1 style="font-family:'Playfair Display',serif;font-size:36px;font-weight:400;color:var(--ink)">All Pieces</h1>
+        <h1 style="font-family:'Playfair Display',serif;font-size:clamp(26px,4vw,36px);font-weight:400;color:var(--ink)">All Pieces</h1>
       </div>
       <span id="pcount" style="font-size:12px;color:var(--ink3);letter-spacing:0.06em;align-self:flex-end;padding-bottom:4px"></span>
     </div>
@@ -318,24 +492,26 @@ footer{background:var(--ink);padding:3rem 2.5rem;display:grid;grid-template-colu
   </div>
   <div class="products-grid" id="pgrid"></div>
   <footer>
-    <div class="f-brand"><em>Eras</em> & Moonlight</div>
+    <div class="f-brand"><em>Eras</em> &amp; Moonlight</div>
     <div class="f-links"><a onclick="go('shop')">Shop</a><a onclick="go('stores')">Stores</a><a onclick="go('about')">About</a><a onclick="go('contact')">Contact</a></div>
     <div class="f-copy">© 2026 Eras and Moonlight</div>
   </footer>
 </div>
 
+<!-- ═══════════ CART ═══════════ -->
 <div id="page-cart" class="page">
   <div id="cartContent"></div>
   <footer>
-    <div class="f-brand"><em>Eras</em> & Moonlight</div>
+    <div class="f-brand"><em>Eras</em> &amp; Moonlight</div>
     <div class="f-links"><a onclick="go('shop')">Shop</a><a onclick="go('stores')">Stores</a><a onclick="go('about')">About</a><a onclick="go('contact')">Contact</a></div>
     <div class="f-copy">© 2026 Eras and Moonlight</div>
   </footer>
 </div>
 
+<!-- ═══════════ CHECKOUT ═══════════ -->
 <div id="page-checkout" class="page">
-  <div style="padding:1.5rem 2.5rem;border-bottom:1px solid var(--line);background:var(--white);display:flex;align-items:center;justify-content:space-between">
-    <div class="brand" onclick="go('cart')" style="cursor:pointer;font-size:15px"><em>Eras</em> & Moonlight</div>
+  <div class="co-header">
+    <div class="brand" onclick="go('cart')" style="cursor:pointer;font-size:15px"><em>Eras</em> &amp; Moonlight</div>
     <div class="steps" id="steps">
       <div class="sdot active" id="s1">1</div><span class="slabel">Information</span>
       <div class="sline"></div>
@@ -349,12 +525,13 @@ footer{background:var(--ink);padding:3rem 2.5rem;display:grid;grid-template-colu
     <div class="co-side" id="coSide"></div>
   </div>
   <footer>
-    <div class="f-brand"><em>Eras</em> & Moonlight</div>
+    <div class="f-brand"><em>Eras</em> &amp; Moonlight</div>
     <div class="f-links"><a onclick="go('shop')">Shop</a><a onclick="go('stores')">Stores</a><a onclick="go('about')">About</a><a onclick="go('contact')">Contact</a></div>
     <div class="f-copy">© 2026 Eras and Moonlight</div>
   </footer>
 </div>
 
+<!-- ═══════════ ABOUT ═══════════ -->
 <div id="page-about" class="page">
   <div class="about-banner">
     <h1>Our Story</h1>
@@ -377,16 +554,17 @@ footer{background:var(--ink);padding:3rem 2.5rem;display:grid;grid-template-colu
     <div class="val"><h4>Honest</h4><p>Clear pricing, transparent sourcing, and straightforward returns — always.</p></div>
   </div>
   <footer>
-    <div class="f-brand"><em>Eras</em> & Moonlight</div>
+    <div class="f-brand"><em>Eras</em> &amp; Moonlight</div>
     <div class="f-links"><a onclick="go('shop')">Shop</a><a onclick="go('stores')">Stores</a><a onclick="go('about')">About</a><a onclick="go('contact')">Contact</a></div>
     <div class="f-copy">© 2026 Eras and Moonlight</div>
   </footer>
 </div>
 
+<!-- ═══════════ CONTACT ═══════════ -->
 <div id="page-contact" class="page">
-  <div style="padding:3rem 2.5rem 2rem;background:var(--white);border-bottom:1px solid var(--line)">
+  <div style="padding:2.5rem 1.5rem 1.5rem;background:var(--white);border-bottom:1px solid var(--line)">
     <p class="section-label">Get in touch</p>
-    <h1 style="font-family:'Playfair Display',serif;font-size:36px;font-weight:400;color:var(--ink)">We'd love to hear from you</h1>
+    <h1 style="font-family:'Playfair Display',serif;font-size:clamp(26px,4vw,36px);font-weight:400;color:var(--ink)">We'd love to hear from you</h1>
   </div>
   <div class="contact-wrap">
     <div class="contact-info">
@@ -397,7 +575,7 @@ footer{background:var(--ink);padding:3rem 2.5rem;display:grid;grid-template-colu
         <div class="ci-item"><label>Instagram</label><span>@erasandmoonlight</span></div>
         <div class="ci-item"><label>Facebook</label><span>Eras and Moonlight</span></div>
         <div class="ci-item"><label>Hours</label><span>Mon–Sat, 9am–6pm PHT</span></div>
-        <div class="ci-item"><label>Stores</label><span>Tutuban Mall & Ayala Malls Cloverleaf</span></div>
+        <div class="ci-item"><label>Stores</label><span>Tutuban Mall &amp; Ayala Malls Cloverleaf</span></div>
       </div>
     </div>
     <div class="contact-form">
@@ -406,120 +584,94 @@ footer{background:var(--ink);padding:3rem 2.5rem;display:grid;grid-template-colu
       <div class="fg"><label>Email Address</label><input type="email" placeholder="you@email.com"></div>
       <div class="fg">
         <label>Subject</label>
-        <select><option>Order inquiry</option><option>Returns & exchanges</option><option>Sizing help</option><option>Wholesale</option><option>Other</option></select>
+        <select><option>Order inquiry</option><option>Returns &amp; exchanges</option><option>Sizing help</option><option>Wholesale</option><option>Other</option></select>
       </div>
       <div class="fg"><label>Message</label><textarea placeholder="Tell us how we can help..."></textarea></div>
       <button class="btn btn-dark" style="width:100%;text-align:center;margin-top:8px" onclick="showToast('Message sent — we\'ll be in touch soon.')">Send Message</button>
     </div>
   </div>
   <footer>
-    <div class="f-brand"><em>Eras</em> & Moonlight</div>
+    <div class="f-brand"><em>Eras</em> &amp; Moonlight</div>
     <div class="f-links"><a onclick="go('shop')">Shop</a><a onclick="go('stores')">Stores</a><a onclick="go('about')">About</a><a onclick="go('contact')">Contact</a></div>
     <div class="f-copy">© 2026 Eras and Moonlight</div>
   </footer>
 </div>
 
+<!-- ═══════════ STORES ═══════════ -->
 <div id="page-stores" class="page">
-  <div style="padding:3rem 2.5rem 2rem;background:var(--white);border-bottom:1px solid var(--line)">
+  <div class="stores-header">
     <p class="section-label">Find us in person</p>
-    <h1 style="font-family:'Playfair Display',serif;font-size:36px;font-weight:400;color:var(--ink)">Our Physical Stores</h1>
+    <h1 style="font-family:'Playfair Display',serif;font-size:clamp(26px,4vw,36px);font-weight:400;color:var(--ink)">Our Physical Stores</h1>
     <p style="font-size:13px;color:var(--ink2);line-height:2;max-width:520px;margin-top:0.5rem">We believe in transparency — come see the clothes in person, feel the fabric, and try before you buy. We have <strong>4 store locations</strong> across Metro Manila.</p>
   </div>
 
-  <div style="padding:3rem 2.5rem;background:var(--bg)">
-
-    <!-- Tutuban Mall Group -->
-    <div style="margin-bottom:3rem">
-      <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1.5rem">
-        <div style="width:3px;height:32px;background:var(--accent)"></div>
+  <div style="padding:2.5rem 1.5rem;background:var(--bg)">
+    <!-- Tutuban -->
+    <div style="margin-bottom:2.5rem">
+      <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1.25rem">
+        <div style="width:3px;height:30px;background:var(--accent);flex-shrink:0"></div>
         <div>
           <p style="font-size:10px;letter-spacing:0.22em;text-transform:uppercase;color:var(--accent);margin-bottom:2px">3 Branches</p>
-          <h2 style="font-family:'Playfair Display',serif;font-size:26px;font-weight:400;color:var(--ink)">Tutuban Center Mall</h2>
+          <h2 style="font-family:'Playfair Display',serif;font-size:clamp(20px,3vw,26px);font-weight:400;color:var(--ink)">Tutuban Center Mall</h2>
           <p style="font-size:12px;color:var(--ink3);letter-spacing:0.04em">Claro M. Recto Ave, Tondo, Manila</p>
         </div>
       </div>
-      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1px;background:var(--line)">
-
-        <div style="background:var(--white);padding:2rem">
-          <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:1rem">
-            <div>
-              <p style="font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:var(--accent);margin-bottom:4px">Inside the Mall</p>
-              <h3 style="font-family:'Playfair Display',serif;font-size:20px;font-weight:400;color:var(--ink)">Main Branch</h3>
-            </div>
-            <span style="border:1px solid var(--line);font-size:9px;letter-spacing:0.12em;text-transform:uppercase;padding:4px 10px;color:var(--ink3)">Ground Floor</span>
+      <div class="stores-grid">
+        <div class="store-card">
+          <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:0.9rem">
+            <div><p style="font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:var(--accent);margin-bottom:3px">Inside the Mall</p><h3 style="font-family:'Playfair Display',serif;font-size:19px;font-weight:400;color:var(--ink)">Main Branch</h3></div>
+            <span class="store-badge-outline">Ground Floor</span>
           </div>
           <p style="font-size:12px;color:var(--ink2);line-height:1.9">Our flagship Tutuban store. Full collection available — men's and women's. Fitting rooms on-site.</p>
-          <div style="margin-top:1.25rem;padding-top:1.25rem;border-top:1px solid var(--line)">
-            <p style="font-size:11px;color:var(--ink3);letter-spacing:0.06em">Mon–Sun · 10am–8pm</p>
-          </div>
+          <div style="margin-top:1.1rem;padding-top:1.1rem;border-top:1px solid var(--line)"><p style="font-size:11px;color:var(--ink3);letter-spacing:0.06em">Mon–Sun · 10am–8pm</p></div>
         </div>
-
-        <div style="background:var(--white);padding:2rem">
-          <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:1rem">
-            <div>
-              <p style="font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:var(--accent);margin-bottom:4px">Inside the Mall</p>
-              <h3 style="font-family:'Playfair Display',serif;font-size:20px;font-weight:400;color:var(--ink)">Station Branch</h3>
-            </div>
-            <span style="border:1px solid var(--line);font-size:9px;letter-spacing:0.12em;text-transform:uppercase;padding:4px 10px;color:var(--ink3)">Near LRT</span>
+        <div class="store-card">
+          <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:0.9rem">
+            <div><p style="font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:var(--accent);margin-bottom:3px">Inside the Mall</p><h3 style="font-family:'Playfair Display',serif;font-size:19px;font-weight:400;color:var(--ink)">Station Branch</h3></div>
+            <span class="store-badge-outline">Near LRT</span>
           </div>
           <p style="font-size:12px;color:var(--ink2);line-height:1.9">Conveniently located near the Recto LRT station entrance. Perfect for quick pickups on your commute.</p>
-          <div style="margin-top:1.25rem;padding-top:1.25rem;border-top:1px solid var(--line)">
-            <p style="font-size:11px;color:var(--ink3);letter-spacing:0.06em">Mon–Sun · 10am–8pm</p>
-          </div>
+          <div style="margin-top:1.1rem;padding-top:1.1rem;border-top:1px solid var(--line)"><p style="font-size:11px;color:var(--ink3);letter-spacing:0.06em">Mon–Sun · 10am–8pm</p></div>
         </div>
-
-        <div style="background:var(--white);padding:2rem">
-          <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:1rem">
-            <div>
-              <p style="font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:var(--accent);margin-bottom:4px">Outside the Mall</p>
-              <h3 style="font-family:'Playfair Display',serif;font-size:20px;font-weight:400;color:var(--ink)">Night Market</h3>
-            </div>
-            <span style="background:var(--ink);font-size:9px;letter-spacing:0.12em;text-transform:uppercase;padding:4px 10px;color:var(--white)">Outdoor</span>
+        <div class="store-card">
+          <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:0.9rem">
+            <div><p style="font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:var(--accent);margin-bottom:3px">Outside the Mall</p><h3 style="font-family:'Playfair Display',serif;font-size:19px;font-weight:400;color:var(--ink)">Night Market</h3></div>
+            <span class="store-badge-dark">Outdoor</span>
           </div>
           <p style="font-size:12px;color:var(--ink2);line-height:1.9">Open evenings at the Tutuban Night Market. Great deals and new arrivals dropped weekly. Cash-friendly.</p>
-          <div style="margin-top:1.25rem;padding-top:1.25rem;border-top:1px solid var(--line)">
-            <p style="font-size:11px;color:var(--ink3);letter-spacing:0.06em">Thu–Sun · 6pm–11pm</p>
-          </div>
+          <div style="margin-top:1.1rem;padding-top:1.1rem;border-top:1px solid var(--line)"><p style="font-size:11px;color:var(--ink3);letter-spacing:0.06em">Thu–Sun · 6pm–11pm</p></div>
         </div>
-
       </div>
     </div>
 
-    <!-- Ayala Malls Cloverleaf -->
+    <!-- Ayala -->
     <div>
-      <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1.5rem">
-        <div style="width:3px;height:32px;background:var(--accent)"></div>
+      <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1.25rem">
+        <div style="width:3px;height:30px;background:var(--accent);flex-shrink:0"></div>
         <div>
           <p style="font-size:10px;letter-spacing:0.22em;text-transform:uppercase;color:var(--accent);margin-bottom:2px">1 Branch</p>
-          <h2 style="font-family:'Playfair Display',serif;font-size:26px;font-weight:400;color:var(--ink)">Ayala Malls Cloverleaf</h2>
+          <h2 style="font-family:'Playfair Display',serif;font-size:clamp(20px,3vw,26px);font-weight:400;color:var(--ink)">Ayala Malls Cloverleaf</h2>
           <p style="font-size:12px;color:var(--ink3);letter-spacing:0.04em">A. Bonifacio Ave, Balintawak, Quezon City</p>
         </div>
       </div>
-      <div style="background:var(--white);padding:2rem;max-width:400px">
-        <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:1rem">
-          <div>
-            <p style="font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:var(--accent);margin-bottom:4px">Inside the Mall</p>
-            <h3 style="font-family:'Playfair Display',serif;font-size:20px;font-weight:400;color:var(--ink)">Cloverleaf Branch</h3>
-          </div>
-          <span style="border:1px solid var(--line);font-size:9px;letter-spacing:0.12em;text-transform:uppercase;padding:4px 10px;color:var(--ink3)">Level 2</span>
+      <div class="store-card" style="background:var(--white);max-width:400px">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:0.9rem">
+          <div><p style="font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:var(--accent);margin-bottom:3px">Inside the Mall</p><h3 style="font-family:'Playfair Display',serif;font-size:19px;font-weight:400;color:var(--ink)">Cloverleaf Branch</h3></div>
+          <span class="store-badge-outline">Level 2</span>
         </div>
         <p style="font-size:12px;color:var(--ink2);line-height:1.9">Our newest store. Full men's and women's collection, plus exclusive branch-only arrivals from Korea and Japan.</p>
-        <div style="margin-top:1.25rem;padding-top:1.25rem;border-top:1px solid var(--line)">
-          <p style="font-size:11px;color:var(--ink3);letter-spacing:0.06em">Mon–Sun · 10am–9pm</p>
-        </div>
+        <div style="margin-top:1.1rem;padding-top:1.1rem;border-top:1px solid var(--line)"><p style="font-size:11px;color:var(--ink3);letter-spacing:0.06em">Mon–Sun · 10am–9pm</p></div>
       </div>
     </div>
 
-    <!-- Visit note -->
-    <div style="margin-top:3rem;border:1px solid var(--line);padding:2rem;background:var(--white);display:flex;gap:1.5rem;align-items:flex-start">
-      <div style="font-size:24px;color:var(--accent);flex-shrink:0">◎</div>
+    <div style="margin-top:2.5rem;border:1px solid var(--line);padding:1.75rem;background:var(--white);display:flex;gap:1.25rem;align-items:flex-start">
+      <div style="font-size:22px;color:var(--accent);flex-shrink:0">◎</div>
       <div>
-        <h4 style="font-family:'Playfair Display',serif;font-size:17px;font-weight:400;color:var(--ink);margin-bottom:6px">Can't visit in person?</h4>
+        <h4 style="font-family:'Playfair Display',serif;font-size:17px;font-weight:400;color:var(--ink);margin-bottom:5px">Can't visit in person?</h4>
         <p style="font-size:12px;color:var(--ink2);line-height:1.9">Shop online anytime — we ship nationwide with Cash on Delivery, GCash, and bank transfer available.</p>
         <button class="btn btn-dark" style="margin-top:1rem;font-size:10px" onclick="go('shop')">Shop Online →</button>
       </div>
     </div>
-
   </div>
 
   <footer>
@@ -529,6 +681,7 @@ footer{background:var(--ink);padding:3rem 2.5rem;display:grid;grid-template-colu
   </footer>
 </div>
 
+<!-- ═══════════ SUCCESS ═══════════ -->
 <div id="page-success" class="page">
   <div class="success-wrap">
     <div class="success-mark">✓</div>
@@ -538,7 +691,7 @@ footer{background:var(--ink);padding:3rem 2.5rem;display:grid;grid-template-colu
     <button class="btn btn-outline" onclick="go('home')" style="margin-top:1rem">Return to Home</button>
   </div>
   <footer>
-    <div class="f-brand"><em>Eras</em> & Moonlight</div>
+    <div class="f-brand"><em>Eras</em> &amp; Moonlight</div>
     <div class="f-links"><a onclick="go('shop')">Shop</a><a onclick="go('stores')">Stores</a><a onclick="go('about')">About</a><a onclick="go('contact')">Contact</a></div>
     <div class="f-copy">© 2026 Eras and Moonlight</div>
   </footer>
@@ -547,9 +700,9 @@ footer{background:var(--ink);padding:3rem 2.5rem;display:grid;grid-template-colu
 <div class="toast-bar" id="toast"></div>
 
 <!-- Product Modal -->
-<div id="modal-overlay" style="display:none;position:fixed;inset:0;background:rgba(13,13,13,0.55);z-index:500;align-items:center;justify-content:center;padding:1rem" onclick="if(event.target===this)closeModal()">
-  <div id="modal-box" style="background:var(--white);max-width:560px;width:100%;max-height:90vh;overflow-y:auto;position:relative">
-    <button onclick="closeModal()" style="position:absolute;top:14px;right:16px;background:none;border:none;font-size:20px;cursor:pointer;color:var(--ink3);line-height:1;z-index:2">✕</button>
+<div id="modal-overlay" style="display:none" onclick="if(event.target===this)closeModal()">
+  <div id="modal-box">
+    <button id="modal-close" onclick="closeModal()">✕</button>
     <div id="modal-content"></div>
   </div>
 </div>
@@ -574,23 +727,22 @@ const products=[
   {id:16,name:'Chou Oversized Tee',cat:'top',price:790,icon:'◇',badge:'',meta:'Men & Women · Tee · Korea',colors:['White','Black','Ash'],sizes:['XS','S','M','L','XL','2XL']},
 ];
 
-// Shipping rates by region
 const SHIPPING={
-  'Metro Manila':120,
-  'CALABARZON':150,'MIMAROPA':180,
+  'Metro Manila':120,'CALABARZON':150,'MIMAROPA':180,
   'Central Luzon':150,'Western Visayas':200,
   'Central Visayas':200,'Mindanao':220,'Other':220
 };
-const COD_FEE=50; // flat COD handling fee
+const COD_FEE=50;
 
 let cart=[],coStep=1,selPay='cod',selRegion='Metro Manila';
 let modalQty=1,modalColor='',modalSize='';
 
-/* ── Navigation ── */
+/* ── Nav ── */
 function go(p){
   document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));
   document.getElementById('page-'+p).classList.add('active');
   window.scrollTo(0,0);
+  closeMenu();
   if(p==='cart')renderCart();
   if(p==='checkout'){coStep=1;renderCo();}
   if(p==='shop')renderProds('all');
@@ -601,14 +753,27 @@ function filterP(btn,cat){
   renderProds(cat);
 }
 
-/* ── Product Grid ── */
+function toggleMenu(){
+  const m=document.getElementById('mobileMenu');
+  const h=document.getElementById('ham');
+  const open=m.classList.toggle('open');
+  h.classList.toggle('open',open);
+  document.body.style.overflow=open?'hidden':'';
+}
+function closeMenu(){
+  document.getElementById('mobileMenu').classList.remove('open');
+  document.getElementById('ham').classList.remove('open');
+  document.body.style.overflow='';
+}
+
+/* ── Products ── */
 function renderProds(cat){
   const list=cat==='all'?products:products.filter(p=>p.cat===cat);
   document.getElementById('pcount').textContent=list.length+' pieces';
   document.getElementById('pgrid').innerHTML=list.map(p=>`
     <div class="product-card" onclick="openModal(${p.id})">
       <div class="p-img">
-        <span style="font-size:72px;color:var(--ink3);opacity:0.18">${p.icon}</span>
+        <span style="font-size:64px;color:var(--ink3);opacity:0.18">${p.icon}</span>
         ${p.badge?`<span class="p-badge">${p.badge}</span>`:''}
         <div class="p-hover-cta">View &amp; Select</div>
       </div>
@@ -623,10 +788,10 @@ function renderProds(cat){
     </div>`).join('');
 }
 
-/* ── Product Modal ── */
+/* ── Modal ── */
 function openModal(id){
   const p=products.find(x=>x.id===id);
-  modalQty=1; modalColor=p.colors[0]; modalSize='';
+  modalQty=1;modalColor=p.colors[0];modalSize='';
   const ov=document.getElementById('modal-overlay');
   ov.style.display='flex';
   renderModal(p);
@@ -638,40 +803,40 @@ function closeModal(){
 }
 function renderModal(p){
   document.getElementById('modal-content').innerHTML=`
-    <div style="padding:2rem 2rem 0">
-      <div style="height:200px;background:var(--bg2);display:flex;align-items:center;justify-content:center;margin:-2rem -2rem 1.5rem;font-size:90px;color:var(--ink3);opacity:0.15">${p.icon}</div>
+    <div style="padding:2rem 1.5rem 0">
+      <div style="height:180px;background:var(--bg2);display:flex;align-items:center;justify-content:center;margin:-2rem -1.5rem 1.25rem;font-size:80px;color:var(--ink3);opacity:0.15">${p.icon}</div>
       ${p.badge?`<span style="background:var(--ink);color:var(--white);font-size:9px;letter-spacing:0.14em;text-transform:uppercase;padding:4px 9px;margin-bottom:10px;display:inline-block">${p.badge}</span>`:''}
-      <h2 style="font-family:'Playfair Display',serif;font-size:24px;font-weight:400;color:var(--ink);margin-bottom:4px">${p.name}</h2>
-      <p style="font-size:12px;color:var(--ink3);letter-spacing:0.06em;margin-bottom:1rem">${p.meta}</p>
-      <p style="font-size:22px;font-weight:500;color:var(--ink);margin-bottom:1.5rem">₱${p.price.toLocaleString()}</p>
+      <h2 style="font-family:'Playfair Display',serif;font-size:22px;font-weight:400;color:var(--ink);margin-bottom:3px">${p.name}</h2>
+      <p style="font-size:12px;color:var(--ink3);letter-spacing:0.06em;margin-bottom:0.75rem">${p.meta}</p>
+      <p style="font-size:21px;font-weight:500;color:var(--ink);margin-bottom:1.25rem">₱${p.price.toLocaleString()}</p>
     </div>
-    <div style="padding:0 2rem">
-      <div style="margin-bottom:1.25rem">
-        <p style="font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:var(--ink3);margin-bottom:8px">Color — <strong style="color:var(--ink)" id="modal-color-label">${modalColor}</strong></p>
-        <div style="display:flex;gap:8px;flex-wrap:wrap">
-          ${p.colors.map(c=>`<button onclick="setColor('${c}',this,${p.id})" style="border:2px solid ${c===modalColor?'var(--ink)':'var(--line)'};background:none;padding:6px 14px;font-size:11px;font-family:'DM Sans',sans-serif;cursor:pointer;color:var(--ink);transition:all 0.15s;letter-spacing:0.06em">${c}</button>`).join('')}
+    <div style="padding:0 1.5rem">
+      <div style="margin-bottom:1.1rem">
+        <p style="font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:var(--ink3);margin-bottom:7px">Color — <strong style="color:var(--ink)" id="modal-color-label">${modalColor}</strong></p>
+        <div style="display:flex;gap:7px;flex-wrap:wrap">
+          ${p.colors.map(c=>`<button onclick="setColor('${c}',this,${p.id})" style="border:2px solid ${c===modalColor?'var(--ink)':'var(--line)'};background:none;padding:6px 13px;font-size:11px;font-family:'DM Sans',sans-serif;cursor:pointer;color:var(--ink);transition:all 0.15s;letter-spacing:0.06em">${c}</button>`).join('')}
         </div>
       </div>
-      <div style="margin-bottom:1.5rem">
-        <p style="font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:var(--ink3);margin-bottom:8px">Size ${modalSize?'— <strong style="color:var(--ink)">'+modalSize+'</strong>':''}</p>
+      <div style="margin-bottom:1.25rem">
+        <p style="font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:var(--ink3);margin-bottom:7px" id="size-label">Size</p>
         <div style="display:flex;gap:6px;flex-wrap:wrap">
           ${p.sizes.map(s=>`<button onclick="setSize('${s}',this,${p.id})" style="border:1px solid ${s===modalSize?'var(--ink)':'var(--line)'};background:${s===modalSize?'var(--ink)':'none'};color:${s===modalSize?'var(--white)':'var(--ink2)'};width:44px;height:40px;font-size:12px;font-family:'DM Sans',sans-serif;cursor:pointer;transition:all 0.15s">${s}</button>`).join('')}
         </div>
-        <p style="font-size:11px;color:var(--ink3);margin-top:8px;line-height:1.6">Free size exchange within 14 days if the fit isn't right.</p>
+        <p style="font-size:11px;color:var(--ink3);margin-top:7px;line-height:1.6">Free size exchange within 14 days if the fit isn't right.</p>
       </div>
-      <div style="display:flex;align-items:center;gap:14px;margin-bottom:1.5rem">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:1.25rem">
         <p style="font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:var(--ink3)">Qty</p>
         <div style="display:flex;align-items:center;gap:10px;border:1px solid var(--line);padding:4px 10px">
-          <button onclick="setModalQty(${p.id},-1)" style="background:none;border:none;font-size:18px;cursor:pointer;color:var(--ink);width:24px;line-height:1">−</button>
+          <button onclick="setModalQty(${p.id},-1)" style="background:none;border:none;font-size:18px;cursor:pointer;color:var(--ink);width:28px;line-height:1;min-height:28px">−</button>
           <span id="modal-qty" style="font-size:14px;font-weight:500;min-width:24px;text-align:center">${modalQty}</span>
-          <button onclick="setModalQty(${p.id},1)" style="background:none;border:none;font-size:18px;cursor:pointer;color:var(--ink);width:24px;line-height:1">+</button>
+          <button onclick="setModalQty(${p.id},1)" style="background:none;border:none;font-size:18px;cursor:pointer;color:var(--ink);width:28px;line-height:1;min-height:28px">+</button>
         </div>
-        <span style="font-size:14px;font-weight:500;color:var(--ink)">= ₱${(p.price*modalQty).toLocaleString()}</span>
+        <span id="modal-total" style="font-size:14px;font-weight:500;color:var(--ink)">= ₱${(p.price*modalQty).toLocaleString()}</span>
       </div>
     </div>
-    <div style="padding:0 2rem 2rem;display:flex;gap:10px">
-      <button class="btn btn-dark" style="flex:1;text-align:center" onclick="addToCartFromModal(${p.id})">Add to Bag</button>
-      <button class="btn btn-accent" style="flex:1;text-align:center" onclick="addToCartFromModal(${p.id},true)">Buy Now</button>
+    <div style="padding:0 1.5rem 1.75rem;display:flex;gap:10px;flex-wrap:wrap">
+      <button class="btn btn-dark" style="flex:1;text-align:center;min-width:120px" onclick="addToCartFromModal(${p.id})">Add to Bag</button>
+      <button class="btn btn-accent" style="flex:1;text-align:center;min-width:120px" onclick="addToCartFromModal(${p.id},true)">Buy Now</button>
     </div>`;
 }
 function setColor(c,btn,id){
@@ -684,18 +849,14 @@ function setSize(s,btn,id){
   modalSize=s;
   btn.closest('div').querySelectorAll('button').forEach(b=>{b.style.borderColor='var(--line)';b.style.background='none';b.style.color='var(--ink2)';});
   btn.style.borderColor='var(--ink)';btn.style.background='var(--ink)';btn.style.color='var(--white)';
-  // update size label
-  const lbl=btn.closest('[style*="margin-bottom:1.5rem"]').querySelector('p');
-  lbl.innerHTML=`<span style="font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:var(--ink3)">Size — <strong style="color:var(--ink)">${s}</strong></span>`;
+  document.getElementById('size-label').innerHTML=`Size — <strong style="color:var(--ink)">${s}</strong>`;
 }
 function setModalQty(id,d){
   const p=products.find(x=>x.id===id);
   modalQty=Math.max(1,modalQty+d);
   document.getElementById('modal-qty').textContent=modalQty;
-  document.getElementById('modal-qty').nextElementSibling&&(document.getElementById('modal-qty').parentElement.nextElementSibling.textContent='= ₱'+(p.price*modalQty).toLocaleString());
-  // re-render just price
-  const priceEl=document.getElementById('modal-qty').closest('[style*="display:flex;align-items:center;gap:14px"]');
-  if(priceEl){const sp=priceEl.querySelectorAll('span');if(sp[1])sp[1].textContent='= ₱'+(p.price*modalQty).toLocaleString();}
+  const t=document.getElementById('modal-total');
+  if(t)t.textContent='= ₱'+(p.price*modalQty).toLocaleString();
 }
 function addToCartFromModal(id,buyNow=false){
   if(!modalSize){showToast('Please select a size');return;}
@@ -704,8 +865,7 @@ function addToCartFromModal(id,buyNow=false){
   const ex=cart.find(x=>x.key===key);
   if(ex){ex.qty+=modalQty;}
   else{cart.push({...p,qty:modalQty,size:modalSize,color:modalColor,key});}
-  updCount();
-  closeModal();
+  updCount();closeModal();
   showToast(p.name+' added to bag');
   if(buyNow)go('cart');
 }
@@ -718,11 +878,10 @@ function chQty(key,d){
   updCount();renderCart();
 }
 function rmItem(key){cart=cart.filter(x=>x.key!==key);updCount();renderCart();}
-
 function calcSub(){return cart.reduce((s,i)=>s+i.price*i.qty,0);}
-function calcShip(region){return cart.length>0?(SHIPPING[region]||150):0;}
+function calcShip(r){return cart.length>0?(SHIPPING[r]||150):0;}
 function calcCODFee(){return selPay==='cod'&&cart.length>0?COD_FEE:0;}
-function calcTotal(region){return calcSub()+calcShip(region)+calcCODFee();}
+function calcTotal(r){return calcSub()+calcShip(r)+calcCODFee();}
 
 function renderCart(){
   const el=document.getElementById('cartContent');
@@ -731,11 +890,12 @@ function renderCart(){
     return;
   }
   const s=calcSub(),sh=calcShip(selRegion),cod=calcCODFee(),t=s+sh+cod;
+  const cnt=cart.reduce((a,i)=>a+i.qty,0);
   el.innerHTML=`<div class="cart-wrap">
     <div class="cart-main">
-      <h2 class="sec-title">Your Bag <span style="font-size:13px;font-family:'DM Sans',sans-serif;color:var(--ink3);font-weight:400">(${cart.reduce((a,i)=>a+i.qty,0)} item${cart.reduce((a,i)=>a+i.qty,0)!==1?'s':''})</span></h2>
+      <h2 class="sec-title">Your Bag <span style="font-size:13px;font-family:'DM Sans',sans-serif;color:var(--ink3);font-weight:400">(${cnt} item${cnt!==1?'s':''})</span></h2>
       ${cart.map(i=>`<div class="c-item">
-        <div class="c-img" style="font-size:28px;color:var(--ink3);opacity:0.3">${i.icon}</div>
+        <div class="c-img">${i.icon}</div>
         <div>
           <div class="c-name">${i.name}</div>
           <div class="c-meta">${i.color} · Size ${i.size} · ${i.meta.split('·').pop().trim()}</div>
@@ -754,11 +914,8 @@ function renderCart(){
     </div>
     <div class="cart-side">
       <h3 class="sub-h">Order Summary</h3>
-      <div class="sum-row"><span>Subtotal (${cart.reduce((a,i)=>a+i.qty,0)} items)</span><span>₱${s.toLocaleString()}</span></div>
-      <div class="sum-row">
-        <span>Shipping <span style="font-size:10px;color:var(--ink3)">(${selRegion})</span></span>
-        <span>₱${sh.toLocaleString()}</span>
-      </div>
+      <div class="sum-row"><span>Subtotal (${cnt} items)</span><span>₱${s.toLocaleString()}</span></div>
+      <div class="sum-row"><span>Shipping <span style="font-size:10px;color:var(--ink3)">(${selRegion})</span></span><span>₱${sh.toLocaleString()}</span></div>
       ${cod>0?`<div class="sum-row"><span>COD Handling Fee</span><span>₱${cod.toLocaleString()}</span></div>`:''}
       <div class="sum-total"><span>Total</span><span>₱${t.toLocaleString()}</span></div>
       <div style="margin:1rem 0;padding:12px;background:var(--bg2);font-size:11px;color:var(--ink3);line-height:1.7">
@@ -766,9 +923,7 @@ function renderCart(){
       </div>
       <div class="promo"><input type="text" id="promoInput" placeholder="Promo code"><button onclick="applyPromo()">Apply</button></div>
       <div style="font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:var(--ink3);margin-bottom:8px">Accepted payments</div>
-      <div class="pay-accept">
-        <span class="pac">COD</span><span class="pac">BPI</span><span class="pac">BDO</span><span class="pac">GCash</span><span class="pac">Maya</span>
-      </div>
+      <div class="pay-accept"><span class="pac">COD</span><span class="pac">BPI</span><span class="pac">BDO</span><span class="pac">GCash</span><span class="pac">Maya</span></div>
       <button class="btn btn-dark" style="width:100%;text-align:center" onclick="go('checkout')">Proceed to Checkout →</button>
       <button class="btn btn-outline" style="width:100%;text-align:center;margin-top:10px" onclick="go('shop')">Continue Shopping</button>
     </div>
@@ -795,15 +950,15 @@ function renderCo(){
       <span class="o-iname">${i.name}<br><span style="font-size:10px;color:var(--ink3)">${i.color} · ${i.size} · ×${i.qty}</span></span>
       <span class="o-ip">₱${(i.price*i.qty).toLocaleString()}</span>
     </div>`).join('')}
-    <div style="margin-top:14px;padding-top:14px;border-top:1px solid var(--line)">
+    <div style="margin-top:12px;padding-top:12px;border-top:1px solid var(--line)">
       <div class="sum-row"><span>Subtotal</span><span>₱${s.toLocaleString()}</span></div>
-      <div class="sum-row"><span>Shipping <small style="font-size:10px;color:var(--ink3)">(${selRegion})</small></span><span>₱${sh.toLocaleString()}</span></div>
+      <div class="sum-row"><span>Shipping</span><span>₱${sh.toLocaleString()}</span></div>
       ${cod>0?`<div class="sum-row"><span>COD Fee</span><span>₱${cod.toLocaleString()}</span></div>`:''}
       <div class="sum-total"><span>Total</span><span>₱${t.toLocaleString()}</span></div>
     </div>`;
 
   if(coStep===1){
-    m.innerHTML=`<h2 class="sec-title">Delivery Information</h2>
+    m.innerHTML=`<h2 class="sec-title" style="font-size:24px">Delivery Information</h2>
       <div class="fgg">
         <div class="fg"><label>First Name</label><input type="text" id="f-fname" placeholder="Maria"></div>
         <div class="fg"><label>Last Name</label><input type="text" id="f-lname" placeholder="Santos"></div>
@@ -825,22 +980,23 @@ function renderCo(){
       <div style="background:var(--bg2);padding:12px;font-size:11px;color:var(--ink3);margin-bottom:1rem;line-height:1.7">
         Shipping to <strong style="color:var(--ink)">${selRegion}</strong>: ₱${calcShip(selRegion).toLocaleString()} · Estimated 3–5 business days
       </div>
-      <button class="btn btn-dark" style="margin-top:0.5rem" onclick="validateStep1()">Continue to Payment →</button>`;
-    document.getElementById('f-region').value=selRegion;
+      <button class="btn btn-dark" onclick="validateStep1()">Continue to Payment →</button>`;
+    const fr=document.getElementById('f-region');
+    if(fr)fr.value=selRegion;
   } else if(coStep===2){
-    m.innerHTML=`<h2 class="sec-title">Payment Method</h2>
+    m.innerHTML=`<h2 class="sec-title" style="font-size:24px">Payment Method</h2>
       <div class="pay-grid" id="payGrid">
         <div class="pm ${selPay==='cod'?'sel':''}" id="pm-cod" onclick="selP('cod')">
           <div class="pm-icon">◎</div><div class="pm-label">Cash on Delivery</div>
-          <div style="font-size:9px;color:var(--ink3);margin-top:4px;letter-spacing:0.06em">+₱${COD_FEE} fee</div>
+          <div style="font-size:9px;color:var(--ink3);margin-top:3px;letter-spacing:0.06em">+₱${COD_FEE} fee</div>
         </div>
         <div class="pm ${selPay==='bank'?'sel':''}" id="pm-bank" onclick="selP('bank')">
           <div class="pm-icon">◫</div><div class="pm-label">Bank Transfer</div>
-          <div style="font-size:9px;color:var(--ink3);margin-top:4px;letter-spacing:0.06em">No extra fee</div>
+          <div style="font-size:9px;color:var(--ink3);margin-top:3px;letter-spacing:0.06em">No extra fee</div>
         </div>
         <div class="pm ${selPay==='ew'?'sel':''}" id="pm-ew" onclick="selP('ew')">
           <div class="pm-icon">◻</div><div class="pm-label">E-Wallet</div>
-          <div style="font-size:9px;color:var(--ink3);margin-top:4px;letter-spacing:0.06em">No extra fee</div>
+          <div style="font-size:9px;color:var(--ink3);margin-top:3px;letter-spacing:0.06em">No extra fee</div>
         </div>
       </div>
       <div class="pay-info" id="payInfo"></div>
@@ -848,35 +1004,30 @@ function renderCo(){
     renderPayInfo();
   } else {
     const s2=calcSub(),sh2=calcShip(selRegion),cod2=calcCODFee(),t2=s2+sh2+cod2;
-    m.innerHTML=`<h2 class="sec-title">Review & Confirm</h2>
+    m.innerHTML=`<h2 class="sec-title" style="font-size:24px">Review &amp; Confirm</h2>
       <div class="pay-info" style="margin-bottom:1rem">
         <p style="margin-bottom:6px"><strong>Payment:</strong> ${selPay==='cod'?'Cash on Delivery (₱'+COD_FEE+' handling fee)':selPay==='bank'?'Bank Transfer (BPI / BDO)':'E-Wallet (GCash / Maya)'}</p>
         <p><strong>Delivery:</strong> Standard · ${selRegion} · ₱${calcShip(selRegion).toLocaleString()} · 3–5 business days</p>
       </div>
-      <div style="border:1px solid var(--line);padding:1.25rem;margin-bottom:1.25rem">
-        <p style="font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:var(--ink3);margin-bottom:10px">Items (${cart.reduce((a,i)=>a+i.qty,0)})</p>
-        ${cart.map(i=>`<div style="display:flex;justify-content:space-between;font-size:12px;padding:5px 0;border-bottom:1px solid var(--line)">
+      <div style="border:1px solid var(--line);padding:1.1rem;margin-bottom:1.1rem">
+        <p style="font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:var(--ink3);margin-bottom:9px">Items (${cart.reduce((a,i)=>a+i.qty,0)})</p>
+        ${cart.map(i=>`<div style="display:flex;justify-content:space-between;font-size:12px;padding:5px 0;border-bottom:1px solid var(--line);gap:8px">
           <span style="color:var(--ink2)">${i.name} — ${i.color}, ${i.size} ×${i.qty}</span>
-          <span style="font-weight:500">₱${(i.price*i.qty).toLocaleString()}</span>
+          <span style="font-weight:500;white-space:nowrap">₱${(i.price*i.qty).toLocaleString()}</span>
         </div>`).join('')}
-        <div style="display:flex;justify-content:space-between;font-size:12px;padding:8px 0;color:var(--ink2)"><span>Subtotal</span><span>₱${s2.toLocaleString()}</span></div>
+        <div style="display:flex;justify-content:space-between;font-size:12px;padding:7px 0;color:var(--ink2)"><span>Subtotal</span><span>₱${s2.toLocaleString()}</span></div>
         <div style="display:flex;justify-content:space-between;font-size:12px;padding:4px 0;color:var(--ink2)"><span>Shipping</span><span>₱${sh2.toLocaleString()}</span></div>
         ${cod2>0?`<div style="display:flex;justify-content:space-between;font-size:12px;padding:4px 0;color:var(--ink2)"><span>COD Fee</span><span>₱${cod2.toLocaleString()}</span></div>`:''}
         <div style="display:flex;justify-content:space-between;font-size:15px;font-weight:500;padding-top:10px;margin-top:4px;border-top:2px solid var(--ink)"><span>Total</span><span>₱${t2.toLocaleString()}</span></div>
       </div>
-      <p style="font-size:12px;color:var(--ink3);line-height:1.9;margin-bottom:1.5rem">By placing your order you agree to our Terms of Service. A confirmation will be sent to your email.</p>
-      <button class="btn btn-accent" style="width:100%;text-align:center;padding:16px" onclick="placeOrder()">Place Order — ₱${t2.toLocaleString()}</button>`;
+      <p style="font-size:12px;color:var(--ink3);line-height:1.9;margin-bottom:1.25rem">By placing your order you agree to our Terms of Service. A confirmation will be sent to your email.</p>
+      <button class="btn btn-accent" style="width:100%;text-align:center;padding:16px;font-size:12px" onclick="placeOrder()">Place Order — ₱${t2.toLocaleString()}</button>`;
   }
 }
 
 function updateRegion(r){
-  selRegion=r;
-  const info=document.querySelector('#coMain [style*="Shipping to"]');
-  if(info)info.innerHTML=`Shipping to <strong style="color:var(--ink)">${selRegion}</strong>: ₱${calcShip(selRegion).toLocaleString()} · Estimated 3–5 business days`;
-  // update sidebar
-  renderCo();
+  selRegion=r;renderCo();
 }
-
 function validateStep1(){
   const fname=document.getElementById('f-fname')?.value.trim();
   const email=document.getElementById('f-email')?.value.trim();
@@ -886,56 +1037,31 @@ function validateStep1(){
   selRegion=document.getElementById('f-region')?.value||selRegion;
   nxtStep();
 }
-
 function selP(method){
-  selPay=method;
-  ['cod','bank','ew'].forEach(x=>{
-    const el=document.getElementById('pm-'+x);
-    if(el)el.classList.toggle('sel',x===method);
-  });
-  renderPayInfo();
-  // update sidebar totals
-  const a=document.getElementById('coSide');
-  const s=calcSub(),sh=calcShip(selRegion),cod=calcCODFee(),t=s+sh+cod;
-  const rows=a.querySelectorAll('.sum-row');
-  // re-render sidebar
-  renderCo();
-  // re-render payment panel without losing selection
-  const pg=document.getElementById('payGrid');
-  if(pg)['cod','bank','ew'].forEach(x=>{
-    const el=document.getElementById('pm-'+x);
-    if(el)el.classList.toggle('sel',x===selPay);
-  });
-  renderPayInfo();
+  selPay=method;renderCo();
+  setTimeout(()=>{
+    ['cod','bank','ew'].forEach(x=>{
+      const el=document.getElementById('pm-'+x);
+      if(el)el.classList.toggle('sel',x===method);
+    });
+    renderPayInfo();
+  },10);
 }
-
 function renderPayInfo(){
   const el=document.getElementById('payInfo');if(!el)return;
-  const s=calcSub(),sh=calcShip(selRegion),cod=calcCODFee(),t=s+sh+cod;
+  const t=calcTotal(selRegion);
   const info={
     cod:`<p><strong>Cash on Delivery</strong> — Pay when your parcel arrives. Prepare the exact amount.<br><br>
-      <span style="font-size:11px;color:var(--ink3)">Note: A ₱${COD_FEE} handling fee applies for COD orders. Your total to pay upon delivery is <strong style="color:var(--ink)">₱${t.toLocaleString()}</strong>.</span></p>`,
-    bank:`<p><strong>Bank Transfer</strong><br>
-      BPI: <strong>1234-5678-90</strong><br>
-      BDO: <strong>0987-6543-21</strong><br>
-      Account Name: <strong>Eras and Moonlight Co.</strong><br><br>
-      Amount to transfer: <strong style="font-size:14px">₱${t.toLocaleString()}</strong><br><br>
-      Send proof of payment to <strong>orders@erasandmoonlight.ph</strong></p>`,
-    ew:`<p><strong>GCash / Maya</strong><br>
-      GCash: <strong>0917-123-4567</strong><br>
-      Maya: <strong>0917-123-4567</strong><br>
-      Account Name: <strong>Eras and Moonlight</strong><br><br>
-      Amount to send: <strong style="font-size:14px">₱${t.toLocaleString()}</strong><br><br>
-      Screenshot your receipt and send to our Messenger or email.</p>`
+      <span style="font-size:11px;color:var(--ink3)">Note: A ₱${COD_FEE} handling fee applies. Your total to pay upon delivery: <strong style="color:var(--ink)">₱${t.toLocaleString()}</strong>.</span></p>`,
+    bank:`<p><strong>Bank Transfer</strong><br>BPI: <strong>1234-5678-90</strong><br>BDO: <strong>0987-6543-21</strong><br>Account Name: <strong>Eras and Moonlight Co.</strong><br><br>Amount: <strong style="font-size:14px">₱${t.toLocaleString()}</strong><br><br>Send proof to <strong>orders@erasandmoonlight.ph</strong></p>`,
+    ew:`<p><strong>GCash / Maya</strong><br>GCash: <strong>0917-123-4567</strong><br>Maya: <strong>0917-123-4567</strong><br>Account: <strong>Eras and Moonlight</strong><br><br>Amount: <strong style="font-size:14px">₱${t.toLocaleString()}</strong><br><br>Screenshot your receipt and send to our Messenger or email.</p>`
   };
   el.innerHTML=info[selPay];
 }
-
 function nxtStep(){coStep++;renderCo();window.scrollTo(0,0);}
-
 function placeOrder(){
   const ref='EM-'+Math.floor(100000+Math.random()*900000);
-  const s=calcSub(),sh=calcShip(selRegion),cod=calcCODFee(),t=s+sh+cod;
+  const t=calcTotal(selRegion);
   const sw=document.getElementById('page-success').querySelector('.success-wrap');
   sw.querySelector('p').innerHTML=`Thank you for shopping with Eras and Moonlight!<br>
     <span style="font-size:12px;color:var(--ink3)">
@@ -945,8 +1071,6 @@ function placeOrder(){
       <br>We'll send tracking details to your email once dispatched.
     </span>`;
   document.getElementById('oref').textContent='Order #'+ref;
-  const payLabel=sw.querySelector('#order-pay-summary');
-  if(payLabel)payLabel.textContent=`${selPay==='cod'?'Cash on Delivery':selPay==='bank'?'Bank Transfer':'E-Wallet'} · ₱${t.toLocaleString()}`;
   cart=[];updCount();go('success');
 }
 
@@ -956,5 +1080,12 @@ function showToast(msg){
   setTimeout(()=>t.classList.remove('show'),2500);
 }
 
+/* Close mobile menu on resize to desktop */
+window.addEventListener('resize',()=>{
+  if(window.innerWidth>680)closeMenu();
+});
+
 renderProds('all');
 </script>
+</body>
+</html>
