@@ -1,0 +1,738 @@
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=DM+Sans:wght@300;400;500&display=swap');
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --ink:#0D0D0D;--ink2:#4A4A4A;--ink3:#9A9A9A;
+  --bg:#FAFAF8;--bg2:#F3F2EF;--bg3:#ECEAE5;
+  --line:#E2E0DB;--accent:#B8935A;--white:#FFFFFF;
+}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--ink);min-height:100vh;overflow-x:hidden}
+.page{display:none}.page.active{display:block}
+nav{background:var(--white);border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 2.5rem;height:60px;position:sticky;top:0;z-index:100}
+.brand{font-family:'Playfair Display',serif;font-size:17px;font-weight:400;letter-spacing:0.06em;color:var(--ink);cursor:pointer;white-space:nowrap}
+.brand em{font-style:italic;color:var(--accent)}
+.nav-links{display:flex;gap:2.5rem}
+.nav-links a{font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:var(--ink2);cursor:pointer;text-decoration:none;transition:color 0.2s}
+.nav-links a:hover{color:var(--ink)}
+.nav-right{display:flex;align-items:center;gap:1.5rem}
+.cart-icon{cursor:pointer;display:flex;align-items:center;gap:6px;font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:var(--ink2);background:none;border:none;font-family:'DM Sans',sans-serif;transition:color 0.2s}
+.cart-icon:hover{color:var(--ink)}
+.cart-dot{background:var(--ink);color:var(--white);width:17px;height:17px;border-radius:50%;font-size:10px;display:flex;align-items:center;justify-content:center;font-weight:500}
+
+.hero{background:var(--white);display:grid;grid-template-columns:1fr 1fr;min-height:calc(100vh - 60px)}
+.hero-text{display:flex;flex-direction:column;justify-content:center;padding:5rem 3.5rem;border-right:1px solid var(--line)}
+.hero-kicker{font-size:10px;letter-spacing:0.25em;text-transform:uppercase;color:var(--accent);margin-bottom:2rem}
+.hero-h1{font-family:'Playfair Display',serif;font-size:clamp(44px,6vw,72px);font-weight:400;line-height:1.05;color:var(--ink);margin-bottom:1.5rem}
+.hero-h1 em{font-style:italic;color:var(--ink2)}
+.hero-p{font-size:13px;line-height:2;color:var(--ink2);max-width:340px;margin-bottom:2.5rem;letter-spacing:0.02em}
+.btn{display:inline-block;font-family:'DM Sans',sans-serif;font-size:11px;letter-spacing:0.18em;text-transform:uppercase;cursor:pointer;transition:all 0.25s;border:none}
+.btn-dark{background:var(--ink);color:var(--white);padding:13px 36px}
+.btn-dark:hover{background:#333}
+.btn-outline{background:transparent;color:var(--ink);border:1px solid var(--ink);padding:12px 36px}
+.btn-outline:hover{background:var(--ink);color:var(--white)}
+.btn-accent{background:var(--accent);color:var(--white);padding:13px 36px}
+.btn-accent:hover{background:#9E7B44}
+.hero-visual{background:var(--bg2);display:flex;align-items:center;justify-content:center;position:relative}
+.hero-placeholder{text-align:center}
+.hero-mono{font-size:80px;opacity:0.15}
+.hero-caption{font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:var(--ink3);margin-top:1rem}
+
+.strip{background:var(--ink);padding:14px 2rem;display:flex;gap:4rem;justify-content:center;align-items:center;overflow-x:auto}
+.strip span{font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(255,255,255,0.6);white-space:nowrap}
+.strip-dot{width:3px;height:3px;background:var(--accent);border-radius:50%;flex-shrink:0}
+
+.section-pad{padding:5rem 2.5rem}
+.section-label{font-size:10px;letter-spacing:0.25em;text-transform:uppercase;color:var(--accent);margin-bottom:1rem}
+.section-title{font-family:'Playfair Display',serif;font-size:clamp(28px,4vw,42px);font-weight:400;color:var(--ink);margin-bottom:2.5rem;line-height:1.2}
+
+.categories{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);margin:0 2.5rem}
+.cat-card{background:var(--white);padding:2.5rem 1.5rem;cursor:pointer;transition:background 0.2s;text-align:center}
+.cat-card:hover{background:var(--bg2)}
+.cat-icon{font-size:32px;margin-bottom:1rem;opacity:0.5}
+.cat-name{font-family:'Playfair Display',serif;font-size:18px;font-weight:400;color:var(--ink);margin-bottom:4px}
+.cat-count{font-size:11px;color:var(--ink3);letter-spacing:0.08em}
+
+.shop-header{padding:3rem 2.5rem 0;background:var(--white);border-bottom:1px solid var(--line)}
+.shop-top{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:2rem}
+.filter-bar{display:flex;gap:0;overflow-x:auto}
+.ftab{background:none;border:none;border-bottom:2px solid transparent;padding:12px 20px;font-family:'DM Sans',sans-serif;font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:var(--ink3);cursor:pointer;transition:all 0.2s;white-space:nowrap}
+.ftab.active,.ftab:hover{color:var(--ink);border-bottom-color:var(--ink)}
+
+.products-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:1px;background:var(--line);margin:1px 0}
+.product-card{background:var(--white);cursor:pointer;transition:background 0.2s}
+.product-card:hover{background:var(--bg)}
+.p-img{height:300px;background:var(--bg2);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
+.p-emoji{font-size:64px;opacity:0.2}
+.p-badge{position:absolute;top:14px;left:14px;background:var(--ink);color:var(--white);font-size:9px;letter-spacing:0.14em;text-transform:uppercase;padding:4px 9px}
+.p-info{padding:1.25rem 1.25rem 1.5rem}
+.p-name{font-family:'Playfair Display',serif;font-size:16px;font-weight:400;color:var(--ink);margin-bottom:3px}
+.p-sub{font-size:11px;color:var(--ink3);letter-spacing:0.06em;margin-bottom:10px}
+.p-row{display:flex;justify-content:space-between;align-items:center}
+.p-price{font-size:14px;font-weight:500;color:var(--ink)}
+.p-add{background:none;border:1px solid var(--line);color:var(--ink2);font-family:'DM Sans',sans-serif;font-size:10px;letter-spacing:0.12em;text-transform:uppercase;padding:6px 14px;cursor:pointer;transition:all 0.2s}
+.p-add:hover{border-color:var(--ink);color:var(--ink);background:var(--ink);color:var(--white)}
+
+.cart-wrap{display:grid;grid-template-columns:1fr 340px;min-height:80vh;background:var(--white)}
+.cart-main{padding:3rem 2.5rem;border-right:1px solid var(--line)}
+.cart-side{padding:3rem 2rem;background:var(--bg)}
+.sec-title{font-family:'Playfair Display',serif;font-size:30px;font-weight:400;color:var(--ink);margin-bottom:2rem}
+.c-item{display:grid;grid-template-columns:88px 1fr auto;gap:1.25rem;padding:1.5rem 0;border-bottom:1px solid var(--line);align-items:start}
+.c-img{width:88px;height:110px;background:var(--bg2);display:flex;align-items:center;justify-content:center;font-size:32px;opacity:0.4;flex-shrink:0}
+.c-name{font-family:'Playfair Display',serif;font-size:16px;font-weight:400;color:var(--ink);margin-bottom:3px}
+.c-meta{font-size:11px;color:var(--ink3);letter-spacing:0.06em;margin-bottom:12px}
+.qty-row{display:flex;align-items:center;gap:12px}
+.qbtn{width:28px;height:28px;border:1px solid var(--line);background:none;cursor:pointer;font-size:14px;color:var(--ink);display:flex;align-items:center;justify-content:center;transition:all 0.2s;font-family:'DM Sans',sans-serif}
+.qbtn:hover{border-color:var(--ink);background:var(--ink);color:var(--white)}
+.qnum{font-size:13px;font-weight:500;min-width:18px;text-align:center}
+.rmv{font-size:10px;color:var(--ink3);background:none;border:none;cursor:pointer;letter-spacing:0.1em;text-transform:uppercase;font-family:'DM Sans',sans-serif;margin-top:6px;display:block;text-decoration:underline}
+.c-price{font-size:15px;font-weight:500;color:var(--ink);padding-top:2px}
+.sum-row{display:flex;justify-content:space-between;font-size:13px;color:var(--ink2);padding:9px 0}
+.sum-total{display:flex;justify-content:space-between;font-size:16px;font-weight:500;color:var(--ink);padding-top:14px;margin-top:6px;border-top:1px solid var(--line)}
+.promo{display:flex;gap:8px;margin:1.5rem 0}
+.promo input{flex:1;border:1px solid var(--line);padding:10px 12px;font-size:12px;font-family:'DM Sans',sans-serif;background:var(--white);outline:none;letter-spacing:0.05em}
+.promo input:focus{border-color:var(--ink)}
+.promo button{border:1px solid var(--ink);background:none;color:var(--ink);padding:0 16px;font-size:10px;letter-spacing:0.14em;text-transform:uppercase;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.2s}
+.promo button:hover{background:var(--ink);color:var(--white)}
+.pay-accept{display:flex;flex-wrap:wrap;gap:6px;margin:1.25rem 0 1.5rem}
+.pac{border:1px solid var(--line);padding:4px 10px;font-size:10px;color:var(--ink3);letter-spacing:0.08em;background:var(--white)}
+
+.co-wrap{display:grid;grid-template-columns:1fr 320px;min-height:80vh;background:var(--white)}
+.co-main{padding:3rem 2.5rem;border-right:1px solid var(--line)}
+.co-side{padding:3rem 2rem;background:var(--bg)}
+.steps{display:flex;align-items:center;gap:0;margin-bottom:2.5rem}
+.sdot{width:26px;height:26px;border:1px solid var(--line);display:flex;align-items:center;justify-content:center;font-size:11px;color:var(--ink3);font-weight:500;flex-shrink:0;transition:all 0.3s}
+.sdot.active{background:var(--ink);border-color:var(--ink);color:var(--white)}
+.sdot.done{background:var(--accent);border-color:var(--accent);color:var(--white)}
+.slabel{font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--ink3);margin-left:8px;white-space:nowrap}
+.sline{flex:1;height:1px;background:var(--line);margin:0 16px;max-width:60px}
+.fg{display:flex;flex-direction:column;gap:5px;margin-bottom:14px}
+.fgg{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.fg.full{grid-column:1/-1}
+label{font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:var(--ink3)}
+input[type=text],input[type=email],input[type=tel],select,textarea{border:1px solid var(--line);padding:10px 12px;font-size:13px;background:var(--white);font-family:'DM Sans',sans-serif;outline:none;transition:border-color 0.2s;width:100%;color:var(--ink)}
+input:focus,select:focus,textarea:focus{border-color:var(--ink)}
+.pay-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:1.5rem}
+.pm{border:1px solid var(--line);padding:18px 10px;text-align:center;cursor:pointer;transition:all 0.2s;background:var(--white)}
+.pm.sel{border-color:var(--ink);background:var(--bg)}
+.pm-icon{font-size:20px;margin-bottom:6px;opacity:0.5}
+.pm-label{font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink2)}
+.pay-info{border:1px solid var(--line);padding:1.25rem;background:var(--bg);margin-bottom:1.5rem}
+.pay-info p{font-size:12px;color:var(--ink2);line-height:1.9}
+.pay-info strong{color:var(--ink)}
+.o-item{display:flex;justify-content:space-between;padding:9px 0;border-bottom:1px solid var(--line);font-size:12px}
+.o-iname{color:var(--ink2)}
+.o-ip{color:var(--ink);font-weight:500}
+.sub-h{font-family:'Playfair Display',serif;font-size:18px;font-weight:400;color:var(--ink);margin-bottom:1rem}
+
+.empty{text-align:center;padding:5rem 2rem}
+.empty h2{font-family:'Playfair Display',serif;font-size:28px;font-weight:400;color:var(--ink);margin:1rem 0 0.5rem}
+.empty p{font-size:13px;color:var(--ink3);margin-bottom:2rem;letter-spacing:0.04em}
+
+.about-banner{background:var(--ink);padding:5rem 2.5rem;text-align:center}
+.about-banner h1{font-family:'Playfair Display',serif;font-size:52px;font-weight:400;color:var(--white);margin-bottom:1rem}
+.about-banner p{font-size:13px;color:rgba(255,255,255,0.5);max-width:480px;margin:0 auto;line-height:2;letter-spacing:0.03em}
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:0;background:var(--line);margin:0}
+.about-block{padding:3rem;background:var(--white)}
+.about-block h2{font-family:'Playfair Display',serif;font-size:26px;font-weight:400;color:var(--ink);margin-bottom:1rem}
+.about-block p{font-size:13px;color:var(--ink2);line-height:2}
+.vals{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line);margin:1px 0}
+.val{background:var(--bg);padding:2rem}
+.val h4{font-family:'Playfair Display',serif;font-size:18px;font-weight:400;color:var(--ink);margin-bottom:0.5rem}
+.val p{font-size:12px;color:var(--ink3);line-height:1.8}
+
+.contact-wrap{display:grid;grid-template-columns:1fr 1fr;gap:0;background:var(--line)}
+.contact-info{background:var(--ink);padding:4rem 3rem}
+.contact-info h2{font-family:'Playfair Display',serif;font-size:36px;font-weight:400;color:var(--white);margin-bottom:1.5rem}
+.contact-info p{font-size:13px;color:rgba(255,255,255,0.55);line-height:2;margin-bottom:2rem}
+.ci-row{display:flex;flex-direction:column;gap:16px}
+.ci-item label{font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:var(--accent);display:block;margin-bottom:3px}
+.ci-item span{font-size:13px;color:rgba(255,255,255,0.75)}
+.contact-form{background:var(--white);padding:4rem 3rem}
+.contact-form h2{font-family:'Playfair Display',serif;font-size:30px;font-weight:400;color:var(--ink);margin-bottom:1.5rem}
+textarea{height:100px;resize:vertical}
+
+.success-wrap{padding:6rem 2rem;text-align:center;background:var(--white);min-height:60vh;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.success-mark{width:56px;height:56px;border:1px solid var(--accent);display:flex;align-items:center;justify-content:center;margin:0 auto 2rem;font-size:20px;color:var(--accent)}
+.success-wrap h1{font-family:'Playfair Display',serif;font-size:40px;font-weight:400;color:var(--ink);margin-bottom:1rem}
+.success-wrap p{font-size:13px;color:var(--ink2);line-height:2;max-width:420px}
+.order-tag{border:1px solid var(--line);padding:10px 24px;font-size:12px;color:var(--ink);letter-spacing:0.12em;margin:1.5rem auto;display:inline-block}
+
+footer{background:var(--ink);padding:3rem 2.5rem;display:grid;grid-template-columns:1fr 1fr 1fr;gap:2rem;align-items:center}
+.f-brand{font-family:'Playfair Display',serif;font-size:18px;color:var(--white)}
+.f-brand em{font-style:italic;color:var(--accent)}
+.f-links{display:flex;gap:2rem;justify-content:center}
+.f-links a{font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:rgba(255,255,255,0.4);cursor:pointer;text-decoration:none;transition:color 0.2s}
+.f-links a:hover{color:rgba(255,255,255,0.8)}
+.f-copy{font-size:10px;color:rgba(255,255,255,0.3);letter-spacing:0.08em;text-align:right}
+
+.toast-bar{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%) translateY(80px);background:var(--ink);color:var(--white);padding:11px 28px;font-size:11px;letter-spacing:0.12em;text-transform:uppercase;transition:transform 0.3s;z-index:999;white-space:nowrap}
+.toast-bar.show{transform:translateX(-50%) translateY(0)}
+@media(max-width:680px){
+  .hero{grid-template-columns:1fr}.hero-visual{display:none}
+  .cart-wrap,.co-wrap,.contact-wrap,.about-grid{grid-template-columns:1fr}
+  .categories{grid-template-columns:1fr 1fr}
+  .fgg{grid-template-columns:1fr}
+  footer{grid-template-columns:1fr;text-align:center}.f-copy{text-align:center}.f-links{justify-content:center}
+  .nav-links{display:none}
+}
+</style>
+
+<nav>
+  <div class="brand" onclick="go('home')"><em>Eras</em> & Moonlight</div>
+  <div class="nav-links">
+    <a onclick="go('home')">Home</a>
+    <a onclick="go('shop')">Shop</a>
+    <a onclick="go('stores')">Stores</a>
+    <a onclick="go('about')">About</a>
+    <a onclick="go('contact')">Contact</a>
+  </div>
+  <div class="nav-right">
+    <button class="cart-icon" onclick="go('cart')">
+      Bag <span class="cart-dot" id="ccount">0</span>
+    </button>
+  </div>
+</nav>
+
+<div id="page-home" class="page active">
+  <div class="hero">
+    <div class="hero-text">
+      <p class="hero-kicker">New Arrivals — Spring 2026</p>
+      <h1 class="hero-h1">Dressed for<br><em>every era.</em></h1>
+      <p class="hero-p">Timeless clothing for men and women. Asian-sourced styles curated across every category — from casual ease to refined elegance.</p>
+      <button class="btn btn-dark" onclick="go('shop')">Shop the Collection</button>
+    </div>
+    <div class="hero-visual">
+      <svg width="100%" viewBox="0 0 500 420" xmlns="http://www.w3.org/2000/svg" style="max-height:100%;object-fit:cover">
+        <defs>
+          <pattern id="grain" width="4" height="4" patternUnits="userSpaceOnUse">
+            <circle cx="1" cy="1" r="0.4" fill="rgba(255,255,255,0.04)"/>
+            <circle cx="3" cy="3" r="0.4" fill="rgba(255,255,255,0.04)"/>
+          </pattern>
+        </defs>
+        <rect width="500" height="420" fill="#0D0D0D"/>
+        <rect width="500" height="420" fill="url(#grain)"/>
+        <line x1="30" y1="50" x2="470" y2="50" stroke="#B8935A" stroke-width="0.5" opacity="0.4"/>
+        <line x1="30" y1="370" x2="470" y2="370" stroke="#B8935A" stroke-width="0.5" opacity="0.4"/>
+        <circle cx="250" cy="210" r="130" fill="none" stroke="#B8935A" stroke-width="0.8" opacity="0.3"/>
+        <circle cx="250" cy="210" r="108" fill="none" stroke="#B8935A" stroke-width="0.4" opacity="0.15"/>
+        <path d="M250 100 A110 110 0 1 1 250 320 A75 75 0 1 0 250 100Z" fill="#B8935A" opacity="0.1"/>
+        <path d="M250 100 A110 110 0 1 1 250 320 A75 75 0 1 0 250 100Z" fill="none" stroke="#B8935A" stroke-width="1" opacity="0.55"/>
+        <path d="M50 185 C110 165 155 245 210 205" fill="none" stroke="rgba(255,255,255,0.07)" stroke-width="1"/>
+        <path d="M50 205 C115 180 158 260 212 218" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+        <path d="M450 185 C390 165 345 245 290 205" fill="none" stroke="rgba(255,255,255,0.07)" stroke-width="1"/>
+        <path d="M450 205 C385 180 342 260 288 218" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+        <circle cx="90" cy="88" r="1.2" fill="#B8935A" opacity="0.7"/>
+        <circle cx="410" cy="88" r="1.2" fill="#B8935A" opacity="0.7"/>
+        <circle cx="140" cy="125" r="0.7" fill="rgba(255,255,255,0.4)"/>
+        <circle cx="360" cy="120" r="0.7" fill="rgba(255,255,255,0.4)"/>
+        <circle cx="250" cy="72" r="1" fill="rgba(255,255,255,0.45)"/>
+        <text x="250" y="190" text-anchor="middle" font-family="'Playfair Display',Georgia,serif" font-size="48" font-weight="400" letter-spacing="14" fill="#FAFAF8" opacity="0.95">ERAS</text>
+        <text x="250" y="220" text-anchor="middle" font-family="'Playfair Display',Georgia,serif" font-size="12" font-weight="400" letter-spacing="5" fill="#B8935A" opacity="0.85">&amp;</text>
+        <text x="250" y="248" text-anchor="middle" font-family="'Playfair Display',Georgia,serif" font-size="26" font-weight="400" letter-spacing="10" fill="#FAFAF8" opacity="0.82" font-style="italic">Moonlight</text>
+        <text x="250" y="288" text-anchor="middle" font-family="'Playfair Display',Georgia,serif" font-size="9" letter-spacing="3.5" fill="#B8935A" opacity="0.7">ASIAN FASHION · MEN &amp; WOMEN</text>
+        <line x1="150" y1="308" x2="350" y2="308" stroke="#B8935A" stroke-width="0.5" opacity="0.4"/>
+        <path d="M30 65 L30 50 L45 50" fill="none" stroke="#B8935A" stroke-width="0.7" opacity="0.5"/>
+        <path d="M470 65 L470 50 L455 50" fill="none" stroke="#B8935A" stroke-width="0.7" opacity="0.5"/>
+        <path d="M30 355 L30 370 L45 370" fill="none" stroke="#B8935A" stroke-width="0.7" opacity="0.5"/>
+        <path d="M470 355 L470 370 L455 370" fill="none" stroke="#B8935A" stroke-width="0.7" opacity="0.5"/>
+        <text x="250" y="395" text-anchor="middle" font-family="'Playfair Display',Georgia,serif" font-size="8" letter-spacing="2.5" fill="rgba(255,255,255,0.22)">PHILIPPINES · EST. 2022</text>
+      </svg>
+    </div>
+  </div>
+  <div class="strip">
+    <span>Free shipping nationwide</span><div class="strip-dot"></div>
+    <span>Easy 14-day returns</span><div class="strip-dot"></div>
+    <span>COD · Bank · E-Wallet</span><div class="strip-dot"></div>
+    <span>Asian-sourced · Men &amp; Women</span><div class="strip-dot"></div>
+    <span>Visit us in-store</span>
+  </div>
+  <div class="section-pad" style="background:var(--white)">
+    <p class="section-label">Shop by category</p>
+    <h2 class="section-title">Find your style</h2>
+    <div class="categories">
+      <div class="cat-card" onclick="go('shop');filterP(null,'dress')">
+        <div class="cat-icon">◈</div>
+        <div class="cat-name">Dresses</div>
+        <div class="cat-count">12 pieces · Women</div>
+      </div>
+      <div class="cat-card" onclick="go('shop');filterP(null,'top')">
+        <div class="cat-icon">◇</div>
+        <div class="cat-name">Tops &amp; Blouses</div>
+        <div class="cat-count">18 pieces · Men &amp; Women</div>
+      </div>
+      <div class="cat-card" onclick="go('shop');filterP(null,'coord')">
+        <div class="cat-icon">◉</div>
+        <div class="cat-name">Co-ord Sets</div>
+        <div class="cat-count">8 pieces · Men &amp; Women</div>
+      </div>
+      <div class="cat-card" onclick="go('shop');filterP(null,'skirt')">
+        <div class="cat-icon">○</div>
+        <div class="cat-name">Skirts &amp; Bottoms</div>
+        <div class="cat-count">10 pieces · Women</div>
+      </div>
+      <div class="cat-card" onclick="go('shop');filterP(null,'mens')">
+        <div class="cat-icon">▣</div>
+        <div class="cat-name">Men's Essentials</div>
+        <div class="cat-count">14 pieces · Men</div>
+      </div>
+      <div class="cat-card" onclick="go('shop');filterP(null,'outerwear')">
+        <div class="cat-icon">◆</div>
+        <div class="cat-name">Outerwear</div>
+        <div class="cat-count">6 pieces · Men &amp; Women</div>
+      </div>
+    </div>
+  </div>
+  <footer>
+    <div class="f-brand"><em>Eras</em> & Moonlight</div>
+    <div class="f-links">
+      <a onclick="go('shop')">Shop</a>
+      <a onclick="go('about')">About</a>
+      <a onclick="go('contact')">Contact</a>
+    </div>
+    <div class="f-copy">© 2026 Eras and Moonlight</div>
+  </footer>
+</div>
+
+<div id="page-shop" class="page">
+  <div class="shop-header">
+    <div class="shop-top">
+      <div>
+        <p class="section-label">Collection</p>
+        <h1 style="font-family:'Playfair Display',serif;font-size:36px;font-weight:400;color:var(--ink)">All Pieces</h1>
+      </div>
+      <span id="pcount" style="font-size:12px;color:var(--ink3);letter-spacing:0.06em;align-self:flex-end;padding-bottom:4px"></span>
+    </div>
+    <div class="filter-bar" id="filterBar">
+      <button class="ftab active" onclick="filterP(this,'all')">All</button>
+      <button class="ftab" onclick="filterP(this,'dress')">Dresses</button>
+      <button class="ftab" onclick="filterP(this,'top')">Tops</button>
+      <button class="ftab" onclick="filterP(this,'mens')">Men's</button>
+      <button class="ftab" onclick="filterP(this,'coord')">Co-ords</button>
+      <button class="ftab" onclick="filterP(this,'skirt')">Skirts</button>
+      <button class="ftab" onclick="filterP(this,'outerwear')">Outerwear</button>
+    </div>
+  </div>
+  <div class="products-grid" id="pgrid"></div>
+  <footer>
+    <div class="f-brand"><em>Eras</em> & Moonlight</div>
+    <div class="f-links"><a onclick="go('shop')">Shop</a><a onclick="go('stores')">Stores</a><a onclick="go('about')">About</a><a onclick="go('contact')">Contact</a></div>
+    <div class="f-copy">© 2026 Eras and Moonlight</div>
+  </footer>
+</div>
+
+<div id="page-cart" class="page">
+  <div id="cartContent"></div>
+  <footer>
+    <div class="f-brand"><em>Eras</em> & Moonlight</div>
+    <div class="f-links"><a onclick="go('shop')">Shop</a><a onclick="go('stores')">Stores</a><a onclick="go('about')">About</a><a onclick="go('contact')">Contact</a></div>
+    <div class="f-copy">© 2026 Eras and Moonlight</div>
+  </footer>
+</div>
+
+<div id="page-checkout" class="page">
+  <div style="padding:1.5rem 2.5rem;border-bottom:1px solid var(--line);background:var(--white);display:flex;align-items:center;justify-content:space-between">
+    <div class="brand" onclick="go('cart')" style="cursor:pointer;font-size:15px"><em>Eras</em> & Moonlight</div>
+    <div class="steps" id="steps">
+      <div class="sdot active" id="s1">1</div><span class="slabel">Information</span>
+      <div class="sline"></div>
+      <div class="sdot" id="s2">2</div><span class="slabel">Payment</span>
+      <div class="sline"></div>
+      <div class="sdot" id="s3">3</div><span class="slabel">Confirm</span>
+    </div>
+  </div>
+  <div class="co-wrap">
+    <div class="co-main" id="coMain"></div>
+    <div class="co-side" id="coSide"></div>
+  </div>
+  <footer>
+    <div class="f-brand"><em>Eras</em> & Moonlight</div>
+    <div class="f-links"><a onclick="go('shop')">Shop</a><a onclick="go('stores')">Stores</a><a onclick="go('about')">About</a><a onclick="go('contact')">Contact</a></div>
+    <div class="f-copy">© 2026 Eras and Moonlight</div>
+  </footer>
+</div>
+
+<div id="page-about" class="page">
+  <div class="about-banner">
+    <h1>Our Story</h1>
+    <p>Built on the belief that great clothing transcends seasons — Eras and Moonlight dresses men and women for every chapter of their lives.</p>
+  </div>
+  <div class="about-grid">
+    <div class="about-block">
+      <h2>Who we are</h2>
+      <p>Eras and Moonlight is a Philippine-based clothing label founded in 2022. We curate for anyone who moves between worlds — effortlessly, unapologetically. Our collections span casual, formal, and everything in between — designed for both men and women.</p>
+    </div>
+    <div class="about-block" style="background:var(--bg)">
+      <h2>How we work</h2>
+      <p>Our pieces are carefully sourced from trusted suppliers across Asia — Japan, Korea, China, and Thailand — bringing you quality fabrics and contemporary cuts at honest prices. We keep our sourcing transparent so you know exactly where your clothes come from.</p>
+    </div>
+  </div>
+  <div class="vals">
+    <div class="val"><h4>Timeless</h4><p>Designed beyond trends — pieces built to be worn across years, not seasons.</p></div>
+    <div class="val"><h4>Asian-Sourced</h4><p>Carefully selected from Japan, Korea, China, and Thailand. Quality you can feel from the first wear.</p></div>
+    <div class="val"><h4>Inclusive</h4><p>Sizes XS–2XL for women, S–XXL for men. Fits designed for real bodies.</p></div>
+    <div class="val"><h4>Honest</h4><p>Clear pricing, transparent sourcing, and straightforward returns — always.</p></div>
+  </div>
+  <footer>
+    <div class="f-brand"><em>Eras</em> & Moonlight</div>
+    <div class="f-links"><a onclick="go('shop')">Shop</a><a onclick="go('stores')">Stores</a><a onclick="go('about')">About</a><a onclick="go('contact')">Contact</a></div>
+    <div class="f-copy">© 2026 Eras and Moonlight</div>
+  </footer>
+</div>
+
+<div id="page-contact" class="page">
+  <div style="padding:3rem 2.5rem 2rem;background:var(--white);border-bottom:1px solid var(--line)">
+    <p class="section-label">Get in touch</p>
+    <h1 style="font-family:'Playfair Display',serif;font-size:36px;font-weight:400;color:var(--ink)">We'd love to hear from you</h1>
+  </div>
+  <div class="contact-wrap">
+    <div class="contact-info">
+      <h2>Contact Details</h2>
+      <p>Whether it's a sizing question, an order concern, or just a note to say hello — our team typically responds within 24 hours.</p>
+      <div class="ci-row">
+        <div class="ci-item"><label>Email</label><span>hello@erasandmoonlight.ph</span></div>
+        <div class="ci-item"><label>Instagram</label><span>@erasandmoonlight</span></div>
+        <div class="ci-item"><label>Facebook</label><span>Eras and Moonlight</span></div>
+        <div class="ci-item"><label>Hours</label><span>Mon–Sat, 9am–6pm PHT</span></div>
+        <div class="ci-item"><label>Stores</label><span>Tutuban Mall & Ayala Malls Cloverleaf</span></div>
+      </div>
+    </div>
+    <div class="contact-form">
+      <h2>Send a message</h2>
+      <div class="fg"><label>Full Name</label><input type="text" placeholder="Your name"></div>
+      <div class="fg"><label>Email Address</label><input type="email" placeholder="you@email.com"></div>
+      <div class="fg">
+        <label>Subject</label>
+        <select><option>Order inquiry</option><option>Returns & exchanges</option><option>Sizing help</option><option>Wholesale</option><option>Other</option></select>
+      </div>
+      <div class="fg"><label>Message</label><textarea placeholder="Tell us how we can help..."></textarea></div>
+      <button class="btn btn-dark" style="width:100%;text-align:center;margin-top:8px" onclick="showToast('Message sent — we\'ll be in touch soon.')">Send Message</button>
+    </div>
+  </div>
+  <footer>
+    <div class="f-brand"><em>Eras</em> & Moonlight</div>
+    <div class="f-links"><a onclick="go('shop')">Shop</a><a onclick="go('stores')">Stores</a><a onclick="go('about')">About</a><a onclick="go('contact')">Contact</a></div>
+    <div class="f-copy">© 2026 Eras and Moonlight</div>
+  </footer>
+</div>
+
+<div id="page-stores" class="page">
+  <div style="padding:3rem 2.5rem 2rem;background:var(--white);border-bottom:1px solid var(--line)">
+    <p class="section-label">Find us in person</p>
+    <h1 style="font-family:'Playfair Display',serif;font-size:36px;font-weight:400;color:var(--ink)">Our Physical Stores</h1>
+    <p style="font-size:13px;color:var(--ink2);line-height:2;max-width:520px;margin-top:0.5rem">We believe in transparency — come see the clothes in person, feel the fabric, and try before you buy. We have <strong>4 store locations</strong> across Metro Manila.</p>
+  </div>
+
+  <div style="padding:3rem 2.5rem;background:var(--bg)">
+
+    <!-- Tutuban Mall Group -->
+    <div style="margin-bottom:3rem">
+      <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1.5rem">
+        <div style="width:3px;height:32px;background:var(--accent)"></div>
+        <div>
+          <p style="font-size:10px;letter-spacing:0.22em;text-transform:uppercase;color:var(--accent);margin-bottom:2px">3 Branches</p>
+          <h2 style="font-family:'Playfair Display',serif;font-size:26px;font-weight:400;color:var(--ink)">Tutuban Center Mall</h2>
+          <p style="font-size:12px;color:var(--ink3);letter-spacing:0.04em">Claro M. Recto Ave, Tondo, Manila</p>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1px;background:var(--line)">
+
+        <div style="background:var(--white);padding:2rem">
+          <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:1rem">
+            <div>
+              <p style="font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:var(--accent);margin-bottom:4px">Inside the Mall</p>
+              <h3 style="font-family:'Playfair Display',serif;font-size:20px;font-weight:400;color:var(--ink)">Main Branch</h3>
+            </div>
+            <span style="border:1px solid var(--line);font-size:9px;letter-spacing:0.12em;text-transform:uppercase;padding:4px 10px;color:var(--ink3)">Ground Floor</span>
+          </div>
+          <p style="font-size:12px;color:var(--ink2);line-height:1.9">Our flagship Tutuban store. Full collection available — men's and women's. Fitting rooms on-site.</p>
+          <div style="margin-top:1.25rem;padding-top:1.25rem;border-top:1px solid var(--line)">
+            <p style="font-size:11px;color:var(--ink3);letter-spacing:0.06em">Mon–Sun · 10am–8pm</p>
+          </div>
+        </div>
+
+        <div style="background:var(--white);padding:2rem">
+          <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:1rem">
+            <div>
+              <p style="font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:var(--accent);margin-bottom:4px">Inside the Mall</p>
+              <h3 style="font-family:'Playfair Display',serif;font-size:20px;font-weight:400;color:var(--ink)">Station Branch</h3>
+            </div>
+            <span style="border:1px solid var(--line);font-size:9px;letter-spacing:0.12em;text-transform:uppercase;padding:4px 10px;color:var(--ink3)">Near LRT</span>
+          </div>
+          <p style="font-size:12px;color:var(--ink2);line-height:1.9">Conveniently located near the Recto LRT station entrance. Perfect for quick pickups on your commute.</p>
+          <div style="margin-top:1.25rem;padding-top:1.25rem;border-top:1px solid var(--line)">
+            <p style="font-size:11px;color:var(--ink3);letter-spacing:0.06em">Mon–Sun · 10am–8pm</p>
+          </div>
+        </div>
+
+        <div style="background:var(--white);padding:2rem">
+          <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:1rem">
+            <div>
+              <p style="font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:var(--accent);margin-bottom:4px">Outside the Mall</p>
+              <h3 style="font-family:'Playfair Display',serif;font-size:20px;font-weight:400;color:var(--ink)">Night Market</h3>
+            </div>
+            <span style="background:var(--ink);font-size:9px;letter-spacing:0.12em;text-transform:uppercase;padding:4px 10px;color:var(--white)">Outdoor</span>
+          </div>
+          <p style="font-size:12px;color:var(--ink2);line-height:1.9">Open evenings at the Tutuban Night Market. Great deals and new arrivals dropped weekly. Cash-friendly.</p>
+          <div style="margin-top:1.25rem;padding-top:1.25rem;border-top:1px solid var(--line)">
+            <p style="font-size:11px;color:var(--ink3);letter-spacing:0.06em">Thu–Sun · 6pm–11pm</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Ayala Malls Cloverleaf -->
+    <div>
+      <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1.5rem">
+        <div style="width:3px;height:32px;background:var(--accent)"></div>
+        <div>
+          <p style="font-size:10px;letter-spacing:0.22em;text-transform:uppercase;color:var(--accent);margin-bottom:2px">1 Branch</p>
+          <h2 style="font-family:'Playfair Display',serif;font-size:26px;font-weight:400;color:var(--ink)">Ayala Malls Cloverleaf</h2>
+          <p style="font-size:12px;color:var(--ink3);letter-spacing:0.04em">A. Bonifacio Ave, Balintawak, Quezon City</p>
+        </div>
+      </div>
+      <div style="background:var(--white);padding:2rem;max-width:400px">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:1rem">
+          <div>
+            <p style="font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:var(--accent);margin-bottom:4px">Inside the Mall</p>
+            <h3 style="font-family:'Playfair Display',serif;font-size:20px;font-weight:400;color:var(--ink)">Cloverleaf Branch</h3>
+          </div>
+          <span style="border:1px solid var(--line);font-size:9px;letter-spacing:0.12em;text-transform:uppercase;padding:4px 10px;color:var(--ink3)">Level 2</span>
+        </div>
+        <p style="font-size:12px;color:var(--ink2);line-height:1.9">Our newest store. Full men's and women's collection, plus exclusive branch-only arrivals from Korea and Japan.</p>
+        <div style="margin-top:1.25rem;padding-top:1.25rem;border-top:1px solid var(--line)">
+          <p style="font-size:11px;color:var(--ink3);letter-spacing:0.06em">Mon–Sun · 10am–9pm</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Visit note -->
+    <div style="margin-top:3rem;border:1px solid var(--line);padding:2rem;background:var(--white);display:flex;gap:1.5rem;align-items:flex-start">
+      <div style="font-size:24px;color:var(--accent);flex-shrink:0">◎</div>
+      <div>
+        <h4 style="font-family:'Playfair Display',serif;font-size:17px;font-weight:400;color:var(--ink);margin-bottom:6px">Can't visit in person?</h4>
+        <p style="font-size:12px;color:var(--ink2);line-height:1.9">Shop online anytime — we ship nationwide with Cash on Delivery, GCash, and bank transfer available.</p>
+        <button class="btn btn-dark" style="margin-top:1rem;font-size:10px" onclick="go('shop')">Shop Online →</button>
+      </div>
+    </div>
+
+  </div>
+
+  <footer>
+    <div class="f-brand"><em>Eras</em> &amp; Moonlight</div>
+    <div class="f-links"><a onclick="go('shop')">Shop</a><a onclick="go('stores')">Stores</a><a onclick="go('about')">About</a><a onclick="go('contact')">Contact</a></div>
+    <div class="f-copy">© 2026 Eras and Moonlight</div>
+  </footer>
+</div>
+
+<div id="page-success" class="page">
+  <div class="success-wrap">
+    <div class="success-mark">✓</div>
+    <h1>Order confirmed</h1>
+    <p>Thank you for shopping with Eras and Moonlight. We'll send your tracking details via email once your order is dispatched.</p>
+    <div class="order-tag" id="oref">Order #EM-000000</div>
+    <button class="btn btn-outline" onclick="go('home')" style="margin-top:1rem">Return to Home</button>
+  </div>
+  <footer>
+    <div class="f-brand"><em>Eras</em> & Moonlight</div>
+    <div class="f-links"><a onclick="go('shop')">Shop</a><a onclick="go('stores')">Stores</a><a onclick="go('about')">About</a><a onclick="go('contact')">Contact</a></div>
+    <div class="f-copy">© 2026 Eras and Moonlight</div>
+  </footer>
+</div>
+
+<div class="toast-bar" id="toast"></div>
+
+<script>
+const products=[
+  {id:1,name:'Luna Slip Dress',cat:'dress',price:1890,icon:'◈',badge:'Bestseller',meta:'Women · Slip · Ivory, Rose, Midnight · Korea'},
+  {id:2,name:'Soleil Wrap Top',cat:'top',price:890,icon:'◇',badge:'New',meta:'Women · Tops · Cream, Sage, Blush · Thailand'},
+  {id:3,name:'Reverie Co-ord',cat:'coord',price:2490,icon:'◉',badge:'Limited',meta:'Women · Set · Mocha, Sand, Plum · Japan'},
+  {id:4,name:'Dusk Midi Skirt',cat:'skirt',price:1290,icon:'○',badge:'',meta:'Women · Midi · Black, Caramel, Ivory · Korea'},
+  {id:5,name:'Nocturne Maxi',cat:'dress',price:2190,icon:'◈',badge:'New',meta:'Women · Maxi · Midnight, Wine, Forest · China'},
+  {id:6,name:'Eras Linen Blouse',cat:'top',price:990,icon:'◇',badge:'',meta:'Women · Blouse · White, Lilac, Stone · Japan'},
+  {id:7,name:'Gilded Co-ord',cat:'coord',price:2790,icon:'◉',badge:'Bestseller',meta:'Men &amp; Women · Set · Gold, Nude, Chocolate · Korea'},
+  {id:8,name:'Vesper Pleated Skirt',cat:'skirt',price:1490,icon:'○',badge:'',meta:'Women · Pleated · Rose, Ivory, Slate · Thailand'},
+  {id:9,name:'Breezy Linen Trench',cat:'outerwear',price:3290,icon:'◆',badge:'New',meta:'Men &amp; Women · Trench · Oat, Camel, Black · Japan'},
+  {id:10,name:'Autumn Oversized Blazer',cat:'outerwear',price:2890,icon:'◆',badge:'',meta:'Men &amp; Women · Blazer · Charcoal, Cream, Mocha · Korea'},
+  {id:11,name:'Hiroshi Relaxed Shirt',cat:'mens',price:1190,icon:'▣',badge:'New',meta:'Men · Button-down · Navy, Ivory, Sage · Japan'},
+  {id:12,name:'Seoul Cargo Trousers',cat:'mens',price:1890,icon:'▣',badge:'Bestseller',meta:'Men · Trousers · Olive, Camel, Black · Korea'},
+  {id:13,name:'Zen Linen Set',cat:'mens',price:2490,icon:'▣',badge:'',meta:'Men · Coord Set · Sand, Stone, Slate · China'},
+  {id:14,name:'Tokyo Knit Polo',cat:'mens',price:990,icon:'▣',badge:'New',meta:'Men · Polo · Mocha, Oat, Forest · Japan'},
+  {id:15,name:'Bali Batik Shirt',cat:'mens',price:1390,icon:'▣',badge:'Limited',meta:'Men · Short Sleeve · Multi, Navy, Rust · Thailand'},
+  {id:16,name:'Chou Oversized Tee',cat:'top',price:790,icon:'◇',badge:'',meta:'Men &amp; Women · Tee · White, Black, Ash · Korea'},
+];
+let cart=[],coStep=1,selPay='cod';
+
+function go(p){
+  document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));
+  document.getElementById('page-'+p).classList.add('active');
+  window.scrollTo(0,0);
+  if(p==='cart')renderCart();
+  if(p==='checkout'){coStep=1;renderCo();}
+  if(p==='shop')renderProds('all');
+}
+
+function filterP(btn,cat){
+  if(btn){document.querySelectorAll('.ftab').forEach(t=>t.classList.remove('active'));btn.classList.add('active');}
+  renderProds(cat);
+}
+
+function renderProds(cat){
+  const list=cat==='all'?products:products.filter(p=>p.cat===cat);
+  document.getElementById('pcount').textContent=list.length+' pieces';
+  document.getElementById('pgrid').innerHTML=list.map(p=>`
+    <div class="product-card">
+      <div class="p-img">
+        <span style="font-size:72px;color:var(--ink3);opacity:0.18">${p.icon}</span>
+        ${p.badge?`<span class="p-badge">${p.badge}</span>`:''}
+      </div>
+      <div class="p-info">
+        <div class="p-name">${p.name}</div>
+        <div class="p-sub">${p.meta}</div>
+        <div class="p-row">
+          <span class="p-price">₱${p.price.toLocaleString()}</span>
+          <button class="p-add" onclick="addCart(${p.id})">+ Add</button>
+        </div>
+      </div>
+    </div>`).join('');
+}
+
+function addCart(id){
+  const p=products.find(x=>x.id===id);
+  const ex=cart.find(x=>x.id===id);
+  if(ex)ex.qty++;else cart.push({...p,qty:1});
+  updCount();showToast(p.name+' added to bag');
+}
+
+function updCount(){document.getElementById('ccount').textContent=cart.reduce((s,i)=>s+i.qty,0);}
+
+function chQty(id,d){
+  const i=cart.find(x=>x.id===id);if(!i)return;
+  i.qty+=d;if(i.qty<=0)cart=cart.filter(x=>x.id!==id);
+  updCount();renderCart();
+}
+function rmItem(id){cart=cart.filter(x=>x.id!==id);updCount();renderCart();}
+
+function sub(){return cart.reduce((s,i)=>s+i.price*i.qty,0);}
+function ship(){return cart.length>0?150:0;}
+
+function renderCart(){
+  const el=document.getElementById('cartContent');
+  if(!cart.length){el.innerHTML=`<div class="empty"><div style="font-size:36px;color:var(--ink3);margin-bottom:1rem">○</div><h2>Your bag is empty</h2><p>Discover pieces made to last.</p><button class="btn btn-dark" onclick="go('shop')">Shop Now</button></div>`;return;}
+  const s=sub(),sh=ship(),t=s+sh;
+  el.innerHTML=`<div class="cart-wrap">
+    <div class="cart-main">
+      <h2 class="sec-title">Your Bag</h2>
+      ${cart.map(i=>`<div class="c-item">
+        <div class="c-img" style="font-size:28px;color:var(--ink3);opacity:0.3">${i.icon}</div>
+        <div>
+          <div class="c-name">${i.name}</div>
+          <div class="c-meta">${i.meta.split('·')[0].trim()} · Size M</div>
+          <div class="qty-row">
+            <button class="qbtn" onclick="chQty(${i.id},-1)">−</button>
+            <span class="qnum">${i.qty}</span>
+            <button class="qbtn" onclick="chQty(${i.id},1)">+</button>
+          </div>
+          <button class="rmv" onclick="rmItem(${i.id})">Remove</button>
+        </div>
+        <div class="c-price">₱${(i.price*i.qty).toLocaleString()}</div>
+      </div>`).join('')}
+    </div>
+    <div class="cart-side">
+      <h3 class="sub-h">Order Summary</h3>
+      <div class="sum-row"><span>Subtotal</span><span>₱${s.toLocaleString()}</span></div>
+      <div class="sum-row"><span>Shipping</span><span>₱${sh.toLocaleString()}</span></div>
+      <div class="sum-total"><span>Total</span><span>₱${t.toLocaleString()}</span></div>
+      <div class="promo"><input type="text" placeholder="Promo code"><button>Apply</button></div>
+      <div style="font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:var(--ink3);margin-bottom:8px">Accepted payments</div>
+      <div class="pay-accept">
+        <span class="pac">COD</span><span class="pac">BPI</span><span class="pac">BDO</span><span class="pac">GCash</span><span class="pac">Maya</span>
+      </div>
+      <button class="btn btn-dark" style="width:100%;text-align:center" onclick="go('checkout')">Checkout →</button>
+    </div>
+  </div>`;
+}
+
+function renderCo(){
+  const m=document.getElementById('coMain'),a=document.getElementById('coSide');
+  ['s1','s2','s3'].forEach((id,i)=>{
+    const d=document.getElementById(id);
+    d.className='sdot'+(i+1<coStep?' done':i+1===coStep?' active':'');
+    d.textContent=i+1<coStep?'✓':i+1;
+  });
+  const s=sub(),sh=ship(),t=s+sh;
+  a.innerHTML=`<h3 class="sub-h">Your Order</h3>
+    ${cart.map(i=>`<div class="o-item"><span class="o-iname">${i.name} ×${i.qty}</span><span class="o-ip">₱${(i.price*i.qty).toLocaleString()}</span></div>`).join('')}
+    <div class="sum-row" style="margin-top:12px"><span>Subtotal</span><span>₱${s.toLocaleString()}</span></div>
+    <div class="sum-row"><span>Shipping</span><span>₱${sh.toLocaleString()}</span></div>
+    <div class="sum-total"><span>Total</span><span>₱${t.toLocaleString()}</span></div>`;
+  if(coStep===1){
+    m.innerHTML=`<h2 class="sec-title">Delivery Information</h2>
+      <div class="fgg">
+        <div class="fg"><label>First Name</label><input type="text" placeholder="Maria"></div>
+        <div class="fg"><label>Last Name</label><input type="text" placeholder="Santos"></div>
+        <div class="fg full"><label>Email</label><input type="email" placeholder="you@email.com"></div>
+        <div class="fg full"><label>Phone</label><input type="tel" placeholder="+63 9XX XXX XXXX"></div>
+        <div class="fg full"><label>Street Address</label><input type="text" placeholder="House / Unit No., Street"></div>
+        <div class="fg full"><label>Barangay</label><input type="text" placeholder="Barangay"></div>
+        <div class="fg"><label>City</label><input type="text" placeholder="City / Municipality"></div>
+        <div class="fg"><label>Province</label><input type="text" placeholder="Province"></div>
+        <div class="fg full"><label>Region</label>
+          <select><option>Metro Manila</option><option>CALABARZON</option><option>MIMAROPA</option><option>Central Luzon</option><option>Western Visayas</option><option>Central Visayas</option><option>Mindanao</option><option>Other</option></select>
+        </div>
+        <div class="fg full"><label>Delivery Notes (optional)</label><textarea placeholder="Leave at gate, call upon arrival, etc." style="height:70px"></textarea></div>
+      </div>
+      <button class="btn btn-dark" style="margin-top:1.5rem" onclick="nxtStep()">Continue to Payment →</button>`;
+  } else if(coStep===2){
+    m.innerHTML=`<h2 class="sec-title">Payment Method</h2>
+      <div class="pay-grid" id="payGrid">
+        <div class="pm sel" id="pm-cod" onclick="selP('cod')"><div class="pm-icon">◎</div><div class="pm-label">Cash on Delivery</div></div>
+        <div class="pm" id="pm-bank" onclick="selP('bank')"><div class="pm-icon">◫</div><div class="pm-label">Bank Transfer</div></div>
+        <div class="pm" id="pm-ew" onclick="selP('ew')"><div class="pm-icon">◻</div><div class="pm-label">E-Wallet</div></div>
+      </div>
+      <div class="pay-info" id="payInfo"></div>
+      <button class="btn btn-dark" onclick="nxtStep()">Review Order →</button>`;
+    renderPayInfo();
+  } else {
+    m.innerHTML=`<h2 class="sec-title">Review & Confirm</h2>
+      <div class="pay-info" style="margin-bottom:1.5rem">
+        <p><strong>Delivery:</strong> Standard · ₱150 · 3–5 business days</p>
+        <p style="margin-top:8px"><strong>Payment:</strong> ${selPay==='cod'?'Cash on Delivery':selPay==='bank'?'Bank Transfer (BPI / BDO)':'E-Wallet (GCash / Maya)'}</p>
+      </div>
+      <p style="font-size:12px;color:var(--ink3);line-height:1.9;margin-bottom:1.5rem">By placing your order you agree to our Terms of Service. A confirmation will be sent to your email address.</p>
+      <button class="btn btn-accent" style="width:100%;text-align:center" onclick="placeOrder()">Place Order — ₱${t.toLocaleString()}</button>`;
+  }
+}
+
+function selP(m){
+  selPay=m;
+  ['cod','bank','ew'].forEach(x=>document.getElementById('pm-'+x).classList.toggle('sel',x===m));
+  renderPayInfo();
+}
+
+function renderPayInfo(){
+  const el=document.getElementById('payInfo');if(!el)return;
+  const info={
+    cod:'<p><strong>Cash on Delivery</strong> — Pay when your parcel arrives. Our courier will collect payment upon delivery. Please prepare the exact amount.</p>',
+    bank:'<p><strong>Bank Transfer</strong><br>BPI: <strong>1234-5678-90</strong><br>BDO: <strong>0987-6543-21</strong><br>Account Name: <strong>Eras and Moonlight Co.</strong><br><br>Send your proof of payment to <strong>orders@erasandmoonlight.ph</strong></p>',
+    ew:'<p><strong>GCash / Maya</strong><br>GCash Number: <strong>0917-123-4567</strong><br>Maya Number: <strong>0917-123-4567</strong><br>Account Name: <strong>Eras and Moonlight</strong><br><br>Screenshot your receipt and send to our email or Messenger page.</p>'
+  };
+  el.innerHTML=info[selPay];
+}
+
+function nxtStep(){coStep++;renderCo();window.scrollTo(0,0);}
+
+function placeOrder(){
+  const ref='EM-'+Math.floor(100000+Math.random()*900000);
+  document.getElementById('oref').textContent='Order #'+ref;
+  cart=[];updCount();go('success');
+}
+
+function showToast(msg){
+  const t=document.getElementById('toast');
+  t.textContent=msg;t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),2500);
+}
+
+renderProds('all');
+</script>
